@@ -31,12 +31,14 @@ Edit these files directly:
 - `3_Skills/Global Skills/master-rules.md`
 - `1_References/CREATIVE-DIRECTION.md`
 
-Generated mirrors should not be edited directly:
+Generated or sync-managed files should not be edited directly:
 - `3_Skills/1_Claude Skills/maker-skill.md`
 - `3_Skills/2_Codex Skills/maker-skill.md`
 - `2_Agents/1_Claude Agents/maker-agent.md`
 - `2_Agents/2_Codex Agents/maker-agent.md`
 - `3_Skills/*/creative-direction.md`
+- `.claude/commands/sync-skills.md`
+- `2_Agents/Global Agents/sync-orchestrator.md`
 
 ## Sync workflow
 
@@ -51,6 +53,12 @@ Verification:
 ```bash
 python3 tools/sync_skills.py --check
 ```
+
+What the sync command manages:
+- regenerates maker-skill and maker-agent mirrors from `master-rules.md`
+- regenerates the three `creative-direction.md` mirrors from `1_References/CREATIVE-DIRECTION.md`
+- refreshes the Claude sync wrapper and global sync orchestrator docs
+- validates key sync/version invariants in `AGENTS.md`, `CLAUDE.md`, and `README.md`
 
 If you use Claude and the repo includes `.claude/commands/sync-skills.md`, you can also use `/sync-skills`. The Python command is still the canonical workflow.
 

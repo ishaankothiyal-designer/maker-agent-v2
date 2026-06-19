@@ -18,7 +18,7 @@
 
 ## Key commands
 
-- `python3 tools/sync_skills.py` — Canonical repo-native sync command. Regenerates maker-skill + maker-agent (Claude & Codex) from master-rules.md, and the three creative-direction.md mirrors from 1_References/CREATIVE-DIRECTION.md
+- `python3 tools/sync_skills.py` — Canonical repo-native sync command. Regenerates maker-skill + maker-agent mirrors from `master-rules.md`, regenerates the three creative-direction mirrors from `1_References/CREATIVE-DIRECTION.md`, refreshes sync-managed wrapper docs, and validates entry-doc sync/version invariants.
 - `python3 tools/sync_skills.py --check` — Verify generated files are already in sync without rewriting them
 - `/sync-skills` — Optional Claude convenience wrapper that delegates to `python3 tools/sync_skills.py`
 
@@ -32,7 +32,7 @@ Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `mak
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.21`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.22`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
