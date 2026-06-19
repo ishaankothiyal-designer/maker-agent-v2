@@ -21,7 +21,9 @@ To sync rule changes: run /sync-skills (Claude Code slash command).
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.12`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`.
+`AGENTS.md` does not maintain an independent version number; it must always mirror the current `master-rules.md` version ledger.
+Current mapped version: `v2.20` from `3_Skills/Global Skills/master-rules.md`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
