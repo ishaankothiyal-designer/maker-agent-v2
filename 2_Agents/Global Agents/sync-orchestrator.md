@@ -50,7 +50,7 @@ Wrapper location: `.claude/commands/sync-skills.md`
 ## Rules for the Sync Agent
 
 - Preserve all brand rules exactly — do not paraphrase or reinterpret
-- The master-rules.md `version` value is the repo-level project version. Current baseline: `v2.25`.
+- The master-rules.md `version` value is the repo-level project version. Current baseline: `v2.26`.
 - Increment the version number only if rules or persistent workflow behavior have substantively changed
 - When the user asks to update the version, update the master-rules.md changelog and summarize what changed since the previous version, which skills/references/agents are impacted, how the change helps users, and rollback considerations
 - Never remove a rule — only add or update
