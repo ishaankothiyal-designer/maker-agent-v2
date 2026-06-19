@@ -101,8 +101,8 @@ logo_usage: generation-time-logo-reference
 Generation:
 
 ```text
-For Codex ImageGen, name the theme-matched visible Cars24 logo PNG as the exact repo-relative source file to use, instruct the model to copy the official identity without recreating or modifying it, and apply strict logo QA. Providers/workflows that support image references must also receive the same PNG as actual visual input. Do not add a local logo overlay afterward.
-If Codex changes, omits, boxes, or crops the logo, reject the output and move to a visual-input-capable workflow or ask for a supported logo upload. If a reference-capable provider cannot attach the PNG, stop and ask the user to share/upload it or choose another supported workflow.
+Attach/share the theme-matched visible Cars24 logo PNG as actual visual input and also describe the current logo explicitly in the prompt. The prompt must identify the current Cars24 lockup as the rounded-square icon with the circular cut-through/open-C mark plus the `Cars24` wordmark, and must explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is traceability only and never enough by itself. Do not add a local logo overlay afterward.
+If the active tool cannot attach the PNG as true visual input, do not use that workflow for logo-bearing output. If the output changes, omits, boxes, all-caps, or crops the logo, reject the output and move to a visual-input-capable workflow or ask for a supported logo upload.
 Place the logo by layout axis and clean negative space. In a carousel, keep logo placement and size identical across logo-bearing slides with the same theme/background family. Logo may overlap pattern and may overlap hero only when readable, high-contrast, cleanly fitted, and uncropped.
 ```
 

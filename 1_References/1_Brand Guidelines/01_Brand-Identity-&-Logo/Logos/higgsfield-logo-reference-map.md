@@ -37,7 +37,7 @@ Pick **one** colorway by the background *directly behind the logo placement* (no
 
 1. **Upload the PNG** that matches the dominant logo-placement background (table above) as an **image reference**. PNG is used for the reference because image models take raster, not SVG.
    > **Critical:** For light backgrounds, always use `Logo - Blue-on-white.png` (89KB), NOT `Logo - Blue.png` (3.6KB). The raw blue logo is too small for the model to read — it consistently hallucinates wrong icons. The composite version places the blue logo on a white tile at high resolution, just like `Logo - White-on-blue.png` does for dark backgrounds.
-2. In the prompt, state: *"Place the official Cars24 horizontal lockup (icon + wordmark) exactly as in the attached reference — do not redraw or restyle it. Ignore the background tile of the logo reference and render no box/tile around the logo."*
+2. In the prompt, state: *"Place the official Cars24 horizontal lockup exactly as in the attached reference — rounded-square icon with the circular cut-through/open-C mark plus the `Cars24` wordmark. Do not redraw or restyle it. This is not the old boxed `CARS24` logo, not an all-caps lockup, and not a plaque or badge. Ignore the background tile of the logo reference and render no box/tile around the logo."*
 3. Name the placement and clear space (see below). For HTML/code exports instead of generated images, use the SVG equivalent.
 
 ---
