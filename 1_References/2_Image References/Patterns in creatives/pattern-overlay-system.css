@@ -1,0 +1,253 @@
+/* ================================================================
+   Cars24 Pattern Overlay System  ·  v1.0  ·  2026-05-31
+   ================================================================
+
+   How to use in any creative HTML file:
+
+   1. Link this CSS (adjust path relative to your HTML):
+      <link rel="stylesheet" href="../../1_References/2_Image References/
+            Patterns in creatives/pattern-overlay-system.css">
+
+   2. Your creative container must be:
+      position: relative;  overflow: hidden;
+
+   3. Add a div with THREE modifier classes:
+        c24-pattern   [theme]   [placement]   [name]
+
+      Full example:
+        <div class="c24-pattern c24-pattern--dark
+                    c24-pattern--bottom-right
+                    c24-pattern--mountain"></div>
+
+   THEME choices    →  --dark  |  --light
+   PLACEMENT choices→  --bottom-right | --centre | --full-bleed |
+                        --right-side   | --bottom-centre | --bottom-edge | --left-side
+   NAME choices (dark)  →  --mountain | --circle-dark | --rhombus-dark |
+                            --wave-dark | --bloom | --centre-mesh | --side-mesh
+   NAME choices (light) →  --circle-light | --wave-full-light | --wave-sparse |
+                            --face | --rhombus-light | --side-light
+
+   Optional scale override (compose with any combination):
+        c24-pattern--micro   (very subtle, opacity pulled back)
+        c24-pattern--large   (size of placement zone expanded)
+
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   BASE
+   ---------------------------------------------------------------- */
+.c24-pattern {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+/* ----------------------------------------------------------------
+   THEME MODIFIERS
+   Dark:  screen blend  → blue bg dissolves, bright dots glow through
+   Light: multiply blend → pale bg disappears, soft dots stay
+   ---------------------------------------------------------------- */
+
+.c24-pattern--dark {
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.c24-pattern--light {
+  mix-blend-mode: multiply;
+  opacity: 0.65;
+}
+
+
+/* ----------------------------------------------------------------
+   PLACEMENT MODIFIERS
+   ---------------------------------------------------------------- */
+
+/* Bottom-right corner — default for most hero-led dark posts */
+.c24-pattern--bottom-right {
+  bottom: -8%;
+  right: -8%;
+  width: 65%;
+  height: 65%;
+}
+
+/* Centre — logo identity cards, stingers, brand openers */
+.c24-pattern--centre {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
+  height: 72%;
+}
+
+/* Full bleed — text-only posts, atmospheric backdrop */
+.c24-pattern--full-bleed {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Right side — side accent, sculptural feel, editorial halo */
+.c24-pattern--right-side {
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  background-size: contain;
+  background-position: center right;
+}
+
+/* Left side — AI face pattern, reverse accent */
+.c24-pattern--left-side {
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background-size: contain;
+  background-position: center left;
+}
+
+/* Bottom centre — dome/halo anchor, light editorial posts */
+.c24-pattern--bottom-centre {
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 55%;
+  background-position: bottom center;
+}
+
+/* Bottom edge — low-profile base sweep */
+.c24-pattern--bottom-edge {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  background-position: bottom center;
+  background-size: cover;
+}
+
+
+/* ----------------------------------------------------------------
+   SCALE OVERRIDES  (compose with theme + placement)
+   ---------------------------------------------------------------- */
+
+/* Micro: very subtle — pull it back behind dense copy */
+.c24-pattern--micro {
+  opacity: 0.35 !important;
+}
+
+/* Large: expand the placement zone for open hero layouts */
+.c24-pattern--large.c24-pattern--bottom-right {
+  width: 80%;
+  height: 80%;
+  bottom: -12%;
+  right: -12%;
+}
+.c24-pattern--large.c24-pattern--centre {
+  width: 88%;
+  height: 88%;
+}
+.c24-pattern--large.c24-pattern--right-side {
+  width: 70%;
+}
+
+
+/* ================================================================
+   DARK THEME PATTERNS
+   Pair with: .c24-pattern--dark
+   Background: Brand Blue #4736FE
+   Blend: screen (blue bg dissolves, bright dot motif glows)
+   ================================================================ */
+
+/* Wave Field / terrain — energy, motion, launch feel */
+/* Best with: --bottom-right, mid or large scale */
+.c24-pattern--mountain {
+  background-image: url('./References/mountain pattern dark theme.png');
+}
+
+/* Shell Halo — luminous sphere, hero-backed open compositions */
+/* Best with: --bottom-right, large scale */
+.c24-pattern--circle-dark {
+  background-image: url('./References/large circle pattern dark theme.png');
+}
+
+/* Edge Frame / trapezoid — rounded corner containing frame, premium */
+/* Best with: --bottom-right, large scale */
+.c24-pattern--rhombus-dark {
+  background-image: url('./References/large rhombus pattern dark theme.png');
+}
+
+/* Wave Field full-bleed — undulating dot grid, text-only backdrop */
+/* Best with: --full-bleed, reduce opacity to --micro for heavy copy */
+.c24-pattern--wave-dark {
+  background-image: url('./References/full bleed pattern dark theme.png');
+}
+
+/* Particle Bloom — bokeh circles + teal accent, open airy layouts */
+/* Best with: --bottom-right, large scale */
+.c24-pattern--bloom {
+  background-image: url('./References/Dark theme pattern large.png');
+}
+
+/* Organic Mesh / centre blob — logo identity cards, stingers */
+/* Best with: --centre */
+.c24-pattern--centre-mesh {
+  background-image: url('./References/Centre pattern dark thme.png');
+}
+
+/* Organic Mesh / side (pink-magenta accent) — sculptural side energy */
+/* Best with: --right-side */
+.c24-pattern--side-mesh {
+  background-image: url('./References/side pattern dark theme.png');
+}
+
+
+/* ================================================================
+   LIGHT THEME PATTERNS
+   Pair with: .c24-pattern--light
+   Background: Pale lavender #EEEFFE or off-white #FFFFFF
+   Blend: multiply (pale bg disappears, soft dots stay)
+   ================================================================ */
+
+/* Shell Halo — dome hemisphere, bottom-anchored editorial */
+/* Best with: --bottom-centre */
+.c24-pattern--circle-light {
+  background-image: url('./References/Circle pattern bottom light theme.png');
+}
+
+/* Wave Field full-bleed — dot grid on lavender, editorial / text-forward */
+/* Best with: --full-bleed, reduce to --micro for copy-heavy layouts */
+.c24-pattern--wave-full-light {
+  background-image: url('./References/Full bleed pattern light theme.png');
+}
+
+/* Wave Field sparse — minimal dot grid on white, very light touch */
+/* Best with: --full-bleed on white (#FFFFFF) background */
+.c24-pattern--wave-sparse {
+  background-image: url('./References/full bleed light pattern.png');
+}
+
+/* Organic Mesh / face — dot-matrix human profile, AI/identity posts */
+/* Best with: --right-side or --left-side */
+.c24-pattern--face {
+  background-image: url('./References/human pattern light theme.png');
+}
+
+/* Edge Frame / trapezoid light — soft rhombus frame, contained feel */
+/* Best with: --bottom-right */
+.c24-pattern--rhombus-light {
+  background-image: url('./References/Rhombus pattern in bottom.png');
+}
+
+/* Shell Halo side — purple-pink sphere, right-side editorial anchor */
+/* Best with: --right-side */
+.c24-pattern--side-light {
+  background-image: url('./References/Side Pattern light theme.png');
+}

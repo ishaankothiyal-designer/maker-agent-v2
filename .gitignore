@@ -1,0 +1,20 @@
+.DS_Store
+**/.DS_Store
+
+# Local/editor state
+.claude/settings.local.json
+.claude/launch.json
+
+# Dependency folders and caches
+node_modules
+node_modules/
+.cache/
+
+# Generated production outputs are large and should be archived separately.
+# Keep 4_exports/README.md tracked as documentation.
+4_exports/*
+!4_exports/README.md
+
+# Local environment/secrets
+.env
+.env.*
