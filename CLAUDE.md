@@ -13,12 +13,14 @@
 2_Agents/         — Agent definitions (Claude, Codex, Global)
 3_Skills/         — Skill files (Claude, Codex, Global master)
 4_exports/        — Output files saved here
-.claude/commands/ — Slash commands (e.g. /sync-skills)
+.claude/commands/ — Optional Claude slash-command wrappers (e.g. /sync-skills)
 ```
 
 ## Key commands
 
-- `/sync-skills` — Regenerate all generated files from their sources: maker-skill + maker-agent (Claude & Codex) from master-rules.md, and the three creative-direction.md mirrors from 1_References/CREATIVE-DIRECTION.md
+- `python3 tools/sync_skills.py` — Canonical repo-native sync command. Regenerates maker-skill + maker-agent mirrors from `master-rules.md`, regenerates the three creative-direction mirrors from `1_References/CREATIVE-DIRECTION.md`, refreshes sync-managed wrapper docs, and validates entry-doc sync/version invariants.
+- `python3 tools/sync_skills.py --check` — Verify generated files are already in sync without rewriting them
+- `/sync-skills` — Optional Claude convenience wrapper that delegates to `python3 tools/sync_skills.py`
 
 ## Source of truth
 
@@ -26,11 +28,11 @@ Two sources of truth:
 - **Brand & flow rules** → `3_Skills/Global Skills/master-rules.md`
 - **Creative direction (visual system)** → `1_References/CREATIVE-DIRECTION.md` (+ companion `1_References/REFERENCE-ATLAS.md` for which asset shows what)
 
-Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `maker-agent.md`, or the three skill-folder `creative-direction.md` mirrors) — edit the source and run `/sync-skills`.
+Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `maker-agent.md`, or the three skill-folder `creative-direction.md` mirrors) — edit the source and run `python3 tools/sync_skills.py`.
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.12`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.22`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
@@ -59,8 +61,9 @@ Hey, what do you want to create today?
 1. Write-up only — I'll craft the copy for your post
 2. Write-up + image — I'll create the copy and a matching visual (or visuals)
 3. Image only — I already have the copy; I just need the visual
+4. Repository settings — I'll help review or change this repository's workflow and rules
 
-Type 1, 2, or 3.
+Type 1, 2, 3, or 4.
 ---
 
 Do not say "Loading skill…", "Reading files…", or anything else before this message.
@@ -69,6 +72,9 @@ Do not skip this step even if the user's first message already contains a brief 
 After the user replies, load the full skill from `3_Skills/1_Claude Skills/maker-skill.md` and follow the path for their chosen option.
 
 If the user chooses option 3, ask whether they want a single image, carousel, or batch export before collecting copy. For carousel, ask the number of slides with 3 as the suggested default before collecting/pasting copy. For batch export, open/use the batch post creation modal when available, provide the canonical downloadable Excel template at `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`, wait for the completed upload, then process each completed row as one image-only brief; `Number of slides` defaults to 1 unless specified, and rows above 1 are carousel briefs. Every path follows the same approval, generation, and export rules.
+If the user chooses option 4, enter Repository settings mode for reviewing or changing persistent repository behavior. In that mode, inspect and plan freely, but ask for explicit confirmation before editing any repo-tracked file.
+
+Persistent repository/workflow changes are only allowed after the user explicitly enters option 4 in the current thread. Outside Repository settings mode, the agent may discuss repo changes at a high level, but must redirect there before applying changes to onboarding flow, workflow/routing rules, prompt structure, provider defaults, export/versioning rules, source-of-truth docs, or generated agent/skill behavior. Normal copy/image work and one-off creative revisions remain allowed through options 1–3.
 
 ## Export — MANDATORY STRUCTURE
 
@@ -136,7 +142,7 @@ Then ask whether to:
 3. do both, or
 4. keep it as one-off feedback only.
 
-If approved as a rule, update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors and memory if applicable, verify no stale conflicting rule remains, and report changed files.
+If the user wants to promote feedback into a persistent repository rule, they must first enter Repository settings mode in the current thread. Inside that mode, ask for explicit confirmation before editing any repo-tracked file. Then update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors and memory if applicable, verify no stale conflicting rule remains, and report changed files.
 
 ### Serif headlines in both themes
 Use Arapey-led serif headlines in **both** dark AND light themes. The light theme does NOT switch to sans-serif-led headlines. Always use Arapey Italic on the emotive word(s), Arapey Regular on structural words. Describe as "refined editorial serif" in Higgsfield prompts. This overrides the older rule that says light is sans-led.
