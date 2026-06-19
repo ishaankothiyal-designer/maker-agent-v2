@@ -1,11 +1,12 @@
 # Master Rules — Cars24 Maker Agent
 > Single source of truth. All Claude and Codex skill files are generated from this file.
-> Run `/sync-skills` to propagate changes to both tool-specific skill files.
+> Run `python3 tools/sync_skills.py` to propagate changes to both tool-specific skill files. Claude users may also use `/sync-skills` when `.claude/commands/sync-skills.md` is present.
 
 <!-- sync-metadata
 last_updated: 2026-06-19
-version: 2.20
+version: 2.21
 changelog:
+  - 2.21 — Added a fourth onboarding path, `Repository settings`, to separate normal creative work from persistent repository/workflow changes. Repository-level changes such as onboarding flow, routing rules, prompt structure, provider defaults, export/versioning rules, source-of-truth docs, and generated agent/skill behavior are now only allowed after the user explicitly enters Repository settings mode in the current thread. Outside that mode, the agent may discuss repository changes but must redirect before applying them. Inside that mode, the agent may inspect and plan changes but must ask for explicit confirmation before editing repo-tracked files. Normal copy/image generation and one-off creative revisions remain available through options 1–3. Propagates to onboarding prompts, path definitions, feedback-promotion rules, generated skill/agent mirrors, and entry files. Rollback: restore the 3-option onboarding flow and remove the repository-settings gate.
   - 2.20 — Higgsfield provider default changed to GPT Image 2 and retired the previous Higgsfield model from active project instructions. Codex still defaults to Codex ImageGen whenever it can satisfy the approved reference needs. Any non-Codex, Claude, CLI, explicit Higgsfield, or Codex-unsuitable fallback route must first verify Higgsfield authentication, then use `gpt_image_2` by default with the approved reference map and cost preview. Removed active mentions of the old model name across Maker rules, prompt builder, generated agent/skill mirrors, and entry files to prevent provider confusion. Added a GPT Image 2 aspect-ratio adapter because the model supports `1:1`, `4:3`, `3:4`, `16:9`, `9:16`, `3:2`, and `2:3`; unsupported Maker ratios such as `4:5`, `1.91:1`, and `2:1` must be mapped visibly in the Stage 7 handoff before approval. Rollback: restore v2.19 provider-default wording and command examples.
   - 2.19 — Codex ImageGen repo-relative logo source-path test from project 032 feedback. Codex ImageGen can be attempted first for logo-bearing creatives when the final prompt names the exact repo-relative logo PNG as the source file to use, not merely as traceability. The prompt must say to copy/use the official logo from that path exactly and must forbid recreating, retyping, simplifying, stylising, or changing the icon mark or wordmark. Logo QA remains strict: if Codex changes the logo geometry, drops the icon, alters the wordmark, adds a tile/box, or crops the lockup, the output fails even if the rest of the creative is good. After a Codex logo QA fail, regenerate with a provider/workflow that can use the logo as actual visual input or ask the user for a supported logo upload. Rollback: return to v2.18's visual-input-only wording and remove the Codex source-path attempt rule.
   - 2.18 — Image workflow intake split for write-up-plus-image vs image-only. Path 2 now keeps the copy freeze gate unchanged, then asks for output type with two options only: single image or carousel. Carousel asks for slide count with 3 as the suggested default before Stage 2 breaks the frozen write-up into per-slide copy and prompts. Path 3 image-only now asks three options before collecting copy: single image, carousel, or batch export. Direct carousel asks for slide count with 3 as the suggested default; batch export continues through the downloadable Excel template, now with `Number of slides` defaulting to 1 unless the user specifies otherwise. This reduces accidental batch routing, makes carousel creation explicit in image-only, and keeps write-up-led image generation focused on the frozen post. Rollback: restore v2.17 Path 3 single-or-batch intake and remove the batch template slide-count field.
@@ -67,8 +68,9 @@ Hey, what do you want to create today?
 1. Write-up only — I'll craft the copy for your post
 2. Write-up + image — I'll create the copy and a matching visual (or visuals)
 3. Image only — I already have the copy; I just need the visual
+4. Repository settings — I'll help review or change this repository's workflow and rules
 
-Type 1, 2, or 3.
+Type 1, 2, 3, or 4.
 ```
 
 After the user picks, follow the path for that option:
@@ -113,6 +115,20 @@ Runs the full Image Generation Pipeline (§6). In brief:
 3. **Carousel:** ask for the number of slides, with 3 as the suggested default. Then ask the user to paste the existing write-up/copy or slide-wise copy, and run the same Image Generation Pipeline as Path 2 Step B (Stages 1–9 above).
 4. **Batch export:** open/use the batch post creation modal when available and provide the canonical downloadable Excel template: `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`. The template must collect one row per requested image/post, including copy, URL/context if relevant, number of slides (default 1 unless specified), size, theme, visible image text, logo choice, hero/style direction, references/assets, guardrails, and status. Wait for the completed upload before planning images. Treat each completed row as one image-only brief; if a row's number of slides is greater than 1, process that row as a carousel brief. Queue generation in order and process each row through the same slide plan, reference map, prompt approval, generation, and export rules; do not skip approval or brand QA gates because it is a batch.
 5. **No write-up step. Do not generate or suggest copy.**
+
+### Path 4 — Repository settings
+1. Enter a repository-change workflow instead of a creative-generation workflow.
+2. Ask what the user wants to do: review current repository settings, change workflow/rules, update the project version, inspect which files a repository change would affect, or exit back to normal creation flow.
+3. Treat Repository settings as the only valid entry point for persistent repository changes in the current thread.
+4. Inside this mode, the agent may inspect, explain, compare options, and plan repository-level changes without editing files yet.
+5. Before editing any repo-tracked file, restate the intended persistent change and ask for explicit confirmation.
+6. Apply repository changes source-first: update `3_Skills/Global Skills/master-rules.md` and/or other source-of-truth docs first, then propagate to generated mirrors and entry files, verify no stale conflicting instruction remains, and report the changed files.
+
+### Repository settings gate
+- **Persistent repository changes require Path 4 in the current thread.** This includes onboarding flow, workflow/routing rules, prompt structure, provider defaults, export/versioning rules, source-of-truth docs, and generated agent/skill behavior.
+- Outside Path 4, the agent may discuss repository changes at a high level, but must not apply them. Redirect the user into Repository settings before editing repo-tracked files or treating a request as a permanent workflow/rule change.
+- Normal creative work remains allowed outside Path 4: copy creation, image generation, revisions for the current creative, and one-off prompt/art-direction tweaks that are not being promoted into repository rules.
+- If a user wants to promote feedback or a one-off preference into a persistent repository rule, route that promotion through Path 4 first.
 
 ---
 
@@ -165,7 +181,7 @@ These overrides come from repeated production runs and user feedback. They are c
 - **Style purity:** one creative commits to one primary visual style only — illustration, photo, abstract pattern/form, or infographic/icon. Do not blend illustration people, infographic flows, SaaS/product dashboards, 3D platform blocks, network maps, UI cards, and Cars24 service scenes unless the selected style explicitly permits that element. The latest project 020 batch showed the failure mode: polished but generic "AI workflow" imagery created by mixing styles. Prevent it with a style-purity audit before generation.
 - **Visual noun budget:** each prompt gets one dominant hero noun and at most one supporting visual noun. If a prompt lists more than two visual systems or objects (for example: people + car + icons + dashboards + nodes + database + roadmap), simplify before approval. The slide should read as a specific Cars24 moment, not a generic technology ecosystem.
 - **Provider defaults:** Codex uses the built-in Codex ImageGen tool by default. Claude, non-Codex, and CLI workflows use Higgsfield + GPT Image 2 (`gpt_image_2`) after a successful authentication check. Provider choice does not change the shared brand, prompt, approval, QA, or export rules.
-- **Feedback-to-learning loop:** treat user terms like **hack**, **feedback**, **improvement**, **tweak**, **fix**, **learning**, **preference**, or **rule** as production feedback after a creative is generated. Before changing files or regenerating, confirm the feedback back to the user, map the impact across skills/rules/providers/exports, then ask whether to (a) update project rules, (b) create a new version, (c) do both, or (d) keep it as one-off feedback only. If approved as a rule, update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors, verify no stale conflicting rule remains, and report the changed files.
+- **Feedback-to-learning loop:** treat user terms like **hack**, **feedback**, **improvement**, **tweak**, **fix**, **learning**, **preference**, or **rule** as production feedback after a creative is generated. Before changing files or regenerating, confirm the feedback back to the user, map the impact across skills/rules/providers/exports, then ask whether to (a) update project rules, (b) create a new version, (c) do both, or (d) keep it as one-off feedback only. If the user wants to promote feedback into a persistent repository rule, they must first enter **Path 4 — Repository settings** in the current thread. Inside Path 4, ask for explicit confirmation before editing any repo-tracked file. Then update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors, verify no stale conflicting rule remains, and report the changed files.
 
 #### Feedback-to-learning impact map
 

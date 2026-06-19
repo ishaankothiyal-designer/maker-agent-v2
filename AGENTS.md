@@ -17,13 +17,14 @@
 
 All rules: 3_Skills/Global Skills/master-rules.md
 Do not edit Claude or Codex skill files directly.
-To sync rule changes: run /sync-skills (Claude Code slash command).
+To sync rule changes: run `python3 tools/sync_skills.py`.
+Claude users may also use `/sync-skills` via `.claude/commands/sync-skills.md`.
 
 ## Project version
 
 The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`.
 `AGENTS.md` does not maintain an independent version number; it must always mirror the current `master-rules.md` version ledger.
-Current mapped version: `v2.20` from `3_Skills/Global Skills/master-rules.md`.
+Current mapped version: `v2.21` from `3_Skills/Global Skills/master-rules.md`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
@@ -59,8 +60,9 @@ Hey, what do you want to create today?
 1. Write-up only — I'll craft the copy for your post
 2. Write-up + image — I'll create the copy and a matching visual (or visuals)
 3. Image only — I already have the copy; I just need the visual
+4. Repository settings — I'll help review or change this repository's workflow and rules
 
-Type 1, 2, or 3.
+Type 1, 2, 3, or 4.
 ---
 
 Do not say "Loading skill…", "Reading files…", or anything else before this message.
@@ -69,6 +71,9 @@ Do not skip this step even if the user's first message already contains a brief 
 After the user replies, load the full skill from 3_Skills/2_Codex Skills/maker-skill.md and follow the path for their chosen option.
 
 If the user chooses option 3, ask whether they want a single image, carousel, or batch export before collecting copy. For carousel, ask the number of slides with 3 as the suggested default before collecting/pasting copy. For batch export, open/use the batch post creation modal when available, provide the canonical downloadable Excel template at `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`, wait for the completed upload, then process each completed row as one image-only brief; `Number of slides` defaults to 1 unless specified, and rows above 1 are carousel briefs. Every path follows the same approval, generation, and export rules.
+If the user chooses option 4, enter Repository settings mode for reviewing or changing persistent repository behavior. In that mode, inspect and plan freely, but ask for explicit confirmation before editing any repo-tracked file.
+
+Persistent repository/workflow changes are only allowed after the user explicitly enters option 4 in the current thread. Outside Repository settings mode, the agent may discuss repo changes at a high level, but must redirect there before applying changes to onboarding flow, workflow/routing rules, prompt structure, provider defaults, export/versioning rules, source-of-truth docs, or generated agent/skill behavior. Normal copy/image work and one-off creative revisions remain allowed through options 1–3.
 
 ## Export — MANDATORY STRUCTURE
 
@@ -116,7 +121,7 @@ Then ask whether to:
 3. do both, or
 4. keep it as one-off feedback only.
 
-If approved as a rule, update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors, verify no stale conflicting rule remains, and report changed files.
+If the user wants to promote feedback into a persistent repository rule, they must first enter Repository settings mode in the current thread. Inside that mode, ask for explicit confirmation before editing any repo-tracked file. Then update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors, verify no stale conflicting rule remains, and report changed files.
 
 ### Serif headlines in both themes
 Use Arapey-led serif headlines in **both** dark and light themes. The light theme does not switch to sans-led headlines. Use Arapey Italic on the emotive word(s), Arapey Regular on structural words. Describe the headline as a refined editorial serif in image prompts.

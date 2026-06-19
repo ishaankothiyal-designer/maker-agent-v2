@@ -3,7 +3,7 @@ name: creative-direction
 description: Synced mirror of 1_References/CREATIVE-DIRECTION.md. Do not edit directly.
 ---
 
-⚙️ **Auto-generated (2026-06-18).** Synced mirror of `1_References/CREATIVE-DIRECTION.md` (single source of truth for creative direction). **Do not edit directly** — edit the primary and run `/sync-skills`. Content is verbatim so brand rules are never paraphrased.
+⚙️ **Auto-generated (2026-06-19).** Synced mirror of `1_References/CREATIVE-DIRECTION.md` (single source of truth for creative direction). **Do not edit directly** — edit the primary and run `python3 tools/sync_skills.py`. Claude users may also use `/sync-skills` when the repo wrapper exists. Content is verbatim so brand rules are never paraphrased.
 
 ---
 

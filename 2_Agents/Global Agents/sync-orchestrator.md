@@ -1,5 +1,5 @@
 # Sync Orchestrator — Global Agent
-> Triggered by `/sync-skills`. Reads master-rules.md and updates both Claude and Codex skill files in parallel.
+> Canonically triggered by `python3 tools/sync_skills.py`. Claude users may also use `/sync-skills` when `.claude/commands/sync-skills.md` is present.
 
 ---
 
@@ -9,8 +9,9 @@ The Sync Orchestrator ensures that any change made to `3_Skills/Global Skills/ma
 
 ## Trigger
 
-Slash command: `/sync-skills`
-Location of command definition: `.claude/commands/sync-skills.md`
+Canonical command: `python3 tools/sync_skills.py`
+Optional Claude wrapper: `/sync-skills`
+Wrapper location: `.claude/commands/sync-skills.md`
 
 ## Sync Targets
 
@@ -42,7 +43,7 @@ Location of command definition: `.claude/commands/sync-skills.md`
 - Tone: terse, machine-readable where possible
 - Filename: maker-skill.md (used as context file by Codex)
 
-## Sync Process (executed by `/sync-skills`)
+## Sync Process (executed by `python3 tools/sync_skills.py`)
 
 1. Read both sources: `3_Skills/Global Skills/master-rules.md` and `1_References/CREATIVE-DIRECTION.md`
 2. Regenerate from `master-rules.md` (format per table):
