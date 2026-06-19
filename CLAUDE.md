@@ -32,7 +32,7 @@ Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `mak
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.26`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.27`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
