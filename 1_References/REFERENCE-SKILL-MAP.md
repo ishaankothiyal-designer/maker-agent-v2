@@ -38,7 +38,7 @@ description: Vision-verified audit of EVERY reference asset in the Cars24 librar
 | 🎨 **PALETTE** | Attach — sample the brand colours/gradient; do not render the swatch chart |
 | 🔤 **TYPE-SPECIMEN** | Attach — reproduce a pre-typeset lockup (e.g. the tagline) verbatim |
 | ✦ **SHAPE** | Attach — use the trapezoid/star as a framing/accent motif |
-| ⬢ **STYLE-ANCHOR** | Attach — match Cars24 icon proportions/finish. Icons are semantic-first; soft dimensional glass is preferred polish when it improves output, with 3D/flat filled as clarity fallbacks. |
+| ⬢ **STYLE-ANCHOR** | Attach — match Cars24 icon proportions/finish (3D gloss or flat fill). Soft dimensional refs are optional finish inspiration only. |
 | 📸 **PHOTO-STYLE** | Attach — match photography lighting/mood/subject treatment (these are *moodboards*, so caption must say "ignore the grid + labels") |
 | 🏷️ **USP-STAMP** | Attach — reproduce ONE badge faithfully; ignore the rest of the sheet |
 | 🅰️ **LOGO-ASSET** | Attach — reproduce the real wordmark faithfully |
@@ -58,11 +58,11 @@ Which references each skill / pipeline stage should load (read for context) vs a
 | **Image — Illustration** (Stage 4 opt 1) | illustration | Atlas §C + ILLUSTRATION-GENERATION-GUIDE | `Main_reference.png` (mandatory) + 1 scene ref + Atlas LAYOUT + optional clean PATTERN |
 | **Image — Photography** (Stage 4 opt 2) | photo | `5_Photography References/PHOTOGRAPHY-GENERATION-GUIDE.md` | matching `5_Photography References/*_exemplar.png` as 📸 PHOTO-STYLE (primary) + optional source moodboard + Atlas LAYOUT |
 | **Image — Abstract pattern/form** (Stage 4 opt 3) | pattern | Atlas §D + CREATIVE-DIRECTION abstract dot-form hero + pattern families | clean PNG from `Generated Patterns/` as 🟪 when available; otherwise best matching crop from `Patterns in creatives/References/`; Atlas LAYOUT in prompt text or attach when slot is free |
-| **Image — Infographic / icon** (Stage 4 opt 4) | icon | 09_Icon-System + `4_Infographic Icon References/` | Choose the semantic icon concept first. Use `09_Icon-System/02` for proportions; prefer `soft-dimensional-glass-icons-blue.png` for premium/process polish when it improves output; use `03` (3D) or `04` (flat) when those styles communicate the subject better |
+| **Image — Infographic / icon** (Stage 4 opt 4) | icon | 09_Icon-System + `4_Infographic Icon References/` | `09_Icon-System/02` (proportions) + `03`(3D) for premium marketing/feature callouts or `04`(flat) for dense/process/UI flows; soft dimensional refs from `4_Infographic Icon References/` are optional finish inspiration only |
 | **USP / offer callout** (any slide) | overlay | This map §3 / 08_Campaign | `08_Campaign-Assets-&-USPs/03_usp-mnemonics.png` as 🏷️ (one badge) |
 | **Tagline lockup** (campaign sign-off) | type | INDEX #tagline | `03_Typography/08_better-drives-lockup.png` as 🔤 |
 | **Brand shapes** (campaign framing) | shape | 04_Brand-Shapes | `04_.../07_secondary-brand-shape-star-full.png` as ✦ |
-| **Logo on slide** (Stage 8 logo gate) | — | master-rules Logo rule | theme-correct visible generation reference: `Logos/Logo - White-on-blue.png` on dark/brand-blue, `Logos/Logo - Blue-on-white.png` on light, `Logos/Logo - Black.png` for high-contrast/print |
+| **Logo on slide** (Stage 8 logo gate) | — | master-rules Logo rule | theme-correct `Logos/Logo - White.png` / `Logo - Blue.png` as 🅰️ |
 | **Luxury / Elite** mode | photo/type | 10_Luxury + Arapey | `10_.../01_luxury-elite-colors.png` as 🎨 + Atlas LAYOUT (no blue, no USP) |
 | **Any creative** | all | 🎨 `02_Color-System/03_brand-colors-digital.png` for palette discipline | optional 🎨 palette ref if colours drift |
 
@@ -85,10 +85,8 @@ Which references each skill / pipeline stage should load (read for context) vs a
 | `08_logo-lockups-partners.png` | Partner co-brand cards with third-party logos | ⛔ RULES-ONLY | would inject foreign marks |
 | `09_logo-avoid.png` | Misuse chart — 12 wrong logos, red strike-throughs | ⛔ RULES-ONLY | **never** reproduce these |
 | `Logos/Logo - Black.png` | Clean black wordmark + mark, transparent bg, no chrome | 🅰️ **LOGO-ASSET** | "Reproduce this exact Cars24 logo (arrow mark + 'Cars24' wordmark) faithfully in solid black; match proportions/letterforms exactly; do not recolor, restyle, add effects, or distort." |
-| `Logos/Logo - Blue-on-white.png` | Visible high-resolution blue logo on white tile for model reference | 🅰️ **GENERATION LOGO-ASSET** | "Reproduce the Cars24 rounded-square circular-arrow icon mark and wordmark faithfully in vivid Brand Blue; ignore the white tile; no box/tile in final." |
-| `Logos/Logo - White-on-blue.png` | Visible high-resolution white logo on brand-blue tile for model reference | 🅰️ **GENERATION LOGO-ASSET** | "Reproduce the Cars24 rounded-square circular-arrow icon mark and wordmark faithfully in white; ignore the blue tile; no box/tile in final." |
-| `Logos/Logo - Blue.png` | Clean neo-blue wordmark + mark, transparent bg | 🧾 **SOURCE-ASSET** | Preserved raw logo asset for deterministic non-generation layouts; not the preferred generation reference. |
-| `Logos/Logo - White.png` | Clean white wordmark + mark, transparent bg (**looks blank in a viewer — it's white-on-transparent, confirmed valid, 4063 opaque white px**) | 🧾 **SOURCE-ASSET — DO NOT ATTACH TO GENERATION** | Preserved raw logo asset for deterministic non-generation layouts only. Use `Logo - White-on-blue.png` for generation. |
+| `Logos/Logo - Blue.png` | Clean neo-blue wordmark + mark, transparent bg | 🅰️ **LOGO-ASSET** | "Reproduce this exact Cars24 logo faithfully in brand neo-blue; match proportions/letterforms exactly; do not recolor or distort." |
+| `Logos/Logo - White.png` | Clean white wordmark + mark, transparent bg (**looks blank in a viewer — it's white-on-transparent, confirmed valid, 4063 opaque white px**) | 🅰️ **LOGO-ASSET** | "Reproduce this exact Cars24 logo faithfully in solid white for dark/blue backgrounds; match proportions/letterforms exactly; do not recolor or distort." |
 
 ### 02 — Colour System
 
@@ -190,7 +188,7 @@ Which references each skill / pipeline stage should load (read for context) vs a
 ## §4 — Findings & data flags
 
 1. ✅ **RESOLVED — canonical orange is `#EF4523`** (the documented brand-book value). The digital swatch page (`02_Color-System/03_brand-colors-digital.png`) has **corrupted text labels** on its two tertiary swatches (Orange was labelled `#63FFB1` = Mint's hex; Bright Blue `#2B2098` = Brand Blue 700's hex), so the page text can't be trusted for those two. The brand-book documentation records Orange 600 as **`#EF4523`** — that documented value is canonical and is propagated to `INDEX.md`, `02_Color-System/notes.md`, `master-rules.md §8.2`, the illustration guide, and both skill files (it replaces the stray `#FF6B35` that was in the illustration palette). Orange remains a 10% car/clothing accent only. **"Bright Blue 100" has no separately documented hex** (only the corrupted label) and is treated as a minor UI accent, not a tracked palette colour — not worth chasing.
-2. **`Logo - White.png` reads as blank in any image viewer** because it's white-on-transparent. It is valid (confirmed at the pixel level). Don't "fix" or regenerate it, but do not attach it to image generation; use `Logo - White-on-blue.png` so the model can see the logo.
+2. **`Logo - White.png` reads as blank in any image viewer** because it's white-on-transparent. It is valid (confirmed at the pixel level). Don't "fix" or regenerate it; when used on a light background in a tool that previews white-on-white, trust the file.
 3. ✅ **RESOLVED — clean photography exemplars cropped.** One clean single frame was cropped from each `05_Photography-Style/*` moodboard and saved to `1_References/5_Photography References/` as a dedicated attachable asset (see §3 Photography rows + `PHOTOGRAPHY-GENERATION-GUIDE.md`). Attach the **exemplar** as the primary 📸 PHOTO-STYLE ref; the full moodboard can still ride along for broader mood (caption: "ignore the grid + labels").
 4. **Icon-generator pages carry a ChatGPT-UI screenshot.** `03_3d-icon-generator.png` and `04_flat-icon-generator.png` include a dark screenshot panel. The top icon grid is the usable anchor — the caption tells the model to ignore the screenshot. The cleaner `02_icon-system-overview.png` is the safer proportions anchor. For premium marketing/process infographic icons, pair it with the `soft-dimensional-glass` refs in `4_Infographic Icon References/`.
 5. **No clean isolated trapezoid asset exists.** The star has a clean full-bleed tile (`07_...star-full.png` → ✦ attachable). The trapezoid only appears inside spec diagrams, so it stays RULES-ONLY — describe it in the prompt rather than attaching it.

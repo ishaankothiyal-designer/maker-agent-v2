@@ -57,7 +57,7 @@ Location of command definition: `.claude/commands/sync-skills.md`
 
 - Preserve all brand rules exactly — do not paraphrase or reinterpret
 - Update the "last_updated" date in the sync metadata block of master-rules.md
-- The master-rules.md `version` value is the repo-level project version. Current baseline: `v2.23`.
+- The master-rules.md `version` value is the repo-level project version. Current baseline: `v2.8`.
 - Increment the version number only if rules have substantively changed (not cosmetic edits)
 - When the user asks to update the version, update the master-rules.md changelog and summarize what changed since the previous version, which skills/references/agents are impacted, how the change helps users, and rollback considerations.
 - Never remove a rule — only add or update

@@ -30,14 +30,13 @@ Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `mak
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.23`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.12`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
 ## Reference tagging — v2.0
 
 Use `1_References/reference-index.json` and `1_References/reference-tags/` before selecting image references. The tag index defines each reference's role, attachability, copy-from fields, ignore-from fields, and safety guards.
-Resolve `reference-index.json` asset paths relative to `1_References/` (`path_base`), not repo root.
 
 Do not use `4_exports/` as canonical reference-learning input. Exports are output history, not brand truth.
 
@@ -49,10 +48,6 @@ Before prompt assembly, create a visible layout plan for every slide:
 `Slide → archetype → DT/LT layout ref → vertical anchor → dominant element → text zone → hero/pattern zone → reason`.
 
 For carousels and batches, do not use the same archetype or the same top-left text / right-hero anchor on more than two consecutive slides unless the user explicitly asks for a consistent repeated system. Batch visual territories must include layout + style, not style alone.
-
-Batch rows may contain legacy/user-friendly style or layout names. Before prompt approval, map every row into one of four primary styles — illustration, photo, abstract pattern/form, infographic/icon — and one of the eight layout archetypes. Keep the original label as context, but prompt from the canonical mapping.
-
-When the user asks for no visible text, no subtext, or a batch row has `Visible image text = None`, use the dedicated `No-text balanced hero` layout. This is a real layout archetype, not a text layout with copy removed, and it applies to photo, illustration, infographic, and abstract outputs.
 
 ## On session start — MANDATORY FIRST RESPONSE
 
@@ -73,7 +68,7 @@ Do not skip this step even if the user's first message already contains a brief 
 
 After the user replies, load the full skill from `3_Skills/1_Claude Skills/maker-skill.md` and follow the path for their chosen option.
 
-If the user chooses option 3, ask whether they want a single image, a carousel, or batch create before collecting copy. For single image, set slides per post to `1`. For carousel, ask the number of slides and create one slide plan/prompt per slide. For batch create, ask whether they have a completed template to upload or need the default template; provide `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx` when needed, wait for the completed upload, then process each ready row as one post/request. In the sheet, `Slides per post = 1` means one image and `Slides per post = 2–10` means a carousel for that row.
+If the user chooses option 3, ask whether they want a single image, carousel, or batch export before collecting copy. For carousel, ask the number of slides with 3 as the suggested default before collecting/pasting copy. For batch export, open/use the batch post creation modal when available, provide the canonical downloadable Excel template at `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`, wait for the completed upload, then process each completed row as one image-only brief; `Number of slides` defaults to 1 unless specified, and rows above 1 are carousel briefs. Every path follows the same approval, generation, and export rules.
 
 ## Export — MANDATORY STRUCTURE
 
@@ -96,8 +91,6 @@ Every file saved to `4_exports/` must follow this structure. No exceptions.
 - `vN/` — one version folder per generation run (`v1`, `v2`, …). If the user changes any field parameter (theme, size, style, slide count, copy) and regenerates, keep the same project folder and add the next version folder (`v4/`).
 - `{brief}-imageN` — one file per slide inside the version folder (`summer-launch-post-image1`, `summer-launch-post-image2`, …), using the same short kebab-case brief slug so exported files keep context. A single image is `{brief}-image1`.
 - New brief or new topic → new numbered project folder.
-
-**Export fidelity rule:** the file in `4_exports/` must be the exact generated bitmap, except for deterministic rename/copy/resize operations. Export must never mean running the same prompt again. In Codex production export mode, generate directly into `4_exports/` with a file-producing path that preserves any required references, then preview that exact saved file in chat with an absolute Markdown image path.
 
 **Example:**
 ```
@@ -125,7 +118,7 @@ These are accumulated design and workflow rules learned from user feedback. They
 **First-run seeding — MANDATORY:** On every session start, before showing the greeting, silently check whether local memory files exist for the entries listed below (check for any one file, e.g. `feedback-auto-export.md`, in your memory directory). If they do NOT exist, this is a first-run for this user — write each entry below as a separate memory file (with proper frontmatter: name, description, metadata type) and update the local MEMORY.md index. Do this silently — no output to the user, no "seeding memory…" message. Then proceed to the mandatory greeting as normal.
 
 ### Auto-export after generation
-Always export production outputs immediately after generation — never ask the user whether to export. At the end of generation, skip any "which do you want to keep?" or "shall I export?" prompt. Export everything to `4_exports/` following the mandatory structure, then present the exact saved files and ask for feedback/revisions.
+Always export outputs immediately after generation — never ask the user whether to export. At the end of generation, skip any "which do you want to keep?" or "shall I export?" prompt. Export everything to `4_exports/` following the mandatory structure, then present results and ask for feedback/revisions.
 
 ### Feedback-to-learning loop
 Treat user words like **hack**, **feedback**, **improvement**, **tweak**, **fix**, **learning**, **preference**, or **rule** as production feedback after a creative is generated.
@@ -168,8 +161,6 @@ Two recurring Higgsfield image-generation fixes baked into the pipeline:
 
 **Pattern** flows fluidly across the **entire background** like wallpaper — edge to edge, never abruptly cut or confined to one zone. It's an atmospheric layer on top of the background colour.
 
-**No-text variants** must use the `No-text balanced hero` layout. Do not simply remove the headline/body from a text-led layout and leave the old text zone empty. Recompose around hero, pattern, logo/stamp if any, and intentional negative space; keep a blank text-safe zone only when the brief explicitly asks for external/manual text later. For hero-led no-text layouts, check optical centring: the cutout/form/icon system should have comparable left/right breathing room and should not touch or crowd one edge unless a deliberate visual counterweight is named.
-
 **Abstract pattern/form style** (dot-form hero): the Cars24 halftone/particle pattern treatment becomes the hero itself. The hero formation fills the negative space / right zone **heavily**, but fainter dots continue across the **entire canvas** including behind the text. Dense dots and bokeh falloff may form recognisable semantic silhouettes such as a car, key, face, shield, or road, while lighter dots continue as atmosphere. Keep the form abstract and metaphor-led — never a literal illustration, photo, icon set, UI card, dashboard, or infographic flow. The abstract pattern must be **contextual to the essay/slide content** — never default to a generic mountain terrain unless that exact metaphor fits the slide.
 
 ### Sentence case typography
@@ -198,11 +189,7 @@ Dark theme backgrounds must stay bright Cars24 Brand Blue `#4736FE` as the domin
 Light theme backgrounds should remain a pale lavender tint in the `#EBE9FF` family so they are clearly distinct from dark theme, but the lavender must be derived from brand blue. Avoid pink, grey, beige, or generic pastel purple drift. Light theme typography uses Brand Blue `#4736FE` for the headline and short punch/tagline, and near-black `#161616` for descriptive body/subheading.
 
 ### Provider default — Claude
-When working in Claude or any non-Codex CLI session, default to Higgsfield + GPT Image 2 (`gpt_image_2`).
-
-### Provider default — Codex packaging note
-When this packaged project runs in Codex, use built-in Codex imagegen for preview/exploration only. For production outputs that must auto-export to `4_exports/`, use a project-local file-producing path from the start, preferably `tools/maker_image_export.py` or an approved provider CLI that writes directly into the version folder. If a chat-visible imagegen artifact has no local file handle, stop and ask before regenerating; do not call a second generation an export.
-If a production job needs a colour swatch, style reference, or visible logo reference for fidelity, the actual generation path must preserve that approved Stage 7 reference bundle. Do not silently degrade a logo/style-critical job to prompt-only generation; switch to a reference-capable provider path or ask.
+When working in Claude or any non-Codex/CLI session, run `higgsfield account status` first. If authentication is unavailable, stop and ask the user to run `higgsfield auth login`. After authentication succeeds, default to Higgsfield + GPT Image 2 (`gpt_image_2`). Use another supported model only when the user explicitly requests it.
 
 ### Logo generation reference (MANDATORY)
 When a creative needs the Cars24 logo, attach/share the correct theme-matched visible logo asset during image generation and render it inside the generated composite. Do not create a post-process/local superimpose step.
@@ -212,7 +199,7 @@ Use:
 2. Light background → generation context `Logo - Blue-on-white.png`
 3. High-contrast / print → generation context `Logo - Black.png`
 
-Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. If a selected provider cannot accept the logo reference, switch provider or ask; do not silently overlay the logo afterward.
+Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. In Codex ImageGen, include the repo-relative logo path as the explicit source file to use, not merely traceability: tell the model to copy/use the official logo from that path exactly and never recreate, redraw, simplify, typeset, or modify it. For providers/workflows that support image references, attach/share the same visible logo PNG as visual input with the final generation prompt. Place the logo by layout axis and cleanest negative space. In carousels with the same theme/background family, keep logo placement and size exactly consistent across all logo-bearing slides. The logo may overlap pattern and may overlap hero only if readable, high-contrast, cleanly fitted, and uncropped. If the output changes the logo geometry, drops the icon, alters the wordmark, adds a box/tile, or crops the lockup, fail logo QA and regenerate through a visual-input-capable workflow or ask for a supported logo upload. Do not silently overlay the logo afterward.
 
 ### Sentence case only
 All visible creative copy must be sentence case. Never use title case for creative headlines, never camel case, and never all caps.
@@ -222,9 +209,3 @@ All visible creative copy must be sentence case. Never use title case for creati
 
 ### Icon monochrome blue
 All infographic icons (3D, flat, glass, controlled polish) use ONLY the Cars24 brand-blue colour family: saturated `#4736FE` fills, lighter periwinkle highlights, deeper navy shadows, white reflective accents. **NO green, NO cyan, NO teal, NO mint, NO red, NO orange, NO yellow.** No multi-colour semantic coding. If a concept has a non-blue colour association (green for approval), render it in brand blue with shape differentiation instead. Every infographic Prompt Context Block includes an ICON COLOUR LOCK with these explicit negatives.
-
-### Infographic icons — semantic-first
-Infographic icons must first communicate the slide subject correctly. Prefer soft dimensional glass polish for premium/process icons when it improves output, but use Cars24 3D or flat filled styles when those communicate the subject better or when glass output becomes generic, broken, or unclear.
-
-### Prompt colour locks
-Use exact hex codes for theme/canvas/text/logo/icon colour locks when useful, always paired with "do not render the hex code as text." Illustration subject art should use descriptive colour language so colour codes are not drawn into the artwork.

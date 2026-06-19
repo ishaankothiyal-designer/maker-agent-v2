@@ -5,13 +5,13 @@
 
 ## Critical Output Rule
 
-**Every illustration is rendered as a clean cutout-style hero inside the single composed Cars24 creative.**
+**Every illustration must be delivered as a transparent-background PNG.**
 
-- The illustration subject does not carry its own scene background: no sky, cityscape, gradient box, or environmental fill unless the user explicitly asks for a full-scene illustration.
-- The generator renders the subject directly onto the themed Cars24 canvas along with background, pattern, baked-in text, and any required logo.
-- Do not ask for a transparent PNG, lime-green chroma-key, separate subject export, or local compositing step.
-- Heroes must be fully contained inside the canvas: no cropped heads, hands, cars, icons, or key objects.
-- If a reference image has a background, use it only for style/mood cues stated in the reference-role map; ignore the background unless the reference is explicitly selected as a layout reference.
+- No solid colour backgrounds, no gradients, no sky fills, no cityscape backdrops — even if the reference images show them
+- The illustration subject (character, car, scene) must be cut out against full transparency
+- This allows the illustration to be superimposed onto any brand canvas without masking work
+- Format: PNG with alpha channel (RGBA), no JPEG, no flattened backgrounds
+- If the generation tool cannot output transparency natively, use solid lime green `#00FF00` as a chroma-key background
 
 ---
 
@@ -127,7 +127,7 @@ All files in `1_References/3_Illustrations References/`
 ## Prompt Template
 
 ```
-Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric brand blue dominant colour palette, clean flat colour shapes with minimal shading, no photorealistic textures, deep navy-black hair, clean crisp silhouette edges, aspirational and confident mood, no text, no numbers, no labels. Render the subject as a clean-edged cutout-style hero directly inside the themed Cars24 composite, fully contained with head, hands, car/icons, and key objects visible. The canvas background, atmospheric pattern, baked-in headline/subheading, and any required Cars24 logo are separate layers in the same generated composite. No sky, no cityscape, no environment fill, no gradient box behind the subject. Style: premium modern sleek flat editorial illustration.
+Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric brand blue dominant colour palette, clean flat colour shapes with minimal shading, no photorealistic textures, deep navy-black hair, clean crisp silhouette edges, aspirational and confident mood, no text, no numbers, no labels. Isolated subject on transparent background (PNG with alpha channel) — no sky, no cityscape, no environment fill, no gradient. If transparency unavailable, use solid lime green chroma-key background for clean removal. Style: premium modern sleek flat editorial illustration.
 ```
 
 **[SCENE DESCRIPTION] examples:**
@@ -141,7 +141,7 @@ Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian chara
 **When the scene includes an orange car** — add: `orange car as a secondary element`
 
 **Prompt hygiene — always apply:**
-- Use exact hex locks for the surrounding theme/canvas/text system when needed, always with "do not render the hex code as text." Use colour names inside the illustration subject block itself.
+- No hex codes in prompts — use colour names only
 - Always include `no text, no numbers, no labels`
 - Use `electric brand blue dominant` — do NOT write "electric blue and vivid orange colour palette"
 
@@ -154,15 +154,15 @@ Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian chara
 | Orange as dominant colour | Violates 60/30/10 — orange is 10% car/clothing accent only |
 | "Vivid orange colour palette" in prompt | Produces orange-heavy output that breaks brand |
 | Bold/chunky cartoon feel | Main_reference.png is the quality bar — modern and sleek |
-| Subject-owned solid colour backgrounds | Breaks the single themed Cars24 canvas |
-| Subject-owned gradients or environment boxes | Creates a fake panel instead of a cutout-style hero |
+| Solid colour backgrounds | Breaks compositing onto brand canvases |
+| Gradients on backgrounds | Impossible to remove cleanly |
 | Photorealistic rendering | Wrong style register |
 | Drop shadows on characters | Edge artefacts when compositing |
 | Western / non-South-Asian skin tones | Misrepresents India-primary market |
 | Text or logos embedded in illustration | These belong in the design layer above |
-| Environmental backgrounds (sky, cityscape) | Subject should sit directly on the themed Cars24 canvas unless full-scene illustration is explicitly selected |
+| Environmental backgrounds (sky, cityscape) | Transparent background only |
 | Referencing the 75907 file | `freepik__flat-vector-editorial-illustration-fully-illustrat__75907 1 [Vectorized]-1.png` no longer exists |
 
 ---
 
-*Last updated: 2026-06-18 | Source: 1_References/3_Illustrations References/ | Supersedes prior transparent-PNG/chroma-key illustration delivery guidance*
+*Last updated: 2026-05-31 | Source: 1_References/3_Illustrations References/ | Supersedes all prior illustration colour and style guidance*

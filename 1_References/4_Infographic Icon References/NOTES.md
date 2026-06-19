@@ -5,7 +5,7 @@
 
 ## Style Anchor — Brand Icon System
 
-All icons start from the Cars24 brand icon system. Load these when no prior specific icon exists. Icon choice is semantic-first: the symbol must correctly express the slide subject before style polish is applied. For marketing/process infographic slides, prefer the approved **soft dimensional glass** inspiration when it improves output; use Cars24 3D or flat filled when those styles communicate the subject better or when glass output is unclear.
+All icons start from the Cars24 brand icon system. Load these when no prior specific icon exists. For marketing infographic slides, prefer the approved **soft dimensional glass** style below unless the user explicitly asks for flat UI icons or heavier 3D product icons.
 
 | File | What it anchors |
 |---|---|
@@ -15,7 +15,7 @@ All icons start from the Cars24 brand icon system. Load these when no prior spec
 
 ## Optional Finish Inspiration — Soft Dimensional Glass
 
-These references are inspiration for premium dimensional polish, not permission to make generic glass UI tiles. They may teach soft highlights, gentle depth, translucent-looking filled surfaces, and rounded geometry. They must not replace semantic accuracy, the Cars24 icon system, or brand-blue monochrome colour discipline.
+These references are **not** the default infographic style. Use them only as optional finish inspiration when a Cars24 icon output feels too flat. They may teach soft highlights, gentle depth, translucent-looking filled surfaces, and rounded geometry. They must not replace the Cars24 icon system or introduce generic glassmorphic app tiles.
 
 | File | What it may teach | What to ignore |
 |---|---|---|
@@ -24,11 +24,9 @@ These references are inspiration for premium dimensional polish, not permission 
 
 ### Rule
 
-- Pick the icon metaphor that best explains the slide subject first.
-- Prefer soft dimensional glass polish for premium/process icon output when it keeps the meaning clear.
-- Use Cars24 3D when object depth makes a product/feature callout clearer.
-- Use Cars24 flat filled when density, small size, process clarity, or semantic precision matters most.
-- If glass output looks generic, broken, or unclear, fall back to 3D or flat filled.
+- Default premium marketing/feature icons use Cars24 3D icon references.
+- Default dense/process/UI flows use Cars24 flat filled icon references.
+- If an output feels too flat, add controlled dimensional polish to the Cars24 icon system.
 - Avoid thin outline icons and plain white line art as the primary icon style.
 - Do not create glass UI tiles, one large glass slab, generic SaaS symbols, or abstract broken icons.
 
@@ -36,8 +34,8 @@ These references are inspiration for premium dimensional polish, not permission 
 
 | Icon name | File | Style | Context |
 |---|---|---|---|
-| Soft dimensional glass — blue | `soft-dimensional-glass-icons-blue.png` | `soft-dimensional-glass` | Premium dimensional polish inspiration for semantic Cars24 infographic icons |
-| Soft dimensional glass — mint accent | `soft-dimensional-glass-icons-mint.png` | `soft-dimensional-glass` | Internal inspiration for overlap softness only; do not drive generated colours |
+| Soft dimensional glass — blue | `soft-dimensional-glass-icons-blue.png` | `soft-dimensional-glass` | Global style anchor for premium Cars24 infographic icons |
+| Soft dimensional glass — mint accent | `soft-dimensional-glass-icons-mint.png` | `soft-dimensional-glass` | Secondary style anchor for premium infographic icons with restrained mint accent |
 
 ## Rule
 

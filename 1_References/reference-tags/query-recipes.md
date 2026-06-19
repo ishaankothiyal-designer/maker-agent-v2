@@ -9,7 +9,7 @@ Build this plan before prompt assembly:
 ```text
 theme: dark OR light
 reference_role: layout
-archetype/layout_archetype: cover-lockup OR headline-left-hero-right OR stacked-left-hero-right OR text-only OR headline-dominant OR content-card-overlay OR event-poster OR no-text-balanced-hero
+archetype/layout_archetype: cover-lockup OR headline-left-hero-right OR stacked-left-hero-right OR text-only OR headline-dominant OR content-card-overlay OR event-poster
 format: 4:5 OR 1:1 OR requested format
 ```
 
@@ -25,26 +25,6 @@ Carousel/batch guard:
 Do not use the same archetype or the same top-left text / right-hero anchor on more than two consecutive slides unless the user explicitly asks for a consistent repeated system. Batch territories must include layout territory as well as style territory.
 ```
 
-## No visible text / no subtext layout
-
-Use this whenever the user asks for no text, no headline, no subtext, or the batch field `Visible image text` is `None`.
-
-Query:
-
-```text
-reference_role: layout
-layout_archetype: no-text-balanced-hero
-visible_text: none
-typography: no-visible-text
-format: requested format
-```
-
-Prompt guard:
-
-```text
-Use Archetype 8 / NT-1. No visible text, no subtext, no labels, and no dormant text zone. Rebalance the whole canvas around a centred or near-centred hero/form/icon system, with comparable left/right breathing room, no edge-crowded cutout, and full-canvas brand pattern/atmosphere behind it. Applies to photo, illustration, infographic, and abstract styles.
-```
-
 ## Dark theme with real photo hero
 
 Query:
@@ -52,7 +32,7 @@ Query:
 ```text
 theme: dark
 reference_role: layout
-archetype/layout_archetype: cover-lockup OR headline-left-hero-right OR stacked-left-hero-right OR text-only OR headline-dominant OR content-card-overlay OR event-poster OR no-text-balanced-hero
+archetype/layout_archetype: cover-lockup OR headline-left-hero-right OR stacked-left-hero-right OR text-only OR headline-dominant OR content-card-overlay OR event-poster
 copy-layout-only: true
 do-not-generate-marble-hero: true
 ```
@@ -121,7 +101,9 @@ logo_usage: generation-time-logo-reference
 Generation:
 
 ```text
-Attach/share the theme-matched visible Cars24 logo reference and render it inside the generated composite. Do not add a local logo overlay afterward.
+For Codex ImageGen, name the theme-matched visible Cars24 logo PNG as the exact repo-relative source file to use, instruct the model to copy the official identity without recreating or modifying it, and apply strict logo QA. Providers/workflows that support image references must also receive the same PNG as actual visual input. Do not add a local logo overlay afterward.
+If Codex changes, omits, boxes, or crops the logo, reject the output and move to a visual-input-capable workflow or ask for a supported logo upload. If a reference-capable provider cannot attach the PNG, stop and ask the user to share/upload it or choose another supported workflow.
+Place the logo by layout axis and clean negative space. In a carousel, keep logo placement and size identical across logo-bearing slides with the same theme/background family. Logo may overlap pattern and may overlap hero only when readable, high-contrast, cleanly fitted, and uncropped.
 ```
 
 ## Illustration slide
@@ -147,7 +129,7 @@ Default query:
 ```text
 reference_role: icon-style-anchor
 visual_style: icon OR infographic
-icon_style: semantic-first OR soft-dimensional-glass OR 3d-glossy OR flat-solid
+icon_style: 3d-glossy OR flat-solid
 hero: infographic-element OR icon-hero
 ```
 
@@ -155,15 +137,21 @@ Use:
 
 ```text
 1_References/1_Brand Guidelines/09_Icon-System/02_icon-system-overview.png
-1_References/4_Infographic Icon References/soft-dimensional-glass-icons-blue.png for premium/process polish when it improves clarity
-1_References/1_Brand Guidelines/09_Icon-System/03_3d-icon-generator.png when object depth communicates the subject better
-1_References/1_Brand Guidelines/09_Icon-System/04_flat-icon-generator.png for dense/process/UI flows or when clarity beats polish
+1_References/1_Brand Guidelines/09_Icon-System/03_3d-icon-generator.png for premium/feature callouts
+1_References/1_Brand Guidelines/09_Icon-System/04_flat-icon-generator.png for dense/process/UI flows
+```
+
+Optional finish inspiration only:
+
+```text
+1_References/4_Infographic Icon References/soft-dimensional-glass-icons-blue.png
+1_References/4_Infographic Icon References/soft-dimensional-glass-icons-mint.png
 ```
 
 Prompt guard:
 
 ```text
-Start from the Cars24 icon system. The icon must semantically match the slide subject first. Prefer soft dimensional glass polish for premium/process output when it improves clarity; use 3D when object depth communicates the subject better; use flat filled for dense/process/UI flows or when clarity beats polish. If glass output becomes generic, broken, app-tile-like, or unclear, fall back to 3D or flat filled. Do not render thin outline icons, plain white line art as the primary icon style, generic SaaS symbols, glass UI tiles, one large glass slab, app-icon sheets, abstract broken symbols, or heavy photorealistic 3D.
+Start from the Cars24 icon system. Use 3D icons for premium marketing/feature callouts and flat filled icons for dense/process/UI flows. If the output risks looking too flat, add controlled dimensional polish: subtle fill depth, soft top-left highlight, slight shadow, rounded filled forms, and clean readable silhouettes. Do not render thin outline icons, plain white line art as the primary icon style, generic SaaS symbols, glass UI tiles, one large glass slab, app-icon sheets, abstract broken symbols, or heavy photorealistic 3D.
 ```
 
 ## Rules-only safety check

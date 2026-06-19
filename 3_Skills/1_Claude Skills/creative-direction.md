@@ -1,9 +1,9 @@
 ---
-name: creative-direction-claude
+name: creative-direction
 description: Synced mirror of 1_References/CREATIVE-DIRECTION.md. Do not edit directly.
 ---
 
-⚙️ **Auto-generated (2026-06-19).** Synced mirror of `1_References/CREATIVE-DIRECTION.md` (single source of truth for creative direction). **Do not edit directly** — edit the primary and run `/sync-skills`. Content is verbatim so brand rules are never paraphrased.
+⚙️ **Auto-generated (2026-06-18).** Synced mirror of `1_References/CREATIVE-DIRECTION.md` (single source of truth for creative direction). **Do not edit directly** — edit the primary and run `/sync-skills`. Content is verbatim so brand rules are never paraphrased.
 
 ---
 
@@ -74,7 +74,7 @@ Every generated creative commits to **one primary visual style**:
 | Illustration | One Cars24 modern sleek flat editorial hero, possibly with one supporting prop/car/service moment | Infographic flows, SaaS dashboards, 3D platform blocks, database icons, network maps, UI-card clusters, generic AI ecosystem visuals |
 | Photo | One real photographic Cars24 cutout hero from the selected photo layer, natural light, visible white accent outline, theme via canvas/grade | Illustrated overlays, icon clusters, UI dashboards, purple/lavender tinting, generic stock staging, rectangular photo frames, full-scene photo unless explicitly selected |
 | Abstract pattern/form | Contextual dot-form hero built from the Cars24 halftone/particle pattern language; one recognisable semantic silhouette is allowed (car, key, face, shield, road, etc.) when it stays abstract and metaphor-led | Literal people, rendered cars, photo scenes, UI cards, dashboards, icon clusters, process-flow icons, 3D platform blocks, generic default terrain |
-| Infographic/icon | Icon system, steps, connectors, structured information hierarchy. Icons are semantic-first: the symbol must match the slide subject. Prefer soft dimensional glass polish for premium/process output when it improves clarity; use 3D or flat filled when those styles communicate better. **All icons brand-blue monochrome only** — no green, cyan, teal, or off-brand hues. | Cinematic character heroes, full service scenes, decorative illustration vignettes unless explicitly approved, generic glass UI tiles, unclear decorative symbols, polychromatic icon fills, semantic colour coding (green=approved, red=alert) |
+| Infographic/icon | Icon system, steps, connectors, structured information hierarchy. Sub-styles: 3D (premium marketing), flat filled (dense/process), soft dimensional glass (when explicitly selected). **All icons brand-blue monochrome only** — no green, cyan, teal, or off-brand hues. | Cinematic character heroes, full service scenes, decorative illustration vignettes unless explicitly approved, polychromatic icon fills, semantic colour coding (green=approved, red=alert) |
 
 **Visual noun budget:** one dominant hero noun plus at most one supporting noun. If a prompt contains people + car + app screen + nodes + icons + roadmap + database, it has already become generic. Reduce it to the clearest Cars24 moment before generation.
 
@@ -136,10 +136,6 @@ This is the selection mechanism, not optional rationale. If the plan repeats the
 
 **Carousel and batch diversity guard.** No more than two consecutive slides may use the same archetype or the same top-left text / right-hero anchor unless the user explicitly asks for a consistent repeated system. Batch visual territories must include layout territory as well as visual style, e.g. `illustration + cover-lockup`, `photo + stacked-left`, `abstract + headline-dominant`, not only `illustration`, `photo`, or `abstract`.
 
-**No-visible-text variants use their own layout archetype.** If a requested version removes all visible headline/body/subtext, or a batch row's visible text field is `None`, use **Archetype 8 — No-text balanced hero** by default. Do not reuse the original text-led layout with an empty text zone. Treat no-text as a new composition: rebalance around hero, pattern, logo/stamp if present, and intentional negative space. The hero may move closer to centre or scale up, and the pattern may become more active across the former text zone. Keep a clean blank zone only when the brief explicitly needs space for external/manual text later.
-
-**No-text optical balance.** In no-text hero-led variants, the cutout still needs comparable left/right breathing room. Do not let the hero touch or crowd one edge while the opposite side stays wide open. Keep the hero's visual centre near the canvas centre unless a deliberate counterweight is named; pattern can support balance but cannot rescue an edge-pinned cutout.
-
 ### The archetypes (read off the references)
 
 | # | Archetype | Structure | Use it for | Reference examples |
@@ -151,21 +147,8 @@ This is the selection mechanism, not optional rationale. If the plan repeats the
 | 5 | **Headline-dominant** | Headline fills nearly the whole canvas (4–6 lines); no hero; faint corner pattern only. | Pure brand statement | DT-6 |
 | 6 | **Content-card overlay** | A UI element (error card, chat, product/screen mockup) as a mid-layer between headline and hero. | Dev-humour, product demo, failure moment | DT-9, LT-3, LT-5 |
 | 7 | **Announcement / Event poster** | Off-system energy: logo top-centre, centred stacked headline, CTA pill, sponsor/footer strip; often near-black + neon. Symmetric. | Hackathon, deadline, event ad | DT-3 |
-| 8 | **No-text balanced hero** | No headline, body, subtext, labels, or dormant text zone. One centred or near-centred hero/form/icon system carries the visual weight; pattern/atmosphere flows across the full canvas. | Any output where visible text is `None`; no-text variants across photo, illustration, infographic, and abstract | NT-1 |
 
 > The classic two-zone split (clean **text zone** on the left, **hero + pattern zone** on the right) is archetypes 2–3 — the most common, not the only one. Wherever a text zone exists, it stays clean: no pattern intrusion, maximum legibility.
-
-### Archetype 8 — No-text balanced hero
-
-Use this whenever the user asks for no text, no headline, no subtext, or the batch field `Visible image text` is `None`.
-
-- **Photo:** one real photographic cutout, centred or near-centred, with visible white outline and comparable left/right breathing room.
-- **Illustration:** one Cars24 modern sleek flat-editorial cutout or scene cluster, centred or near-centred, fully contained with no edge bleed.
-- **Infographic:** one icon/flow module or grouped icon system becomes the centred hero; no labels, step text, UI text, or captions unless explicitly requested.
-- **Abstract:** the dot-form hero itself is centred or near-centred, with lighter atmospheric dots continuing across the full canvas.
-- **Pattern:** full-canvas atmosphere may be more active than on text-led layouts because there is no readability zone to protect, but it must remain behind the hero and support optical balance.
-- **Spacing:** cutout/form/icon system stays in the safe zone with comparable left/right breathing room. Any offset must have a named counterweight.
-- **Exception:** preserve a deliberate blank zone only when the brief explicitly asks for external/manual text placement later.
 
 ### Balance principles — true for every archetype
 
@@ -178,8 +161,20 @@ This is *how* the references stay balanced. Apply all of them whichever archetyp
 5. **Consistent outer margin (~6–8% inset)** for all text and the logo. The hero stays fully contained with the face/hands/key object inside the safe zone.
 6. **Three-tier text rhythm** when copy is rich: eyebrow/kicker (small Geist) → headline (large Arapey×Geist mix) → body or CTA (small Geist), each tier separated by clear size and space. Bold keywords inline; a hand-drawn underline/arrow may spotlight a CTA (see LT-7).
 7. **Pattern always recedes** behind both headline and hero (see Pattern Scale Rule below).
-8. **No-text balance is visual-first.** When no headline/body is rendered, balance is carried by hero placement, pattern scale, atmospheric flow, and negative space. The absence of text should feel deliberate, not like a missing layer.
-9. **No-text heroes need optical centring.** A centred no-text composition is judged by visual weight, not by the subject merely being large. Check left/right margins around the cutout and avoid edge crowding unless the asymmetry is intentional and visibly counterweighted. This applies equally to photo cutouts, illustration cutouts, infographic icon modules, and abstract dot-form heroes.
+
+### Logo Placement And Visual-Input Rule
+
+When a generated creative includes the Cars24 logo, the final prompt must name the correct theme-matched visible logo PNG as the repo-relative logo source file to use. The prompt must say to copy/use the official logo from that path exactly and must forbid recreating, retyping, simplifying, stylising, or changing the icon mark or wordmark. For providers/workflows that support image references, the same visible logo PNG must also be attached/shared as actual visual input.
+
+Logo placement follows the layout axis and the cleanest negative-space zone:
+- Left-aligned layouts usually use a left-aligned logo, either top-left or bottom-left depending on negative space.
+- Centre/symmetric layouts use centre-aligned logo placement, either top-centre or bottom-centre depending on negative space.
+- Right-aligned layouts may use right-aligned logo placement if that is the cleanest safe zone.
+- In carousels with the same theme/background family, logo placement and size stay exactly consistent across all logo-bearing slides.
+- The logo may overlap pattern. It may overlap the hero only when it remains readable, high-contrast, cleanly fitted, and fully uncropped.
+- The logo must never touch, bleed, crop, cut off, distort, sit in a box/tile, or be approximated from text.
+
+Codex ImageGen may be attempted first with the repo-relative logo source path in the prompt. If the output changes the logo geometry, drops the icon, alters the wordmark, adds a box/tile, crops the lockup, or otherwise modifies the logo, the logo QA fails even if the rest of the creative is good. After a Codex logo QA fail, regenerate through a visual-input-capable workflow or ask for a supported logo upload.
 
 ---
 
@@ -265,7 +260,7 @@ Use the same refined editorial serif system as dark theme: Arapey Italic on emot
 > In short: **both themes = serif headline with italic emphasis.** Never set a whole headline in one uniform weight with no emphasis at all — there is always one device lifting the key word.
 
 ### Rendering the typefaces in image prompts (MANDATORY — image models don't know font names)
-Image models **cannot read a font by name**. Writing "Arapey" or "Geist" into a prompt does nothing — the model falls back to a generic, almost always **sans-serif** face, so an Arapey-led headline silently renders as plain sans (verified, project 013). Always **describe the typeface visually and name its category (serif / sans-serif) explicitly**; append the font name only as a trailing hint.
+Image models **cannot reliably read a font by name**. Writing "Arapey" or "Geist" into a prompt can fall back to a generic, almost always **sans-serif**, face, so an Arapey-led headline may silently render as plain sans (verified, project 013). Always **describe the typeface visually and name its category (serif / sans-serif) explicitly**; append the font name only as a trailing hint.
 - **Arapey (brand serif)** → *"an elegant high-contrast **serif** — refined thin strokes, classic bracketed serifs, editorial book-serif feel (in the spirit of Arapey)"*. **Italic** → *"a flowing, gently calligraphic **serif italic**"*. **Regular** → *"an upright refined **serif** (roman)"*.
 - **Geist (brand sans)** → *"a clean modern geometric **sans-serif** (in the spirit of Geist)"* + weight.
 - **Spell the split out word-by-word** so the model commits, e.g. *"'Winning isn't about being' in a refined editorial serif (roman), 'right' in a flowing serif italic — one elegant serif family throughout, NOT sans-serif."*
@@ -528,7 +523,7 @@ Color: [White / #161616]
 
 | Need | Go to |
 |---|---|
-| **What to attach + what prompt preamble to write for any provider call** | **`HIGGSFIELD-CONTEXT-PACKAGE.md`** ← load at Stage 7/8 |
+| **What to attach + what prompt preamble to write for any Higgsfield call** | **`HIGGSFIELD-CONTEXT-PACKAGE.md`** ← load at Stage 8 |
 | Visual description of every illustration reference image | `HIGGSFIELD-CONTEXT-PACKAGE.md` Package 1 |
 | Visual description of every photography layer | `HIGGSFIELD-CONTEXT-PACKAGE.md` Package 2 |
 | Pattern-to-reference-file mapping (all 13 patterns, with visual descriptions) | `HIGGSFIELD-CONTEXT-PACKAGE.md` Package 3 |

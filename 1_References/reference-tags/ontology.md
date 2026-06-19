@@ -61,7 +61,6 @@ Use these tags when indexing or querying reference images.
 - `headline-dominant`
 - `content-card-overlay`
 - `event-poster`
-- `no-text-balanced-hero`
 - `logo-identity-card`
 - `infographic-flow`
 - `product-hero`
@@ -80,10 +79,6 @@ Use these tags when indexing or querying reference images.
 - `no-camel-case`
 - `no-all-caps`
 - `readable-text-zone`
-- `no-visible-text`
-- `no-subtext`
-- `no-labels`
-- `no-dormant-text-zone`
 
 ## Logo tags
 

@@ -25,7 +25,7 @@ description: Vision-verified fingerprint of every real reference asset in the Ca
 4. If the slide needs a specific pattern, add **one Pattern-texture reference** (Section D) — prefer the *clean* Generated Patterns over the crops.
 5. Attach them with the **role labels** in Section E so the model knows what each image is for.
 
-**Hard cap: 3 references per call** (1 Layout + 1 Subject + 1 Pattern). More than three references can make image models average them into mush.
+**Hard cap: 3 references per call** (1 Layout + 1 Subject + 1 Pattern). More than three can cause image models to blend their signals into an incoherent average.
 
 ---
 

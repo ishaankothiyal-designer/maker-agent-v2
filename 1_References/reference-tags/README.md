@@ -9,8 +9,6 @@ The reference-tagging layer turns the Cars24 reference library into a queryable 
 - Human ontology: `1_References/reference-tags/ontology.md`
 - Query recipes: `1_References/reference-tags/query-recipes.md`
 
-`reference-index.json` asset paths are relative to `1_References/`, as recorded in its `path_base` metadata. Resolve paths against that base before checking files or assembling reference maps.
-
 ## Included sources
 
 Only canonical reference inputs are tagged:

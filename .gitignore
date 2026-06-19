@@ -9,6 +9,8 @@
 node_modules
 node_modules/
 .cache/
+__pycache__/
+**/__pycache__/
 
 # Generated production outputs are large and should be archived separately.
 # Keep 4_exports/README.md tracked as documentation.

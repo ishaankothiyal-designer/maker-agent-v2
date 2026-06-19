@@ -23,13 +23,14 @@ Every new exported creative must use three levels:
 
 ## Export Fidelity
 
-The exported file is the source of truth for production runs.
+The exported file is the source of truth for final Maker runs.
 
-- Production exports must be generated through a file-producing path from the start, so the generated bitmap already exists under `4_exports/{serial}_{brief}_{DD-Mon}/vN/`.
-- Chat previews in Codex should display those exact saved files with absolute Markdown image paths. The preview and the export must be the same bitmap.
-- Export means copy, rename, or deterministic resize/crop of the same generated bitmap. Export must never mean "run the prompt again."
-- If a built-in chat imagegen result is visible in Codex but no local file handle can be verified, stop and ask before regenerating. Regeneration creates a new image and must be named as such.
-- For project-local Codex production exports, prefer `tools/maker_image_export.py` or an approved provider CLI that writes directly into the version folder. Do not depend on user-level Codex caches for packaged Maker Agent behavior.
+- Codex runs use Codex ImageGen / `image_gen`; Claude and non-Codex CLI runs use Higgsfield with GPT Image 2 (`gpt_image_2`) by default.
+- Every final output must be saved under `4_exports/{serial}_{brief}_{DD-Mon}/vN/`.
+- Chat previews should display those exact saved files with absolute Markdown image paths whenever the file exists. The preview and the export must be the same bitmap.
+- Export means copy, rename, or explicitly requested resize of the same generated bitmap. Export must never mean "run the prompt again."
+- Do not crop by default. Cropping is a separate post-production choice and requires an explicit user request.
+- If a Codex `image_gen` result is visible but no exact local/exportable bitmap can be verified, stop and ask before any regeneration, provider switch, or fallback.
 
 ## Current Serial State
 
@@ -77,7 +78,7 @@ Former source: `4_exports/021_introducing-cars24-labs_18-Jun/v1/run-manifest.md`
 - Source row: `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx` -> `Example rows` -> item 15.
 - Title: `One year into our AI journey`
 - Requested matrix: illustration, photo, infographic, and abstract styles in both dark and light themes.
-- Export note: the first built-in Codex ImageGen pass produced better chat-visible previews but did not expose local file handles in the current Codex tool surface. A second file-writing generation pass was used to populate `4_exports/025_one-year-ai-journey_18-Jun/v1/`, which caused visual drift. This run is the reason for the v2.17 production export fidelity rule: future production exports must generate once into `4_exports/` and preview those exact saved files in chat.
+- Export note: the first built-in Codex ImageGen pass produced better chat-visible previews but did not expose local file handles in the current Codex tool surface. A second file-writing generation pass was used to populate `4_exports/025_one-year-ai-journey_18-Jun/v1/`, which caused visual drift. This run is the reason for the export fidelity rule. As of v2.24, Codex uses `image_gen`; if the exact generated bitmap cannot be verified/copied into `4_exports/`, stop and ask before any regeneration, provider switch, or fallback.
 
 ## Hygiene
 

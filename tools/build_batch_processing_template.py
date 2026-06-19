@@ -18,8 +18,8 @@ HEADERS = [
     "Date",
     "Blog title",
     "Blog description",
-    "Slides per post",
     "URL",
+    "Number of slides",
     "Image width px",
     "Image height px",
     "Image theme",
@@ -39,7 +39,7 @@ HEADERS = [
     "Validation warnings",
 ]
 
-REQUIRED = {"Blog title", "Slides per post", "URL", "Image width px", "Image height px", "Image theme", "Hero type", "Image direction", "Status"}
+REQUIRED = {"Blog title", "URL", "Image width px", "Image height px", "Image theme", "Hero type", "Image direction", "Status"}
 
 LISTS = {
     "Themes": ["Dark", "Light", "Custom"],
@@ -60,7 +60,6 @@ LISTS = {
         "Dashboard-to-action",
         "Restrained centre",
         "Bold hero-right",
-        "No-text balanced hero",
         "Map/chain layout",
         "Roadmap arc",
         "Showroom hero",
@@ -99,7 +98,7 @@ LISTS = {
         "Motion interface",
         "Circular system",
     ],
-    "SlidesPerPost": [str(i) for i in range(1, 11)],
+    "SlideCounts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 }
 
 
@@ -146,8 +145,8 @@ def parse_batch_rows() -> list[list[object]]:
                     parts[1],
                     parts[2],
                     parts[3],
-                    1,
                     parts[4],
+                    1,
                     width,
                     height,
                     parts[6],
@@ -331,24 +330,24 @@ def build() -> None:
     for idx in range(1, 101):
         formula = (
             f'TEXTJOIN("; ",TRUE,IF(C{idx+1}="","Missing blog title",""),'
-            f'IF(E{idx+1}="","Missing slides per post",""),IF(OR(E{idx+1}<1,E{idx+1}>10),"Slides per post must be 1-10",""),'
-            f'IF(F{idx+1}="","Missing URL",""),IF(G{idx+1}="","Missing width",""),'
-            f'IF(H{idx+1}="","Missing height",""),IF(I{idx+1}="","Missing theme",""),'
-            f'IF(M{idx+1}="","Missing hero type",""),IF(N{idx+1}="","Missing image direction",""),'
-            f'IF(U{idx+1}="","Missing status",""),IF(AND(J{idx+1}="Custom",K{idx+1}=""),"Custom visible text missing",""))'
+            f'IF(E{idx+1}="","Missing URL",""),IF(F{idx+1}="","Missing number of slides",""),'
+            f'IF(OR(F{idx+1}<1,F{idx+1}>10),"Number of slides must be 1-10",""),'
+            f'IF(G{idx+1}="","Missing width",""),IF(H{idx+1}="","Missing height",""),'
+            f'IF(I{idx+1}="","Missing theme",""),IF(M{idx+1}="","Missing hero type",""),'
+            f'IF(N{idx+1}="","Missing image direction",""),IF(U{idx+1}="","Missing status",""),'
+            f'IF(AND(J{idx+1}="Custom",K{idx+1}=""),"Custom visible text missing",""))'
         )
-        blank_rows.append([idx, "", "", "", 1, "", 1000, 650, "Dark", "Blog title only", "", "None by default", "", "", "", "", "Balanced", "", "", "", "Needs review", "", ("formula", formula)])
+        blank_rows.append([idx, "", "", "", "", 1, 1000, 650, "Dark", "Blog title only", "", "None by default", "", "", "", "", "Balanced", "", "", "", "Needs review", "", ("formula", formula)])
 
     readme = [
         ["Cars24 batch processing template", "", ""],
         ["Use this workbook to upload repeatable batch image jobs.", "", ""],
         ["Step", "Action", "Notes"],
-        ["1", "Fill the Batch upload sheet", "One row equals one post/request."],
-        ["2", "Keep required fields complete", "Validation warnings should be blank before upload."],
+        ["1", "Fill the Batch upload sheet", "One row equals one generated output request. Number of slides defaults to 1; use a higher value for carousel rows."],
+        ["2", "Keep required fields complete", "Validation warnings should be blank before upload; slide counts must be between 1 and 10."],
         ["3", "Use dropdowns where present", "Dropdown values map to Maker Agent batch-processing rules."],
         ["4", "Attach references by path or URL", "Only use approved assets; do not fabricate third-party logos."],
         ["5", "Upload the workbook", "Rows marked Ready can be processed; Skip rows are ignored."],
-        ["Slides per post", "Default 1", "Use 1 for a single image; use 2-10 for a carousel in that row."],
         ["Default dimensions", "1000 x 650 px", "Matches the current Autonauts blog-cover batch."],
         ["Default theme", "Dark Cars24 brand blue", "Can be changed row by row."],
         ["Default visible text", "Blog title only", "Description remains prompt context only."],
@@ -360,8 +359,8 @@ def build() -> None:
         "Date": "Publish or target date. Optional but useful for scheduling.",
         "Blog title": "Primary visible headline unless Visible image text is Custom or None.",
         "Blog description": "Planning and prompt context. Not visible by default.",
-        "Slides per post": "Number of images for this row. 1 = single image; 2-10 = carousel slides for this post.",
         "URL": "Canonical article or destination URL.",
+        "Number of slides": "Defaults to 1. Use 2-5 for carousel rows; above 5 should be intentionally confirmed before generation.",
         "Image width px": "Output width in pixels. Default is 1000.",
         "Image height px": "Output height in pixels. Default is 650.",
         "Image theme": "Cars24 theme to apply: Dark, Light, or Custom.",
@@ -392,7 +391,7 @@ def build() -> None:
     example_rows = [HEADERS] + examples
     sheets = ["README", "Batch upload", "Example rows", "Field guide", "Lists"]
     validations = [
-        validation("E2:E101", "Lists!$H$2:$H$11", "Choose slides per post: 1 for a single image, 2-10 for carousel slides."),
+        validation("F2:F101", "Lists!$H$2:$H$11", "Choose number of slides. Defaults to 1."),
         validation("I2:I101", "Lists!$A$2:$A$4", "Dark, Light, or Custom."),
         validation("J2:J101", "Lists!$B$2:$B$4", "Choose what text appears in the image."),
         validation("L2:L101", "Lists!$C$2:$C$5", "Choose logo handling."),
@@ -418,8 +417,8 @@ def build() -> None:
                     (1, 1, 10),
                     (2, 2, 14),
                     (3, 4, 36),
-                    (5, 5, 16),
-                    (6, 6, 52),
+                    (5, 5, 52),
+                    (6, 6, 17),
                     (7, 8, 14),
                     (9, 13, 20),
                     (14, 18, 34),
@@ -435,12 +434,12 @@ def build() -> None:
             "xl/worksheets/sheet3.xml",
             sheet_xml(
                 example_rows,
-                cols=[(1, 1, 8), (2, 2, 14), (3, 4, 42), (5, 5, 16), (6, 6, 52), (7, 23, 24)],
+                cols=[(1, 1, 8), (2, 2, 14), (3, 4, 42), (5, 5, 52), (6, 23, 24)],
                 freeze="A2",
                 autofilter=f"A1:{cell_ref(len(example_rows), len(HEADERS))}",
             ),
         )
-        zf.writestr("xl/worksheets/sheet4.xml", sheet_xml(guide, cols=[(1, 1, 28), (2, 2, 12), (3, 3, 90)], freeze="A2", autofilter="A1:C23"))
+        zf.writestr("xl/worksheets/sheet4.xml", sheet_xml(guide, cols=[(1, 1, 28), (2, 2, 12), (3, 3, 90)], freeze="A2", autofilter=f"A1:C{len(guide)}"))
         zf.writestr("xl/worksheets/sheet5.xml", sheet_xml(list_rows, cols=[(1, len(LISTS), 28)], hidden=True))
 
 
