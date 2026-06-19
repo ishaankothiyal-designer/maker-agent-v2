@@ -159,7 +159,7 @@ This is *how* the references stay balanced. Apply all of them whichever archetyp
 
 ### Logo Placement And Visual-Input Rule
 
-When a generated creative includes the Cars24 logo, the final prompt must name the correct theme-matched visible logo PNG as the repo-relative logo source file to use. The prompt must say to copy/use the official logo from that path exactly and must forbid recreating, retyping, simplifying, stylising, or changing the icon mark or wordmark. For providers/workflows that support image references, the same visible logo PNG must also be attached/shared as actual visual input.
+When a generated creative includes the Cars24 logo, the same theme-matched visible logo PNG must be attached/shared as actual visual input, and the final prompt must include an explicit current-logo description. Describe the logo as the current Cars24 horizontal lockup: rounded-square icon, circular cut-through/open-`C` mark, plus the `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in the prompt is traceability only, never sufficient by itself.
 
 Logo placement follows the layout axis and the cleanest negative-space zone:
 - Left-aligned layouts usually use a left-aligned logo, either top-left or bottom-left depending on negative space.
@@ -169,7 +169,7 @@ Logo placement follows the layout axis and the cleanest negative-space zone:
 - The logo may overlap pattern. It may overlap the hero only when it remains readable, high-contrast, cleanly fitted, and fully uncropped.
 - The logo must never touch, bleed, crop, cut off, distort, sit in a box/tile, or be approximated from text.
 
-Codex ImageGen may be attempted first with the repo-relative logo source path in the prompt. If the output changes the logo geometry, drops the icon, alters the wordmark, adds a box/tile, crops the lockup, or otherwise modifies the logo, the logo QA fails even if the rest of the creative is good. After a Codex logo QA fail, regenerate through a visual-input-capable workflow or ask for a supported logo upload.
+If the active tool/workflow cannot attach the visible logo PNG as true visual input, do not use it for logo-bearing output. If the output changes the logo geometry, drops the icon, alters the wordmark, drifts to all caps, adds a box/tile, crops the lockup, or otherwise modifies the logo, the logo QA fails even if the rest of the creative is good. After a logo QA fail, regenerate through a visual-input-capable workflow or ask for a supported logo upload.
 
 ---
 

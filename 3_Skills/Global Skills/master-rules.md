@@ -4,8 +4,11 @@
 
 <!-- sync-metadata
 last_updated: 2026-06-20
-version: 2.22
+version: 2.25
 changelog:
+  - 2.25 — Hardened the logo-generation workflow after Codex prompt-only runs drifted to an older boxed `CARS24` mark even when the repo’s current logo asset was named in text. Logo-bearing generations must now use both signals together: the actual theme-matched visible logo PNG attached/shared as visual input, and an explicit prompt block describing the current Cars24 lockup while rejecting the old boxed/all-caps mark, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is now traceability only, never sufficient by itself. If the active tool cannot attach the logo PNG as true visual input, it may not be used for logo-bearing output. Updated master rules, creative direction, query recipes, logo reference map, and synced Codex/Claude mirrors so the whole repo follows one stricter logo-fidelity rule. Rollback: restore v2.24 logo wording that allowed Codex source-path-first attempts and remove the explicit current-logo description requirement.
+  - 2.24 — Tightened the repo-maintenance loop for image-quality improvements. Added a mandatory per-version `generation-manifest.md` export artifact so each run preserves the layout plan, reference map, assembled prompt, provider path, approval state, and QA/follow-up notes needed to turn user feedback into repeatable rule updates instead of guesswork. Explicitly routed Higgsfield fallback and any multi-reference generation through `3_Skills/Global Skills/higgsfield-prompt-builder.md`, and added a hard provider-utility guardrail so provider-specific tools may assist generation but may never bypass the Maker Stage 1–9 pipeline, approval gate, logo/reference rules, or export discipline. Also aligned `4_exports/README.md` back to the main version ledger and export-governance rules. Helps Maker Agent maintainers act like system owners: every output now carries enough provenance to debug quality drift, promote feedback safely, and keep the repo honest over time. Rollback: restore v2.23 export guidance, remove mandatory manifests, and return prompt-builder/provider routing to the previous implied behavior.
+  - 2.23 — Smart first-message onboarding for Codex and Claude. The mandatory 1–4 menu remains the first visible output, but the agent may now infer the best-fit path from the user's opening message and continue in the same reply instead of stopping after the menu. Added explicit first-message routing rules for write-up only, write-up + image, image only, and Repository settings; defined the fallback for ambiguous opening prompts; and clarified that Repository settings can be inferred directly from repo/workflow requests while still requiring explicit confirmation before file edits. Documented the current platform limitation that neither Codex nor Claude starts a visible assistant turn on bare thread creation in this repo setup, so this release optimises first-reply behaviour rather than true thread-start auto-chat. Propagates to onboarding rules, generated Claude/Codex skill and agent mirrors, and entry files. Rollback: restore v2.22 hard-stop onboarding wording that always waited after the menu.
   - 2.22 — Fixed the repo-native sync workflow after the Repository settings rollout. `tools/sync_skills.py` now produces deterministic creative-direction mirrors instead of embedding the current date, so `--check` no longer fails just because a new day started. The sync flow now also manages the Claude wrapper, global sync orchestrator, README, AGENTS.md, and CLAUDE.md alignment/validation so repo entry docs cannot drift silently while generated mirrors still pass check. Updated the global sync orchestrator to use the live project version from `master-rules.md` instead of a stale hardcoded baseline. Helps Maker Agent maintainers trust `python3 tools/sync_skills.py` / `--check` as the canonical repo integrity workflow after source changes. Rollback: restore v2.21 sync behavior, including date-stamped creative-direction banners and the narrower sync/check scope.
   - 2.21 — Added a fourth onboarding path, `Repository settings`, to separate normal creative work from persistent repository/workflow changes. Repository-level changes such as onboarding flow, routing rules, prompt structure, provider defaults, export/versioning rules, source-of-truth docs, and generated agent/skill behavior are now only allowed after the user explicitly enters Repository settings mode in the current thread. Outside that mode, the agent may discuss repository changes but must redirect before applying them. Inside that mode, the agent may inspect and plan changes but must ask for explicit confirmation before editing repo-tracked files. Normal copy/image generation and one-off creative revisions remain available through options 1–3. Propagates to onboarding prompts, path definitions, feedback-promotion rules, generated skill/agent mirrors, and entry files. Rollback: restore the 3-option onboarding flow and remove the repository-settings gate.
   - 2.20 — Higgsfield provider default changed to GPT Image 2 and retired the previous Higgsfield model from active project instructions. Codex still defaults to Codex ImageGen whenever it can satisfy the approved reference needs. Any non-Codex, Claude, CLI, explicit Higgsfield, or Codex-unsuitable fallback route must first verify Higgsfield authentication, then use `gpt_image_2` by default with the approved reference map and cost preview. Removed active mentions of the old model name across Maker rules, prompt builder, generated agent/skill mirrors, and entry files to prevent provider confusion. Added a GPT Image 2 aspect-ratio adapter because the model supports `1:1`, `4:3`, `3:4`, `16:9`, `9:16`, `3:2`, and `2:3`; unsupported Maker ratios such as `4:5`, `1.91:1`, and `2:1` must be mapped visibly in the Stage 7 handoff before approval. Rollback: restore v2.19 provider-default wording and command examples.
@@ -59,7 +62,7 @@ changelog:
 When a new thread or session begins, the agent's **very first output** must be exactly this prompt — no preamble, no loading messages, no explanation before it. This applies on every CLI (Claude Code, Codex, any other tool).
 
 Do not say "Loading…", "Reading files…", or anything else before this message.
-Do not skip this step even if the user's opening message already contains a brief — show the prompt first, then incorporate their brief into the chosen path.
+Do not skip this step even if the user's opening message already contains a brief — show the prompt first, then continue in the same reply when the opening message is clear enough to route.
 
 Every session begins with this prompt:
 
@@ -74,7 +77,32 @@ Hey, what do you want to create today?
 Type 1, 2, 3, or 4.
 ```
 
-After the user picks, follow the path for that option:
+After the prompt, handle the first user message as follows:
+
+1. If the user explicitly picks `1`, `2`, `3`, or `4`, follow that path exactly as written below.
+2. If the user's opening message already contains enough signal to classify the request, infer the best-fit path and continue in the **same reply** immediately after the menu.
+3. If the user's opening message is ambiguous, still show the menu first, then ask one short disambiguation question instead of guessing.
+
+### First-message routing rules
+
+- **Infer Path 4 — Repository settings** when the opening message is about repo rules, workflow, onboarding flow, routing logic, prompt structure, provider defaults, export/versioning rules, sync behavior, persistent agent behavior, version updates, or agent setup.
+- **Infer Path 3 — Image only** when the user says they already have the copy, only need image(s), want a carousel from existing copy, or want batch export from prepared briefs.
+- **Infer Path 2 — Write-up + image** when the user asks for both copy and image, or gives a creative brief that clearly asks for a post plus visual(s).
+- **Infer Path 1 — Write-up only** when the user asks only for copy, caption, post text, blog text, or write-up with no visual request.
+
+### First visible reply shape
+
+When the first user message is classifiable, the first assistant reply must follow this structure:
+
+1. Show the mandatory 1–4 menu block unchanged as the first visible content.
+2. Add one short line stating the inferred path, e.g. `Inferred path: Write-up + image.` or `Inferred path: Repository settings.`
+3. Continue immediately by asking only the next missing required input(s) for that path, or by entering Repository settings mode if Path 4 was inferred.
+
+### Platform limitation note
+
+Neither Codex nor Claude should be instructed here to send a visible assistant message on bare thread creation with no user input. In this repo setup, optimise the first reply after the user's first message; do not claim that thread-start automations, hooks, or startup instructions replace true no-user-message auto-chat.
+
+After the path is known, follow the path for that option:
 
 ### Path 1 — Write-up only
 1. Ask: what is the idea or topic? (user can describe in a sentence or paste a rough draft)
@@ -178,10 +206,12 @@ These overrides come from repeated production runs and user feedback. They are c
 - **Photo/image-led covers:** default to a clean photographic cutout hero removed from its original environment, placed directly on the Cars24 canvas, with a crisp visible white accent outline around the complete silhouette. No rectangular photo frame, embedded photo panel, or full-scene background unless the user explicitly selects `full-scene photo`. Preserve natural lighting and real colour inside the cutout; the theme lives in the surrounding canvas, text, and pattern.
 - **Pattern treatment:** patterns may flow across the full background as a clean atmospheric layer. They must stay behind the text and hero, preserve text readability, and never appear as a foreground layer over the hero.
 - **Light pattern opacity:** light-theme dot patterns should sit around **20–25% opacity** — visible enough to register, but still restrained.
-- **Logo fidelity:** in Codex ImageGen, name the exact theme-matched repo-relative PNG as the logo source file and explicitly instruct the model to copy the official identity from that file without recreating, retyping, simplifying, stylising, or changing it. Providers/workflows that support image references must also receive the same visible PNG as actual visual input. Render the logo inside the generated composite; never add a post-process/local superimpose step. The logo must match reference sizing, sit in negative space, preserve clear space, use the correct colourway, and remain fully uncropped. Any changed geometry, missing icon, altered wordmark, box/tile, or crop fails logo QA; after a Codex source-path failure, move to a visual-input-capable workflow or ask for a supported logo upload.
+- **Logo fidelity:** logo-bearing generation must use the actual theme-matched visible logo PNG as attached/shared visual input and must also include an explicit prompt block describing the current Cars24 lockup. The prompt must identify the current logo as the rounded-square icon with the circular cut-through/open-`C` mark plus the `Cars24` wordmark, and must explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is traceability only, never sufficient by itself. If the active tool/workflow cannot attach the visible logo PNG as true visual input, do not use it for logo-bearing output. Render the logo inside the generated composite; never add a post-process/local superimpose step. The logo must match reference sizing, sit in negative space, preserve clear space, use the correct colourway, and remain fully uncropped. Any changed geometry, missing icon, altered wordmark, box/tile, all-caps drift, or crop fails logo QA; move to a visual-input-capable workflow or ask for a supported logo upload.
 - **Style purity:** one creative commits to one primary visual style only — illustration, photo, abstract pattern/form, or infographic/icon. Do not blend illustration people, infographic flows, SaaS/product dashboards, 3D platform blocks, network maps, UI cards, and Cars24 service scenes unless the selected style explicitly permits that element. The latest project 020 batch showed the failure mode: polished but generic "AI workflow" imagery created by mixing styles. Prevent it with a style-purity audit before generation.
 - **Visual noun budget:** each prompt gets one dominant hero noun and at most one supporting visual noun. If a prompt lists more than two visual systems or objects (for example: people + car + icons + dashboards + nodes + database + roadmap), simplify before approval. The slide should read as a specific Cars24 moment, not a generic technology ecosystem.
 - **Provider defaults:** Codex uses the built-in Codex ImageGen tool by default. Claude, non-Codex, and CLI workflows use Higgsfield + GPT Image 2 (`gpt_image_2`) after a successful authentication check. Provider choice does not change the shared brand, prompt, approval, QA, or export rules.
+- **Provider guardrail:** provider-specific tools and skills are execution helpers only. They may assist with Codex ImageGen or Higgsfield calls, but they must never bypass the Maker Stage 1–9 pipeline, copy freeze gate, Stage 7 approval gate, style-purity audit, generation-time logo/reference rules, or export/versioning discipline.
+- **Generation provenance:** every exported version must include a `generation-manifest.md` beside the image files. This manifest is part of the canonical run record and preserves how the image was made so later feedback can be mapped back to the exact layout plan, prompt, references, provider path, and QA call.
 - **Feedback-to-learning loop:** treat user terms like **hack**, **feedback**, **improvement**, **tweak**, **fix**, **learning**, **preference**, or **rule** as production feedback after a creative is generated. Before changing files or regenerating, confirm the feedback back to the user, map the impact across skills/rules/providers/exports, then ask whether to (a) update project rules, (b) create a new version, (c) do both, or (d) keep it as one-off feedback only. If the user wants to promote feedback into a persistent repository rule, they must first enter **Path 4 — Repository settings** in the current thread. Inside Path 4, ask for explicit confirmation before editing any repo-tracked file. Then update the source of truth first (`master-rules.md` and/or `CREATIVE-DIRECTION.md`), propagate to generated Claude/Codex mirrors, verify no stale conflicting rule remains, and report the changed files.
 
 #### Feedback-to-learning impact map
@@ -196,6 +226,7 @@ Use this map whenever the user gives creative feedback after seeing an output:
 | Logo placement/fidelity | Logo gate, generation-time logo reference, export workflow | `master-rules.md`; logo reference map if asset-specific | Maker skills, agents, `AGENTS.md`, `CLAUDE.md` | Ask whether to regenerate with the corrected logo-reference workflow |
 | Provider/model workflow | Stage 7/8 approval, cost/credit gate, generation provider defaults | `master-rules.md`; entry files | Maker skills, agents, `AGENTS.md`, `CLAUDE.md` | Ask whether to rerun with the selected provider |
 | Export/versioning workflow | Export path, version naming, what gets retained | `master-rules.md`; entry files | Maker skills, agents, `AGENTS.md`, `CLAUDE.md` | Ask whether to create or rename a version folder |
+| Prompt/references traceability | Layout plan retention, reference map, final prompt, provider adapter, QA notes | `master-rules.md`; `4_exports/README.md`; prompt-builder if needed | Maker skills, agents, export docs | Ask whether to regenerate the affected version with the corrected manifest/provenance trail |
 | One-off art direction for current creative only | Current prompt and next generation only | No source update unless user approves | None unless promoted to rule | Create next `vN` only if user approves |
 
 Required response shape:
@@ -609,6 +640,8 @@ The user picks one style for all slides, specifies per-slide variation, or choos
 | 3 — Abstract pattern or form | `1_References/2_Image References/Patterns in creatives/` + clean `Generated Patterns/` assets + the relevant dark or light theme reference folder |
 | 4 — Infographic look-and-feel | All files in `1_References/1_Brand Guidelines/09_Icon-System/`; check `1_References/4_Infographic Icon References/` for prior approved icons of the same type |
 
+**Prompt-builder routing:** if the approved generation path will use Higgsfield, or if any slide needs multi-reference assembly beyond a simple prompt-described Codex run, load `3_Skills/Global Skills/higgsfield-prompt-builder.md` before writing the final Stage 6 prompts. Its five-block handoff structure is mandatory for Higgsfield fallback, explicit Higgsfield requests, and any multi-reference provider adapter.
+
 **Theme references (applies to all styles):** load the theme reference folder confirmed in Stage 1 — `2_Image References/Dark theme/` or `2_Image References/Light theme/` — before Stage 6 deconstruction.
 
 **USP assets:** if the user wants offer stamps, proof badges, or USP callouts on any slide, load `1_References/1_Brand Guidelines/08_Campaign-Assets-&-USPs/03_usp-mnemonics.png` and share it with the user (see USP Assets section).
@@ -705,9 +738,10 @@ This is a single gate that merges the former design-brief and prompt-assembly st
 
 **Provider default.** When working inside **Codex**, call the built-in **Codex ImageGen** / `image_gen` tool by default when the approved reference needs can be represented by the assembled prompt. For logo-bearing Codex jobs, the prompt must name the exact repo-relative PNG as the source file to use and include the immutable-logo instructions; the output then passes strict logo QA before acceptance. Use Higgsfield only when the user explicitly requests Higgsfield, Codex ImageGen is unavailable/unsuitable, or comparison/fallback is needed. For **Claude or any non-Codex/CLI session**, use Higgsfield: first run `higgsfield account status`; if authentication is unavailable, stop and ask the user to run `higgsfield auth login`; after a successful check, default to GPT Image 2 (`gpt_image_2`). Providers/workflows that support image references must receive every approved attachable asset, including the visible logo PNG, as actual visual input. If Codex changes the logo, or if a reference-capable provider cannot receive the asset, move to a supported visual-input workflow or ask the user to share/upload the logo. Do not create a local logo overlay workaround.
 
-First load **both** sources of project context:
+First load the required sources of project context:
 - `1_References/HIGGSFIELD-CONTEXT-PACKAGE.md` — per-style Prompt Context Block + exact reference-attachment list
 - `1_References/CREATIVE-DIRECTION.md` — visual system (composition, theme, typography, pattern formulas)
+- `3_Skills/Global Skills/higgsfield-prompt-builder.md` — mandatory whenever the approved path is Higgsfield or any multi-reference provider handoff needs explicit five-block assembly
 - Path 3 batch template: `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`
 
 Then assemble and present to the user, **per slide**, both parts together as one handoff bundle:
@@ -755,6 +789,8 @@ Operational per-style attach lists + Prompt Context Blocks live in `HIGGSFIELD-C
 
 **Model / provider detail:** Codex uses Codex ImageGen by default. Every Higgsfield route must first pass `higgsfield account status`, then use GPT Image 2 (`gpt_image_2`) by default. Use another Higgsfield model only when the user explicitly requests a supported model.
 
+**Provider-utility guardrail — mandatory.** No provider helper, CLI wrapper, or external skill may short-circuit the Maker workflow. The approved provider path must still honor the frozen copy, layout plan, reference map, style-purity audit, exact assembled prompt, explicit approval, logo/reference transport rules, and export requirements. If a provider utility cannot support that discipline, it is not an allowed route for the run.
+
 **GPT Image 2 aspect-ratio adapter — mandatory and visible at Stage 7.** GPT Image 2 supports `1:1`, `4:3`, `3:4`, `16:9`, `9:16`, `3:2`, and `2:3`. Preserve supported ratios exactly. Map unsupported Maker ratios before cost preview and approval: `4:5` → `3:4`; `1.91:1` → `16:9`; `2:1` → `16:9`; custom → nearest supported ratio. Show both the requested ratio and provider ratio in the handoff and explain the mapping. Never silently coerce a ratio.
 
 **Explicit approval — required.** Ask the provider-appropriate question:
@@ -786,11 +822,12 @@ Generate **only** on an explicit **yes**. The gate is satisfied only when the re
 Once the user has approved:
 
 1. **Look up the visual style in HIGGSFIELD-CONTEXT-PACKAGE.md** — identify the reference attachment list and copy the Prompt Context Block for that style
-2. **Use the assembled prompt** built at the Stage 7 gate (Prompt Context Block + Stage 6 prompt + frozen copy)
+2. **Use the assembled prompt** built at the Stage 7 gate (Prompt Context Block + Stage 6 prompt + frozen copy). If the path is Higgsfield or any multi-reference provider adapter, the final payload must also satisfy the five-block structure in `3_Skills/Global Skills/higgsfield-prompt-builder.md`.
 3. **Provider handling:**
    - **Codex ImageGen default:** use the built-in `image_gen` tool with the assembled prompt only when the approved reference map can be satisfied. If no logo is required and the tool cannot directly attach local reference files, include the reference-role map and the visual traits to borrow inside the prompt text. Do not run a Higgsfield cost preview or command.
    - **Logo-bearing Codex jobs:** include the exact repo-relative visible logo PNG path as the explicit source file to use, instruct the model to copy the official identity exactly, and run strict logo QA. If the result changes the logo geometry or wordmark, drops the icon, adds a box/tile, or crops the lockup, reject it and move to a visual-input-capable workflow or ask for a supported logo upload.
    - **Claude/non-Codex Higgsfield default or Codex fallback / explicit request:** run `higgsfield account status`; if it fails, stop and ask the user to run `higgsfield auth login`. Map the requested aspect ratio through the visible GPT Image 2 ratio adapter, attach all listed reference images in the priority order specified for that style, and fire the prompt to Higgsfield with `gpt_image_2` unless the user explicitly requested another supported model.
+4. **Persist provenance with the export.** Every saved version must include a `generation-manifest.md` capturing the layout plan, reference map, final prompt, provider/model path, ratio mapping, approval status, and any QA or revision notes needed for future feedback-driven repo updates.
 5. Allow per-slide revision before moving on.
 
 Generate in slide order. For batch intake, queue rows and generate one approved image/slide at a time in row order; do not fire multiple generations in parallel. Revise and regenerate any slide the user flags before proceeding.
@@ -879,7 +916,17 @@ The export tree has three levels: **project folder → version folder → image 
 - First run → `v1/`.
 - If the user changes **any** field parameter (theme, size, style, slide count, copy, etc.) and regenerates, keep the **same project folder** and add the next version folder (`v4/`).
 
-**Level 3 — Image files inside the version folder:** `{brief}-image1`, `{brief}-image2`, `{brief}-image3` …
+**Level 3 — Files inside the version folder:** `generation-manifest.md` + `{brief}-image1`, `{brief}-image2`, `{brief}-image3` …
+- `generation-manifest.md` is mandatory for every version folder. It records how the output was made so later feedback can be tied back to the exact run conditions.
+- The manifest must include:
+  - brief + slide scope
+  - layout plan per slide
+  - reference map with roles, copy-from, ignore-from, and provider transport
+  - final assembled prompt per slide
+  - provider, model, requested ratio, provider ratio, and any visible ratio mapping
+  - approval state and execution date
+  - export filenames
+  - QA notes, known issues, and next-step feedback hooks
 - Use the same short kebab-case `{brief}` slug from the project folder so each generated file retains context outside its folder.
 - One file per slide. Slide 1 → `{brief}-image1.png`, slide 2 → `{brief}-image2.png`, etc.
 - A single (non-carousel) image is `{brief}-image1`.
@@ -891,13 +938,16 @@ New brief or new topic → a new project folder (next serial).
 4_exports/
   001_summer-launch-post_31-May/
     v1/
+      generation-manifest.md
       summer-launch-post-image1.png
       summer-launch-post-image2.png
     v2/
+      generation-manifest.md
       summer-launch-post-image1.png
       summer-launch-post-image2.png
   002_product-car-hero_01-Jun/
     v1/
+      generation-manifest.md
       product-car-hero-image1.png
 ```
 

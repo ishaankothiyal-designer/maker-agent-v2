@@ -1,6 +1,6 @@
 # Cars24 Maker Agent Exports
 
-This file is the source of truth for export structure, serial handling, and export provenance notes. Do not create per-run generation manifests unless the user explicitly asks for them; add durable run notes here instead.
+This file is the source of truth for export structure, serial handling, and export provenance notes. Every exported version must include a per-run `generation-manifest.md` inside its `vN/` folder so image feedback can be traced back to the exact prompt, references, provider path, and QA decision that produced it.
 
 ## Canonical Structure
 
@@ -9,9 +9,11 @@ Every new exported creative must use three levels:
 ```text
 4_exports/{serial}_{brief}_{DD-Mon}/
   v1/
+    generation-manifest.md
     {brief}-image1.[ext]
     {brief}-image2.[ext]
   v2/
+    generation-manifest.md
     {brief}-image1.[ext]
 ```
 
@@ -19,7 +21,21 @@ Every new exported creative must use three levels:
 - `{brief}` is a kebab-case short slug of the brief, max 30 characters.
 - `{DD-Mon}` is the run date, for example `18-Jun`.
 - `vN/` is one version folder per generation run.
+- `generation-manifest.md` is mandatory in every version folder.
 - Image filenames include the same short brief slug: `{brief}-imageN.[ext]`.
+
+## Generation Manifest
+
+Every `vN/` folder must include `generation-manifest.md` with:
+
+- brief + slide scope
+- layout plan per slide
+- reference map with role, copy-from, ignore-from, and provider transport
+- final assembled prompt per slide
+- provider, model, requested ratio, provider ratio, and visible ratio mapping
+- approval state and execution date
+- exported filenames
+- QA notes, known issues, and revision hooks for future feedback
 
 ## Export Fidelity
 
@@ -27,6 +43,7 @@ The exported file is the source of truth for final Maker runs.
 
 - Codex runs use Codex ImageGen / `image_gen`; Claude and non-Codex CLI runs use Higgsfield with GPT Image 2 (`gpt_image_2`) by default.
 - Every final output must be saved under `4_exports/{serial}_{brief}_{DD-Mon}/vN/`.
+- The manifest and the exported image files together are the canonical run record.
 - Chat previews should display those exact saved files with absolute Markdown image paths whenever the file exists. The preview and the export must be the same bitmap.
 - Export means copy, rename, or explicitly requested resize of the same generated bitmap. Export must never mean "run the prompt again."
 - Do not crop by default. Cropping is a separate post-production choice and requires an explicit user request.
@@ -36,7 +53,7 @@ The exported file is the source of truth for final Maker runs.
 
 Historical exports contain duplicate and missing serials. Preserve them as history; do not renumber old folders.
 
-- Existing highest serial observed after the v2.17 export-fidelity update: `025`.
+- Existing highest serial observed after the v2.24 export-governance update: `025`.
 - Next new brief should start at `026`, unless a later folder already exists.
 - Known historical duplicates: `001`, `021`.
 - Known historical gaps: `003`, `004`, `005`, `006`, `007`.

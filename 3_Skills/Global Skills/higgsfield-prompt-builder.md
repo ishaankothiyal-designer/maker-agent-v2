@@ -13,6 +13,7 @@ description: Assembles complete per-slide Cars24 image-generation prompts. Handl
 > For exact specs while filling a block, pull the matching vision-verified brand-guideline `notes.md` (index in CREATIVE-DIRECTION → *Brand Guidelines — Deep Reference*): colour hex → `02_Color-System/notes.md`; type roles/weights → `03_Typography/notes.md`; CTA + safe-zone specs → `07_Digital-Composition-&-Templates/notes.md`; icon specs → `09_Icon-System/notes.md`; USP stamps → `08_Campaign-Assets-&-USPs/notes.md`; luxury palette → `10_Luxury-&-Elite-Sub-Brand/notes.md`.
 >
 > Every slide gets its own fully assembled prompt and reference bundle. Generate carousels sequentially in slide order.
+> This builder is mandatory whenever the approved generation path uses Higgsfield, and whenever any provider path needs explicit multi-reference assembly. Provider helpers may not bypass this structure.
 
 ---
 
@@ -75,6 +76,7 @@ Before generation, package each slide as one provider-neutral handoff:
    - Codex ImageGen: attach each approved reference when supported; otherwise preserve its path, role, copy-from, and ignore-from instructions in the prompt and accurately mark it as prompt-described rather than attached.
    - Higgsfield: pass every approved attachable reference as `--image` in the same order as the reference map; authenticate first and use `gpt_image_2` by default.
 5. **Execution metadata:** requested ratio, provider ratio, any visible ratio mapping, model, quality/resolution, estimated Higgsfield credits when applicable, and explicit approval status.
+6. **Export provenance:** the exact fields that will be written to `generation-manifest.md` inside the target export version folder.
 
 The gate fails if a required reference is selected but absent from the provider adapter, if an attached file lacks a role caption, if a rules-only asset is attached, or if frozen copy differs from the prompt.
 

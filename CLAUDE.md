@@ -32,7 +32,7 @@ Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `mak
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.22`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.25`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
@@ -67,9 +67,24 @@ Type 1, 2, 3, or 4.
 ---
 
 Do not say "Loading skill…", "Reading files…", or anything else before this message.
-Do not skip this step even if the user's first message already contains a brief — still show this prompt first, then incorporate their brief into the chosen path.
+Do not skip this step even if the user's first message already contains a brief — still show this prompt first, then continue in the same reply when the opening message is clear enough to route.
 
-After the user replies, load the full skill from `3_Skills/1_Claude Skills/maker-skill.md` and follow the path for their chosen option.
+After the prompt, handle the first user message as follows:
+1. If the user explicitly picks `1`, `2`, `3`, or `4`, follow that path exactly.
+2. If the user's first message already contains enough signal, infer the best-fit path and continue in the same reply immediately after the menu.
+3. If the user's first message is ambiguous, still show the menu first, then ask one short disambiguation question instead of guessing.
+
+Routing rules:
+- infer `4` for repo rules, workflow, onboarding, prompt structure, provider defaults, export/versioning, sync, persistent agent behaviour, version updates, or agent setup
+- infer `3` when the user already has copy or only needs image(s), a carousel, or batch export from existing copy
+- infer `2` when the user asks for both copy and image, or clearly wants a post plus visual
+- infer `1` when the user only wants copy/write-up with no visual request
+
+When the first message is classifiable, keep the menu as the first visible block, add one short `Inferred path: ...` line, then ask only the next missing required input(s) for that path or enter Repository settings mode for inferred `4`.
+
+Platform limitation note: Claude startup instructions and hooks do not create a visible assistant turn on bare thread creation in this repo setup. Optimise the first reply after the user's first message; do not treat hooks as a replacement for no-user-message auto-chat.
+
+Once the path is known, load the full skill from `3_Skills/1_Claude Skills/maker-skill.md` and follow that path.
 
 If the user chooses option 3, ask whether they want a single image, carousel, or batch export before collecting copy. For carousel, ask the number of slides with 3 as the suggested default before collecting/pasting copy. For batch export, open/use the batch post creation modal when available, provide the canonical downloadable Excel template at `5_BATCH_EXPORT/cars24-batch-processing-template.xlsx`, wait for the completed upload, then process each completed row as one image-only brief; `Number of slides` defaults to 1 unless specified, and rows above 1 are carousel briefs. Every path follows the same approval, generation, and export rules.
 If the user chooses option 4, enter Repository settings mode for reviewing or changing persistent repository behavior. In that mode, inspect and plan freely, but ask for explicit confirmation before editing any repo-tracked file.
@@ -156,7 +171,7 @@ For any illustrated hero, use `1_References/3_Illustrations References/Main_refe
 ### Higgsfield logo & colour anchoring
 Two recurring Higgsfield image-generation fixes baked into the pipeline:
 
-1. **Logo hallucination fix:** Never attach the raw white-on-transparent logo — it flattens to blank. Composite the white logo onto a solid `#4736FE` tile and attach that visible PNG. In the prompt, name both parts ("rounded-square circular-arrow icon mark + 'Cars24' wordmark") and say "ignore the blue tile background, render logo in white with no box."
+1. **Logo hallucination fix:** Never attach the raw white-on-transparent logo — it flattens to blank. Composite the white logo onto a solid `#4736FE` tile and attach that visible PNG. In the prompt, explicitly describe the current logo as the rounded-square icon with the circular cut-through/open-`C` mark plus the `Cars24` wordmark, and explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. Also say "ignore the blue tile background, render logo in white with no box."
 
 2. **Brand-blue drift fix:** Attach a solid `#4736FE` swatch as a colour anchor. Dark outputs should use a bright Cars24 Brand Blue canvas; describe it in words as "bright saturated Cars24 brand-blue canvas with white text; the theme is dark only because the type and dots are white — NOT navy, NOT indigo, NOT black, NOT midnight blue, NOT dark violet, NOT dimmed." Light backgrounds stay visibly lavender for theme distinction, but as a pale `#EBE9FF`-family tint derived from brand blue, not pink/grey/beige/generic pastel purple. The repeatable 3-ref recipe: **[1] colour swatch (always) + [2] one style-defining ref + [3] visible logo (if logo gate=yes)**. Permanent repo assets: `Logo - White-on-blue.png` and `brand-blue-4736FE-swatch.png`.
 
@@ -205,7 +220,7 @@ Use:
 2. Light background → generation context `Logo - Blue-on-white.png`
 3. High-contrast / print → generation context `Logo - Black.png`
 
-Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. In Codex ImageGen, include the repo-relative logo path as the explicit source file to use, not merely traceability: tell the model to copy/use the official logo from that path exactly and never recreate, redraw, simplify, typeset, or modify it. For providers/workflows that support image references, attach/share the same visible logo PNG as visual input with the final generation prompt. Place the logo by layout axis and cleanest negative space. In carousels with the same theme/background family, keep logo placement and size exactly consistent across all logo-bearing slides. The logo may overlap pattern and may overlap hero only if readable, high-contrast, cleanly fitted, and uncropped. If the output changes the logo geometry, drops the icon, alters the wordmark, adds a box/tile, or crops the lockup, fail logo QA and regenerate through a visual-input-capable workflow or ask for a supported logo upload. Do not silently overlay the logo afterward.
+Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. Logo-bearing generation must use the correct theme-matched visible logo PNG as actual visual input and must also include an explicit prompt block describing the current Cars24 lockup: rounded-square icon, circular cut-through/open-`C` mark, and `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in prompt text is traceability only, never enough by itself. Place the logo by layout axis and cleanest negative space. In carousels with the same theme/background family, keep logo placement and size exactly consistent across all logo-bearing slides. The logo may overlap pattern and may overlap hero only if readable, high-contrast, cleanly fitted, and uncropped. If the active tool cannot attach the logo PNG as true visual input, do not use it for logo-bearing output. If the output changes the logo geometry, drops the icon, alters the wordmark, drifts to all caps, adds a box/tile, or crops the lockup, fail logo QA and regenerate through a visual-input-capable workflow or ask for a supported logo upload. Do not silently overlay the logo afterward.
 
 ### Sentence case only
 All visible creative copy must be sentence case. Never use title case for creative headlines, never camel case, and never all caps.

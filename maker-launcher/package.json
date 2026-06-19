@@ -1,0 +1,17 @@
+{
+  "name": "maker-launcher",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Thin Codex-first launcher for the Cars24 Maker Agent",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@openai/codex-sdk": "^0.141.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
