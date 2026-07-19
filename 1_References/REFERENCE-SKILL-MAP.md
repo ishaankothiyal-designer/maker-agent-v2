@@ -10,8 +10,9 @@ description: Vision-verified audit of EVERY reference asset in the Cars24 librar
 > **Why it exists.** When we attach a reference to Higgsfield, the model fuses it into the composition. That only helps if (a) the reference is a clean visual asset, not a diagram, and (b) we tell the model *what to take and what to ignore*. This map decides both, per asset. Attaching a do/don't chart or a spec sheet injects chart text and crossed-out examples into the output — so most of the brand book is deliberately marked **RULES-ONLY**.
 >
 > **Relationship to the other docs:**
-> - [REFERENCE-ATLAS.md](REFERENCE-ATLAS.md) = source of truth for the *layout / illustration / pattern* creatives (DT-/LT- cards, Section C illustrations, Section D patterns). Not duplicated here.
-> - [CREATIVE-DIRECTION.md](CREATIVE-DIRECTION.md) = source of truth for *rules* (composition, theme, type, pattern families).
+> - [REFERENCE-ATLAS.md](REFERENCE-ATLAS.md) = source of truth for *observed layout / illustration / pattern asset facts* (DT-/LT- cards, Section C illustrations, Section D patterns). It does not override execution rules.
+> - [CREATIVE-DIRECTION.md](CREATIVE-DIRECTION.md) = source of truth for the visual system (composition, theme, type, pattern families).
+> - `3_Illustrations References/ILLUSTRATION-GENERATION-GUIDE.md` = source of truth for illustrated-hero execution, including the mandatory style anchor, final-composite delivery, and controlled 60/30/10 palette.
 > - **This map** = source of truth for *which Brand-Guidelines asset is attachable, in what role, and which skill owns it.*
 > - **v2.0 tag index** = `reference-index.json` + `reference-tags/`. Use it as the machine-readable retrieval layer before selecting references; this map remains the human audit behind brand-guideline attachability.
 
@@ -21,7 +22,7 @@ description: Vision-verified audit of EVERY reference asset in the Cars24 librar
 
 1. Decide the brief's visual style (illustration / photo / pattern / icon / abstract) and theme.
 2. Query `reference-index.json` for role, attachability, copy-from, ignore-from, and quality flags.
-3. Pull the **Layout + Subject + Pattern** refs from the [Atlas](REFERENCE-ATLAS.md) as usual.
+3. Resolve conflicts in this order: Creative Direction → Illustration Generation Guide → tag index → this map → Atlas. Then pull the **Layout + Subject + Pattern** refs from the Atlas as usual.
 4. Then check **§2 (Skill → Reference matrix)** and **§3 (per-asset audit)** here for any *brand-guideline* asset that should ride along — a palette swatch, the tagline lockup, a photo-style moodboard, an icon-style anchor, a USP stamp, the logo PNG.
 5. For every attached ref, paste its **caption** (each tells the model what to take and what to ignore) into Block 5 of the [higgsfield-prompt-builder](../3_Skills/Global%20Skills/higgsfield-prompt-builder.md).
 6. **Hard cap still applies: 3 refs per call.** If a palette/photo-mood/USP ref would push past 3, prefer it over a weaker layout ref, or bake its intent into the prompt text instead of attaching it.
@@ -55,7 +56,7 @@ Which references each skill / pipeline stage should load (read for context) vs a
 | Skill / stage | Style | Load (context) | Attach (`--image`, with caption) |
 |---|---|---|---|
 | **Founder-voice / copy** (Path 1, Path 2 Step A) | n/a | All `06_Voice-Tone-&-Copy/*`, brand story/vision/purpose/persona | — (none — copy skill never attaches images) |
-| **Image — Illustration** (Stage 4 opt 1) | illustration | Atlas §C + ILLUSTRATION-GENERATION-GUIDE | `Main_reference.png` (mandatory) + 1 scene ref + Atlas LAYOUT + optional clean PATTERN |
+| **Image — Illustration** (Stage 4 opt 1) | illustration | Creative Direction + ILLUSTRATION-GENERATION-GUIDE + Atlas §C | `Main_reference.png` is mandatory. Add one scene/identity-context reference only if it does not displace the style anchor; use layout/pattern as available within the cap, otherwise describe those roles in prompt text. Final hero is rendered in the composite, never as transparent/chroma-key output. |
 | **Image — Photography** (Stage 4 opt 2) | photo | `5_Photography References/PHOTOGRAPHY-GENERATION-GUIDE.md` | matching `5_Photography References/*_exemplar.png` as 📸 PHOTO-STYLE (primary) + optional source moodboard + Atlas LAYOUT |
 | **Image — Abstract pattern/form** (Stage 4 opt 3) | pattern | Atlas §D + CREATIVE-DIRECTION abstract dot-form hero + pattern families | clean PNG from `Generated Patterns/` as 🟪 when available; otherwise best matching crop from `Patterns in creatives/References/`; Atlas LAYOUT in prompt text or attach when slot is free |
 | **Image — Infographic / icon** (Stage 4 opt 4) | icon | 09_Icon-System + `4_Infographic Icon References/` | `09_Icon-System/02` (proportions) + `03`(3D) for premium marketing/feature callouts or `04`(flat) for dense/process/UI flows; soft dimensional refs from `4_Infographic Icon References/` are optional finish inspiration only |

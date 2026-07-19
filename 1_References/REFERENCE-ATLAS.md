@@ -80,9 +80,9 @@ description: Vision-verified fingerprint of every real reference asset in the Ca
 # Section C — Subject-Style References (Illustrations)
 
 **Location:** `3_Illustrations References/`
-> **Authoritative source for illustration generation = `3_Illustrations References/ILLUSTRATION-GENERATION-GUIDE.md`** (style, 60/30/10 palette, transparent-PNG rule, per-scene reference selection). This Atlas §C is a quick index; the guide supersedes it for generation rules.
+> **Authoritative source for illustration generation = `3_Illustrations References/ILLUSTRATION-GENERATION-GUIDE.md`** (style, 60/30/10 palette, final-composite delivery, and per-scene reference selection). This Atlas §C is a quick index; the guide supersedes it for generation rules.
 
-**Style (verified):** modern sleek flat editorial vector, clean silhouette edges, 1–2 tonal steps, warm South Asian characters (caramel skin, navy-black hair). **Brand blue `#4736FE` dominant (60%); orange is a 10% car/clothing accent only — never dominant.** All five have FULL backgrounds (car interior, road, cityscape) — **none are transparent cutouts.** When used as a SUBJECT-STYLE ref, take *only* the rendering style + palette and **ignore the background**; output must be a transparent PNG cutout (or lime `#00FF00` chroma key).
+**Style (verified):** modern sleek flat editorial vector, clean silhouette edges, 1–2 tonal steps, warm South Asian characters (caramel skin, navy-black hair). **Brand blue `#4736FE` dominant (60%); controlled supporting tones (30%); orange/mint together no more than 10% contextual accents.** All five have FULL backgrounds (car interior, road, cityscape) — use them only as SUBJECT-STYLE references. Copy the rendering style and palette discipline, ignore their background/scene, and render the fully contained hero directly inside the final Cars24 composite. Never request a transparent PNG or chroma-key output.
 
 > ⚠️ Two corrections: (1) The old `IMAGE-REFERENCE-MAP.md §4` listed phantom files (`Frame 2147228887/888/889`, `freepik 75904/75911/75912`) — they don't exist. (2) `freepik ...75907...` was renamed to **`Main_reference.png`** (same blue-suit driver image) and promoted to mandatory primary anchor. The five files below are the only real illustrations.
 
@@ -149,7 +149,7 @@ The FIRST attached image is a LAYOUT reference. Copy ONLY its composition: the t
 
 **🟨 SUBJECT-STYLE ref:**
 ```
-The SECOND attached image is a SUBJECT-STYLE reference. Match ONLY its rendering style: flat bold vector line quality, colour saturation, and South-Asian character treatment. IGNORE its background and scene entirely. Render the subject described above as a clean cutout on a transparent background. Do NOT reproduce the reference's pose or scene.
+The SECOND attached image is a SUBJECT-STYLE reference. Match ONLY its rendering style: modern sleek flat editorial shapes, colour discipline, and South-Asian character treatment. IGNORE its background and scene entirely. Render the described hero fully contained inside the final Cars24 composite, with no separate scene box, transparent export, or chroma-key layer. Do NOT reproduce the reference's pose or scene.
 ```
 
 **🟪 PATTERN-TEXTURE ref:**

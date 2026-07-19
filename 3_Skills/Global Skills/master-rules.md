@@ -3,10 +3,12 @@
 > Run `python3 tools/sync_skills.py` to propagate changes to both tool-specific skill files. Claude users may also use `/sync-skills` when `.claude/commands/sync-skills.md` is present.
 
 <!-- sync-metadata
-last_updated: 2026-06-25
-version: 2.28
+last_updated: 2026-07-19
+version: 2.30
 changelog:
-  - 2.28 — Subline readability lock and illustration-on-blue differentiation guard. Subline text beneath headlines must now be explicitly described as medium-sized in every prompt — approximately 30–40% of the headline point size — because prompts that said "small" consistently produced illegible supporting text that broke the composition. Added a companion illustration tonal differentiation rule for dark-theme outputs: when an illustrated hero uses a brand-blue-dominant palette on the brand-blue canvas, large clothing areas must use lighter periwinkle or lavender fills, shirts/blouses must carry visible white or off-white highlights, and rim lighting must be bright so the subject does not visually merge into the background. Both rules are promoted from accumulated CLAUDE.md learned preferences into the canonical rule set and propagated to the relevant prompt layers, QA checklist rows, and generated mirrors. Helps Maker Agent users avoid illegible sublines and washed-out illustration heroes on dark-theme outputs. Rollback: remove the subline scale bullet from the Typography System section and the tonal differentiation bullet from §8.3, restoring v2.27 prompt language.
+  - 2.30 — Added direction-locked revision control so a user-approved output can act as a run-specific visual anchor without turning export history into canonical brand learning. Compliance corrections now preserve the approved camera, subject scale, interaction, scene depth, and hierarchy unless the user explicitly requests a composition reset; Stage 9 adds non-regression comparison before export. Replaced the all-contained hero rule with intentional editorial framing: protect faces, key interactions, and meaning-carrying product detail, while allowing controlled edge crops and restrained environmental depth for illustration and photography where they improve the composition. Added a theme-based logo lock for carousels and batches: each approved theme/background family has a fixed official colourway, placement, and optical size across its logo-bearing slides; standalone images balance the logo to their own layout. Rollback: restore v2.29 full-containment, same-family logo wording, and on-demand-only revision QA.
+  - 2.29 — Consolidated recent production feedback into the canonical illustration and reference-selection system. Illustrated heroes now use the Cars24 modern sleek flat-editorial system as one generated composite, with `Main_reference.png` as the mandatory style anchor, scene references as supplements, and identity/context photos unable to override the style. Made the 60/30/10 palette enforceable for illustrations: Brand Blue leads, supporting tones remain subordinate, and orange/mint are controlled 10% total contextual accents. Established explicit reference precedence to eliminate stale atlas/guide conflicts, retired transparent-PNG/chroma-key illustration delivery language, and clarified that the Cars24 logo is optional per slide; strict logo fidelity applies only when a logo is deliberately selected. Rollback: restore v2.28 reference and illustration-delivery wording, remove the palette/reference-precedence QA checks, and reinstate the prior logo-default language.
+  - 2.28 — Refactored the image text workflow to reduce text-heavy creatives and make style selection more context-driven. Image generation now asks the user to choose `headline only` or `headline + short support line`, with `headline only` as the default for single-image creatives. Body text is no longer a valid on-image creative tier. Added a slide-intent decision (`person/credibility`, `story/metaphor`, `emotion/tension/shift`, `structure/framework`) so the visual system is chosen from the slide's communication job rather than from a generic style preference alone. Updated Stage 1 intake, Stage 2 slide planning, Stage 4 style routing, Stage 5/6 text rules, the prompt builder scenarios, and synced mirrors so Maker output stays more graphic, hook-led, and context-specific. Rollback: restore v2.27 image-text intake, re-enable body text as a prompt scenario, and remove the slide-intent style-routing gate.
   - 2.27 — Closed the Codex ImageGen export gap after a live repo-settings correction. The project already required auto-export after generation, but the Codex path still left room for images to remain only in the Codex generated-images directory instead of being copied into the canonical `4_exports/{serial}_{brief}_{DD-Mon}/vN/` structure. The rule is now explicit: after every successful generation, the agent must immediately copy/rename the exact produced bitmap into the export folder, write/update the version manifest, and present the exported files as the canonical result. For Codex `image_gen`, if the exact generated bitmap is locally accessible, the agent must export that same file and must not leave export as a deferred/manual follow-up step. If the exact bitmap cannot be verified or copied, the agent must stop and ask before any regeneration, provider switch, or fallback. Updated the source rules and export README, then resynced generated mirrors and entry docs so export discipline matches real Codex behavior. Rollback: restore v2.26 wording and the earlier README language that treated Codex export as more conditional.
   - 2.26 — Carousel abstract style-lock and icon-label layout guard from project 001 carousel feedback. When a carousel's confirmed style is abstract, every slide must use abstract dot-form treatment — including slides with structured content (lists, pillars, steps). Switching one slide to literal flat/3D/glass icon-label treatment inside an abstract carousel is now an explicit style-purity failure caught at the Stage 7 audit. Added a companion icon-label layout guard: a two-column icon-next-to-text-label layout is only valid when each icon is large enough to carry independent meaning; if the icon merely decorates the label beside it, remove the icon system and use text hierarchy with an abstract hero instead. Both rules help Maker Agent users avoid mixed-style carousel outputs where one slide breaks the visual system the others establish. Rollback: remove the carousel abstract style-lock paragraph and icon-label layout guard bullet, restoring v2.25 carousel diversity and style-purity language.
   - 2.25 — Hardened the logo-generation workflow after Codex prompt-only runs drifted to an older boxed `CARS24` mark even when the repo’s current logo asset was named in text. Logo-bearing generations must now use both signals together: the actual theme-matched visible logo PNG attached/shared as visual input, and an explicit prompt block describing the current Cars24 lockup while rejecting the old boxed/all-caps mark, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is now traceability only, never sufficient by itself. If the active tool cannot attach the logo PNG as true visual input, it may not be used for logo-bearing output. Updated master rules, creative direction, query recipes, logo reference map, and synced Codex/Claude mirrors so the whole repo follows one stricter logo-fidelity rule. Rollback: restore v2.24 logo wording that allowed Codex source-path-first attempts and remove the explicit current-logo description requirement.
@@ -131,12 +133,12 @@ After the path is known, follow the path for that option:
 #### Step B — Image generation (only after freeze)
 
 Runs the full Image Generation Pipeline (§6). In brief:
-1. **Inputs** (Stage 1): choose output type — single image or carousel. If carousel, ask for slide count with 3 as the suggested default; then collect size (1:1 · 1080×1080 / 4:5 · 1080×1350 / 1.91:1 · 1200×628 / 2:1 · 1200×600 / 16:9 · 1600×900 / Custom) and theme — dark / light / mixed (dark = brand blue `#4736FE` · light = soft lavender `#EBE9FF`).
-2. **Slide plan** (Stage 2): break the copy into N slides — title · subheading · visual message · theme per slide. Freeze gate.
+1. **Inputs** (Stage 1): choose output type — single image or carousel. If carousel, ask for slide count with 3 as the suggested default; then collect size (1:1 · 1080×1080 / 4:5 · 1080×1350 / 1.91:1 · 1200×628 / 2:1 · 1200×600 / 16:9 · 1600×900 / Custom), theme — dark / light / mixed (dark = brand blue `#4736FE` · light = soft lavender `#EBE9FF`), and text mode — `headline only` or `headline + short support line`.
+2. **Slide plan** (Stage 2): break the copy into N slides — hook · optional short support line · slide job · visual message · theme per slide. Freeze gate.
 3. **Logo gate** (Stage 3): which slides, if any, carry the Cars24 logo.
 4. **Visual style** (Stage 4): illustration · photo · abstract pattern or form · infographic look-and-feel · or "let AI decide" (AI picks the best per slide and states why).
 5. **Composed creative — always** (Stage 5): no question asked here.
-6. **Build per-slide image prompts** (Stage 6): copy + background (flat/gradient) + pattern + fully contained subject + Arapey-led typography + logo placement in negative space, baked into one prompt; present for review.
+6. **Build per-slide image prompts** (Stage 6): copy + background (flat/gradient) + pattern + intentionally framed subject + Arapey-led typography + logo placement in negative space, baked into one prompt; present for review.
 7. **Assembly & Approval gate** (Stage 7): reference→role map + fully assembled prompt + provider-specific approval. **Codex default:** if running inside Codex and built-in `image_gen`/imagegen is available, default to Codex imagegen and ask "Generate with Codex imagegen? (yes/no)" — no Higgsfield credit estimate needed. **Fallback/non-Codex:** use Higgsfield credit estimate → explicit "Generate with Higgsfield? (yes/no)".
 8. **Generate** (Stage 8) only on **yes** — Codex sessions default to Codex imagegen. Every Higgsfield route first verifies authentication, then uses GPT Image 2 (`gpt_image_2`) unless the user explicitly requested another supported model. Report progress as each image completes.
 9. **Export** to `4_exports/{serial}_{brief}_{DD-Mon}/vN/{brief}-imageN.[ext]`. Visual QA (Stage 9) only if the user flags an output as off.
@@ -204,12 +206,14 @@ These overrides come from repeated production runs and user feedback. They are c
 
 - **Typography:** headlines are **Arapey-led serif in both dark and light themes**. Use Arapey Italic on the emotive word(s) and Arapey Regular on structural words. Describe the typeface visually as a refined editorial serif in image prompts; never rely on the font name alone.
 - **Case:** visible creative copy is sentence case everywhere. Never use title case for creative headlines, never camel case, and never all caps.
-- **Hero framing:** illustration, photo, and infographic/icon heroes must be fully contained inside the canvas. No edge bleed and no cropped heads, hands, cars, icons, or key objects.
+- **Hero framing:** choose `contained` or `intentional editorial edge crop` in the layout plan. Protect faces, focal interactions, action-carrying hands, and meaning-carrying product detail; only supporting forms may exit an edge when the crop is deliberate, stylish, and keeps text readable.
 - **Photo treatment:** photo heroes should be clean cutouts with a visible white accent outline, placed on the themed brand canvas rather than inside a rectangular photo frame.
 - **Photo/image-led covers:** default to a clean photographic cutout hero removed from its original environment, placed directly on the Cars24 canvas, with a crisp visible white accent outline around the complete silhouette. No rectangular photo frame, embedded photo panel, or full-scene background unless the user explicitly selects `full-scene photo`. Preserve natural lighting and real colour inside the cutout; the theme lives in the surrounding canvas, text, and pattern.
 - **Pattern treatment:** patterns may flow across the full background as a clean atmospheric layer. They must stay behind the text and hero, preserve text readability, and never appear as a foreground layer over the hero.
 - **Light pattern opacity:** light-theme dot patterns should sit around **20–25% opacity** — visible enough to register, but still restrained.
-- **Logo fidelity:** logo-bearing generation must use the actual theme-matched visible logo PNG as attached/shared visual input and must also include an explicit prompt block describing the current Cars24 lockup. The prompt must identify the current logo as the rounded-square icon with the circular cut-through/open-`C` mark plus the `Cars24` wordmark, and must explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is traceability only, never sufficient by itself. If the active tool/workflow cannot attach the visible logo PNG as true visual input, do not use it for logo-bearing output. Render the logo inside the generated composite; never add a post-process/local superimpose step. The logo must match reference sizing, sit in negative space, preserve clear space, use the correct colourway, and remain fully uncropped. Any changed geometry, missing icon, altered wordmark, box/tile, all-caps drift, or crop fails logo QA; move to a visual-input-capable workflow or ask for a supported logo upload.
+- **Logo fidelity (only when selected):** logo use is optional per slide and must never be added by default. When a user or approved slide plan selects a logo, it must use the actual theme-matched visible logo PNG as attached/shared visual input and include an explicit prompt block describing the current Cars24 lockup. The prompt must identify the current logo as the rounded-square icon with the circular cut-through/open-`C` mark plus the `Cars24` wordmark, and must explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is traceability only, never sufficient by itself. If the active tool/workflow cannot attach the visible logo PNG as true visual input, do not use it for logo-bearing output. Render the logo inside the generated composite; never add a post-process/local superimpose step. The logo must match reference sizing, sit in negative space, preserve clear space, use the correct colourway, and remain fully uncropped. Any changed geometry, missing icon, altered wordmark, box/tile, all-caps drift, or crop fails logo QA; move to a visual-input-capable workflow or ask for a supported logo upload.
+- **Illustration palette:** illustrated heroes use a 60/30/10 colour budget: 60% Cars24 Brand Blue `#4736FE`; 30% restrained supporting deep-blue, off-white, and natural skin tones; and no more than 10% total optional orange/mint accents. Orange is a contextual car or small clothing detail; mint is a deliberate product/campaign cue. Neither is a default, dominant, background, or dot-pattern colour. Icon systems remain brand-blue monochrome under their stricter rule.
+- **Reference precedence:** use `CREATIVE-DIRECTION.md` for the visual system, `ILLUSTRATION-GENERATION-GUIDE.md` for illustrated-hero execution, `reference-index.json` plus `reference-tags/` for eligible selection and attachability, `REFERENCE-SKILL-MAP.md` for the brand-book asset audit, and `REFERENCE-ATLAS.md` only for observed layout/asset facts. Higher sources win. A layout reference, scene supplement, or identity/context photo must never override the canonical illustration system.
 - **Style purity:** one creative commits to one primary visual style only — illustration, photo, abstract pattern/form, or infographic/icon. Do not blend illustration people, infographic flows, SaaS/product dashboards, 3D platform blocks, network maps, UI cards, and Cars24 service scenes unless the selected style explicitly permits that element. The latest project 020 batch showed the failure mode: polished but generic "AI workflow" imagery created by mixing styles. Prevent it with a style-purity audit before generation.
 - **Icon-label layout guard:** a two-column icon-next-to-text-label layout is only valid when each icon is large enough to carry independent meaning on its own. If the icon merely decorates the label beside it without adding visual context, remove the icon system entirely and use text hierarchy with an abstract dot-form hero instead. Prefer unified compositions over icon-label grids. This guard applies especially when the slide's primary style is abstract — in that case, icon-label pairs are a style-purity failure regardless of icon size.
 - **Visual noun budget:** each prompt gets one dominant hero noun and at most one supporting visual noun. If a prompt lists more than two visual systems or objects (for example: people + car + icons + dashboards + nodes + database + roadmap), simplify before approval. The slide should read as a specific Cars24 moment, not a generic technology ecosystem.
@@ -296,14 +300,14 @@ These are production composition templates. They show how text zones, pattern zo
 
 1. **Background** — single-hue colour field with a subtle same-hue vertical gradient/glow (NOT a flat dead fill; NOT a multi-colour gradient)
 2. **Pattern** — dot/particle atmosphere layer that may flow across the full background while staying clean behind text and hero
-3. **Subject (hero)** — the typed subject (illustration / real photo / abstract), rendered as a cutout-style hero fully contained inside the canvas (no background box of its own). Safe framing: the face, head, hands, car, icon, and any key object stay inside the safe zone (inner ~85%) with headroom — never clipped or cropped at any edge.
-4. **Text** — headline + subheading baked in, with a dynamic layout that follows the theme reference creative
+3. **Subject (hero)** — the typed subject (illustration / real photo / abstract), rendered directly on the full canvas with no background box of its own. Safe framing is deliberate: protect the face, focal interaction, action-carrying hands, and meaning-carrying product detail; a supporting car, shoulder, clothing edge, or environmental form may exit an edge only when declared as an intentional editorial crop.
+4. **Text** — headline + optional short support line baked in, with a dynamic layout that follows the theme reference creative
 5. **Logo** — render the theme-matched Cars24 logo inside the generation from the attached/shared logo reference, sized consistently with the references and placed in negative space
 
 **Layout is a choice, not a fixed law.** The reference cards use a *family* of structures, and rotating between them is what keeps a set balanced and varied. Pick the archetype that fits the slide, and across a multi-slide set alternate archetypes and vertical anchors so consecutive slides don't repeat:
 
 1. **Cover / Lockup** — big title/lockup top (or centred), hero centred-lower or centred logo pill; symmetric (refs DT-1, DT-8, LT-1)
-2. **Headline-left + Hero-right** — headline upper-left, hero fully contained on right/lower-right (refs DT-4, LT-2, LT-5, LT-7)
+2. **Headline-left + Hero-right** — headline upper-left, hero deliberately framed on right/lower-right (refs DT-4, LT-2, LT-5, LT-7)
 3. **Stacked-left column + Hero-right** — kicker/body + large headline stacked left, hero right (refs DT-7, LT-4, LT-6)
 4. **Text-only** — no hero; headline + list, anchored top or bottom; pattern carries the weight (refs DT-2, DT-5)
 5. **Headline-dominant** — headline fills the canvas, faint corner pattern only (ref DT-6)
@@ -318,14 +322,14 @@ The classic two-zone split (clean **text zone** left, **hero + pattern zone** ri
 
 **Carousel abstract style-lock:** when the confirmed carousel style is **abstract**, every slide in the set must use abstract dot-form treatment — including slides whose content is structured (lists, pillars, steps, comparisons). Convey structure through text hierarchy and contextual dot-form formations; do not switch individual slides to literal flat/3D/glass icon-label treatment. Switching one slide to a different visual style inside an abstract carousel is a style-purity failure and must be caught at the Stage 7 style-purity audit before generation.
 
-**Balance principles (every archetype):** one dominant element only (headline *or* hero leads, never both equal — the leading element counterbalances the other's weight); commit to ONE vertical anchor per slide and alternate it across a set; text left-set, left-aligned, ragged-right (Cover/Event centre); generous negative space — text fills ~half its zone; consistent ~6–8% outer margin for text + logo; hero fully contained inside the canvas; three-tier rhythm (kicker → headline → body/CTA) when copy is rich. Full table + reasoning: `1_References/CREATIVE-DIRECTION.md` → *The Layout System*.
+**Balance principles (every archetype):** one dominant element only (headline *or* hero leads, never both equal — the leading element counterbalances the other's weight); commit to ONE vertical anchor per slide and alternate it across a set; text left-set, left-aligned, ragged-right (Cover/Event centre); generous negative space — text fills ~half its zone; consistent ~6–8% outer margin for text + logo; intentional hero framing that protects the story and text zone. For most creatives, text should resolve as one hook or one hook plus one short support line — never a mini article. Full table + reasoning: `1_References/CREATIVE-DIRECTION.md` → *The Layout System*.
 
 ### Theme System
 
 **The chosen theme (dark or light) governs every output format.** Whether the output is an illustration, a photograph, an infographic, or a USP stamp, the confirmed theme defines the same output style across all of them — and all are produced as a single Higgsfield composite. Confirm the theme once (Stage 1) and apply it consistently to whatever format is being produced.
 
 - **Dark theme:** Cars24 Brand Blue `#4736FE` is the dominant full-bleed background anchor · controlled same-hue vertical/ambient gradient for premium depth, with optional restrained radial glow around the hero/pattern zone · white luminous dot patterns · all text white · 4:5 portrait (1080×1350). "Dark theme" means **white-on-brand-blue**, not a darkened canvas: the background may drift slightly lighter or darker around `#4736FE`, but it must still read immediately as bright Cars24 brand blue and must not become navy, indigo, black, midnight blue, dark violet, generic purple, or dim AI-tech dark mode.
-- **Light theme:** exact `#EBE9FF` pale lavender background derived from Brand Blue · blue `#4736FE` dot patterns (no glow) · headline Brand Blue `#4736FE`, subheading/body near-black `#161616`, short punch/tagline Brand Blue `#4736FE` · 1:1 square (1080×1080). Lavender is intentional for light/dark distinction, but it must read as a brand-blue tint — not pink, grey, beige, or generic pastel purple.
+- **Light theme:** exact `#EBE9FF` pale lavender background derived from Brand Blue · blue `#4736FE` dot patterns (no glow) · headline Brand Blue `#4736FE`, optional support line near-black `#161616`, short punch/tagline Brand Blue `#4736FE` · 1:1 square (1080×1080). Lavender is intentional for light/dark distinction, but it must read as a brand-blue tint — not pink, grey, beige, or generic pastel purple.
 
 **Theme drives the canvas, not the subject.** The subject (illustration, photo hero, infographic icon) is rendered as a cutout-style hero *within the single Higgsfield composite* — it carries no background box of its own; the theme is expressed by the canvas around it (background colour, pattern colour, text colour). Tune the subject's own lighting, palette, and mood to *harmonize* with the theme (warmer/luminous for dark, cleaner/brighter for light), but never bake the theme background into the subject. The background, pattern, text, and logo are all part of the same generated image.
 
@@ -341,9 +345,9 @@ This is the single rubric that defines what "looks like the theme reference" mea
 | Pattern | White luminous dots, soft rim glow/bokeh, behind the hero and text — bloom, not a spotlight. For abstract dot-form hero slides, dense dots may form the hero silhouette while lighter dots continue as atmosphere | Brand-blue `#4736FE` dots, controlled at ≈20–25% opacity. For abstract dot-form hero slides, soft bokeh depth is allowed but the look stays clean blue halftone with little or no glow | Dots present, correct colour, full-background but clean; text remains readable; non-abstract slides keep pattern behind the hero, while abstract slides build the hero from the pattern itself |
 | Headline colour | White | Brand blue `#4736FE` | Sample the headline pixels |
 | Headline typeface dominance | **Arapey-led** — predominantly Arapey serif; Arapey Italic on emotive word vs Arapey Regular structural | **Arapey-led** — same serif-led system as dark theme | Both themes use a refined editorial serif headline with one emotive device lifting the key word |
-| Body / subheading colour | White (single-colour text system — no coloured text) | **Descriptive body** near-black `#161616`; **short forward tagline** Brand Blue `#4736FE` Geist Bold | Sample body pixels — light theme runs two body colours by role |
+| Support-line colour | White (single-colour text system — no coloured text) | Optional support line near-black `#161616`; short forward tagline Brand Blue `#4736FE` Geist Bold | Sample support-line pixels — light theme runs two support-line colours by role |
 | Layout & balance | One of the Layout System archetypes, applied cleanly: one dominant element, a committed vertical anchor, generous negative space, consistent margin; full-background pattern stays clean behind text | Same | Reads as a balanced, deliberate composition from the archetype family — not lopsided, not floating, not crammed |
-| Hero treatment | Clean cutout fully contained inside the canvas — no edge bleed and no cropping | Same | Face, head, hands, cars, icons, and key objects are complete and inside the safe area |
+| Hero treatment | Clean direct-on-canvas hero, deliberately framed as contained or an intentional editorial edge crop | Same | Face, focal interaction, action-carrying hands, and meaning-carrying product detail remain clear; only supporting forms may crop intentionally |
 | Aspect ratio (default) | 4:5 portrait (1080×1350) | 1:1 square (1080×1080) | Matches unless user overrode in Stage 1 |
 | Mood | Bold, confident, editorial | Lighter, approachable, editorial | Overall read matches the reference card's register |
 | Icon fill colour | Brand-blue monochrome — saturated `#4736FE` fills + pale blue overlays + white accents. No green, cyan, teal, orange, red, or off-brand hues | Same — full-saturation `#4736FE` brand blue, not washed out by the pale background | Scan each icon: any green/cyan/orange/red → fail |
@@ -370,19 +374,17 @@ This is the single rubric that defines what "looks like the theme reference" mea
 - **Light theme → Arapey-led headline.** Use the same refined editorial serif system as dark theme: Arapey Italic on emotive word(s), Arapey Regular on structural words. Do not switch light theme headlines to a sans-led system.
 - **Always one emphasis device** lifting the key word — never a flat, uniform headline.
 
-**Subheading / body** is always **Geist** (Regular for descriptive copy, Bold for keyword emphasis or a short forward tagline) regardless of theme.
+**Support line** is always **Geist** (Regular for descriptive short copy, Bold for a short forward tagline) regardless of theme.
 
 **Text colour mapping (theme-dependent — observed from the references):**
 - **Dark theme — single-colour:** ALL text white `#FFFFFF`. Hierarchy comes from typeface (Arapey vs Geist), weight, and size — never colour. Bold keywords in body stay white.
 - **Light theme — two-colour text system:**
   - Headline → Brand Blue `#4736FE`
-  - **Descriptive body / subheading** (the explanatory sentence) → **near-black `#161616`**, Geist Regular (e.g. "Sharper ideas. Faster prototypes…", "Not just a side tool.")
-  - **Forward tagline / punch-line subtext** (a short pointer line, often the last line) → **Brand Blue `#4736FE`**, Geist Bold (e.g. "New ways of building…", "From tokens to outcomes."). Use sparingly — it is the punch line, not the paragraph.
-  - Keyword emphasis inside body → Geist Bold in that body line's own colour (near-black for descriptive).
+  - **Short support line** (the only secondary text tier when enabled) → **near-black `#161616`**, Geist Regular
+  - **Forward tagline / punch-line support line** → **Brand Blue `#4736FE`**, Geist Bold. Use sparingly — it is the punch line, not the paragraph.
+  - Keyword emphasis inside the support line → Geist Bold in that line's own colour
 
 **Headline scale:** dominant — occupies 40–60% of canvas height in all scenarios
-
-**Subline/body scale:** medium — clearly legible at a glance, approximately 30–40% of headline point size. Never describe the subline as "small" in prompts; that consistently produces illegible supporting text. The subline must be large enough to create a balanced, cleanly readable composition alongside the headline. The headline size is not affected by this rule.
 
 **Rendering the typefaces in image prompts (MANDATORY — image models do not know font names).** Image models **cannot reliably read a font by name** — writing "Arapey" or "Geist" in a prompt can fall back to a generic, almost always **sans-serif**, face. This is exactly why an Arapey-led headline can render as plain sans (verified, project 013). Never rely on the font name alone. In every prompt, **describe the typeface visually and state its category (serif / sans-serif) explicitly**, then append the font name only as a trailing hint:
 
@@ -482,7 +484,7 @@ All logo assets live at:
 #### Placement
 - Place the logo according to the layout axis and cleanest negative-space zone, not a fixed corner. Left-aligned layouts usually use left-aligned logo placement; centre/symmetric layouts use centre-aligned placement; right-aligned layouts may use a right-aligned logo if that is the cleanest negative space.
 - Top or bottom placement is chosen by the available negative space in the creative. For example, centre-aligned layouts may use bottom-centre or top-centre; left-aligned layouts may use bottom-left or top-left.
-- In carousels or batches with the same theme/background family, keep logo placement and logo size exactly consistent across every logo-bearing slide unless the user explicitly approves a change.
+- In carousels or batches, establish a theme-based logo lock. Within each approved theme/background family, keep the official logo colourway, placement, and optical size exactly consistent across every logo-bearing slide. This applies to white-on-brand, blue-on-light, white-on-dark-photo, and black-on-light/print locks.
 - The logo may overlap the pattern. It may overlap the hero only when it remains readable, high-contrast, cleanly fitted, and fully uncropped.
 - Keep generous clear space on all sides and never let the logo touch, bleed, crop, or cut off at an artwork edge.
 - Do not recolour, stretch, rotate, add shadow, or apply CSS filters.
@@ -580,6 +582,10 @@ Collect the following before proceeding:
 - Size: present as ratios and dimensions only — no platform names
   Options: 1:1 · 1080×1080 / 4:5 · 1080×1350 / 1.91:1 · 1200×628 / 2:1 · 1200×600 / 16:9 · 1600×900 / Custom
 - Theme: single → light or dark; carousel → light, dark, or mixed (mixed = alternating light/dark per slide)
+- Text mode: `headline only` or `headline + short support line`
+  - Single-image default: ask this explicitly and recommend `headline only`
+  - Support line is opt-in; never assume it just because the source copy is long
+  - Body text is not a valid on-image text tier for creatives
 
 ---
 
@@ -589,20 +595,26 @@ Collect the following before proceeding:
 
 For each slide, define:
 - **Slide number**
-- **Title** — short, punchy headline for this slide (drawn from the write-up)
-- **Subheading** — one supporting line (drawn from the write-up)
+- **Hook** — short, punchy headline for this slide (drawn from the write-up)
+- **Support line** — optional, short, and only included when the selected text mode is `headline + short support line`
+- **Slide job** — choose the communication job that should lead the visual:
+  - `person / credibility`
+  - `story / metaphor`
+  - `emotion / tension / shift`
+  - `structure / framework`
 - **Visual message** — one sentence describing what this slide should communicate visually
 - **Theme** — dark or light for this slide. Defaults to the theme confirmed in Stage 1; for a mixed carousel, state the specific theme per slide here.
 
 Present the full breakdown to the user:
 
 ```
-Slide 1 — [Title]
-Subheading: [Subheading]
+Slide 1 — [Hook]
+Support line: [short line / none]
+Slide job: [person / credibility · story / metaphor · emotion / tension / shift · structure / framework]
 Visual message: [What this slide communicates]
 Theme: [dark / light]
 
-Slide 2 — [Title]
+Slide 2 — [Hook]
 ...
 ```
 
@@ -634,10 +646,18 @@ What visual style do you want for these images?
 2. Photo — photography-style or realistic visual
 3. Abstract pattern or form — contextual dot-form hero made from Cars24 halftone/particle patterns
 4. Infographic look-and-feel — data, icons, structured information layout
-5. Let AI decide — I pick the best style for each slide and briefly state why
+5. Let AI decide — I pick the best style for each slide from the slide job and briefly state why
 ```
 
 The user picks one style for all slides, specifies per-slide variation, or chooses **Let AI decide**. If they pick "Let AI decide" (or give no preference), select the best style per slide from options 1–4 and state the rationale in one line per slide.
+
+**Slide-job → style routing default:**
+- `person / credibility` → prefer **photo**
+- `story / metaphor` → prefer **illustration**
+- `emotion / tension / shift` → prefer **abstract pattern or form**
+- `structure / framework` → prefer **infographic look-and-feel**
+
+Use this routing when the user chooses **Let AI decide**, when the brief is under-specified, or when a proposed style conflicts with what the slide is trying to communicate.
 
 **Reference loading — once style is confirmed, load these before Stage 6:**
 
@@ -662,7 +682,7 @@ The user picks one style for all slides, specifies per-slide variation, or choos
 
 **Stage 5 asks the user nothing.** Never ask whether they want standalone layers, a bare cutout, or a composed output — the single-shot composite is the only mode. This stage is a statement of how the creative is built, not a question; move straight from here into Stage 6.
 
-**Text is always baked in by the image model.** The deliverable — whatever the style (illustration, photo, pattern, abstract form, infographic) — has the headline, subline, and required logo rendered *into* the generated image. The subject "cutout" is not a separate exported asset and is never composited by us; it is described in the prompt and rendered directly into the composite. A bare subject with no canvas/text/logo is never the deliverable.
+**Text is always baked in by the image model.** The deliverable — whatever the style (illustration, photo, pattern, abstract form, infographic) — has the headline and optional short support line, plus any required logo, rendered *into* the generated image. Body text is not part of the creative text system. The subject "cutout" is not a separate exported asset and is never composited by us; it is described in the prompt and rendered directly into the composite. A bare subject with no canvas/text/logo is never the deliverable.
 
 **Look-and-feel anchors to the theme reference creatives.** The overall look of every output draws from the confirmed dark/light theme reference creatives in `2_Image References/{Dark|Light} theme/`. Bake this into the Stage 6 prompts; it is checked at the Stage 9 QA only if the user flags an output as off.
 
@@ -673,8 +693,10 @@ The user picks one style for all slides, specifies per-slide variation, or choos
 Stage 6 turns each confirmed slide into the **actual prompt** that will be sent to the selected image provider. One prompt = one composed slide — background, pattern, subject, text, and required logo all described together and rendered in a single generation. There is no logo post-process. Work through every slide and build the prompt in this order.
 
 **6.1 — Copy & description (what we keep).** First, restate exactly what stays on this slide:
-- **Title** — verbatim
-- **Subheading** — verbatim
+- **Hook** — verbatim
+- **Support line** — verbatim, or `none`
+- **Text mode** — `headline only` or `headline + short support line`
+- **Slide job** — `person / credibility` · `story / metaphor` · `emotion / tension / shift` · `structure / framework`
 - **Visual message** — what the slide must communicate
 - **Theme** — dark or light (from Stage 2)
 - **Style** — illustration / photo / abstract pattern or form / infographic (from Stage 4, or the AI's per-slide pick)
@@ -700,14 +722,14 @@ For carousels and batches, review the plans as a set before prompting. No more t
 
 **6.2 — Build the single composite prompt from that context.** Using 6.1, write ONE prompt that produces the complete slide in the chosen style. It must spell out the layout decision plus all five content layers so Higgsfield composites them in a single generation — the agent composites nothing afterward. Ground every layer in the brand guidelines:
 
-- **Layer 0 — Layout & balance (from the approved layout plan)** — use the layout plan from 6.1a as the source. State the **archetype** for this slide from the Layout System (§4: Cover/Lockup · Headline-left+Hero-right · Stacked-left+Hero-right · Text-only · Headline-dominant · Content-card overlay · Event poster), the matching Atlas LAYOUT reference (DT-/LT- ID), the **vertical anchor** (headline top / bottom / centred / full-canvas), and which single element dominates. In a multi-slide set, enforce the diversity guard from 6.1a before this prompt is written. Carry the balance principles into the wording: one dominant element, generous negative space, left-set text (Cover/Event centre), ~6–8% margin, fully contained hero, and clean readable text over the atmospheric pattern. This decision drives the placement language in Layers 2–5.
+- **Layer 0 — Layout & balance (from the approved layout plan)** — use the layout plan from 6.1a as the source. State the **archetype** for this slide from the Layout System (§4: Cover/Lockup · Headline-left+Hero-right · Stacked-left+Hero-right · Text-only · Headline-dominant · Content-card overlay · Event poster), the matching Atlas LAYOUT reference (DT-/LT- ID), the **vertical anchor** (headline top / bottom / centred / full-canvas), which single element dominates, and framing mode (`contained` / `intentional editorial edge crop`) with protected details. In a multi-slide set, enforce the diversity guard from 6.1a before this prompt is written. Carry the balance principles into the wording: one dominant element, generous negative space, left-set text (Cover/Event centre), ~6–8% margin, protected story detail, and clean readable text over the atmospheric pattern. This decision drives the placement language in Layers 2–5.
 - **Layer 1 — Background** — a single-hue field in the slide's theme. Dark = Cars24 Brand Blue `#4736FE` as the dominant canvas, with a subtle same-hue vertical/ambient gradient for premium depth and, when useful, an optional restrained radial glow around the hero/pattern zone. White text creates the dark-theme contrast; never describe the background itself as dark, deep, midnight, navy, indigo, black, dark violet, generic purple, dim, or heavily shadowed. Light = exact pale lavender `#EBE9FF` derived from Brand Blue, distinct from dark but not pink/grey/beige/generic pastel purple. Never a multi-colour gradient. In prompts, include the relevant hex values and state: "do not render the hex code as text."
 - **Layer 2 — Pattern (per-slide decision)** — for THIS slide, decide whether a pattern goes in or not. Name the pattern family and placement, or explicitly state **no pattern**. For illustration/photo/infographic slides, patterns may flow across the full background as a clean atmospheric layer, but must stay behind text and hero and preserve readability. For **abstract pattern/form**, the pattern treatment becomes the hero itself: dense dots build the contextual silhouette while lighter dots continue across the full canvas as atmosphere. Dots: white luminous + controlled glow/bokeh (dark) / brand-blue halftone dots with soft bokeh depth and little or no glow (light). **Keep light-theme dots at ≈20–25% opacity outside the hero form: visible but restrained.** For pattern family + exact base text, load `1_References/CREATIVE-DIRECTION.md` → **Pattern Family Reference**.
-- **Layer 3 — Subject (clearly typed + context-driven)** — first state the subject TYPE explicitly: **illustration**, **real photographic image**, **abstract pattern/form**, or **infographic/icon**. Then write a clear, rich prompt for that subject as the primary style locked in 6.1. Do not mix subject types inside the same prompt. For **abstract pattern/form**, prompt a contextual abstract dot-form hero made entirely from Cars24 halftone/particle dots: one recognisable semantic silhouette is allowed (car, key, face, shield, road, etc.) when it remains metaphor-led, not literal. The hero formation should read as denser dot clusters, depth falloff, and bokeh extracted from the pattern system; lighter dots continue into the surrounding canvas. It must never become a literal illustration, real photo, icon set, UI card, dashboard, service scene, 3D platform block, or infographic process flow, and it must not default to generic mountain/terrain unless that metaphor is explicitly right for the slide. For non-abstract subjects, **state the framing explicitly so the subject is fully contained** — name the crop (e.g. "waist-up, full head and hands in frame with headroom, fully contained inside the canvas"); keep the face, head, hands, car, icons, and any key object inside the safe zone (inner ~85%). The subject must be driven by the slide's meaning — let the visual message and emotion shape it, so the hero earns its place rather than being generic. Cover who/what, action, expression/mood, framing, and palette per the style's rules (§8 illustration, §9 photography, §10 infographic). **For illustration, use the illustration reference model:** `Main_reference.png` from `1_References/3_Illustrations References/` is the mandatory style anchor, any additional illustration-folder file is a scene supplement, and any approved external/person/product image is an identity/context reference only. Merge those cues into Cars24 modern sleek flat editorial illustration; do not let an approved photo turn the hero into photorealism, a painted-photo portrait, a SaaS dashboard scene, a 3D platform render, or an infographic flow. For photo heroes, specify the chosen photo layer and do not add illustrated UI overlays. For infographics, use icon/flow language and avoid human illustration unless explicitly approved.
-- **Layer 4 — Text (dynamic, follows the reference)** — how the headline and subheading flow, headline at 40–60% of canvas height. **Apply Arapey-led serif headline dominance in both themes:** Arapey Italic on the emotive word(s), Arapey Regular on structural words. **⚠️ Describe every typeface visually with its category (serif / sans-serif), never by font name alone — image models ignore font names and default to sans (see Typography System → "Rendering the typefaces in image prompts").** Write the headline as a *serif* family explicitly (e.g. "refined editorial serif, the emotive word in flowing serif italic — NOT sans-serif"), not just "Arapey". **Case:** sentence case only; never title case, camel case, or all caps. **Colours:** dark → all text white (single-colour). Light → headline brand blue `#4736FE`, descriptive body near-black `#161616`, and any short forward tagline in brand blue `#4736FE` Geist Bold. The text **layout is dynamic and follows the actual shared theme reference creative** in `2_Image References/{Dark|Light} theme/` — match its hierarchy while preserving a clean readable text area.
-- **Layer 5 — Logo** — placement per the Stage 3 decision, or none. If logo = yes, name the correct theme-matched visible logo PNG as the repo-relative source file to use and instruct faithful reproduction inside the composite. In Codex ImageGen prompts, use explicit source-language: `Use the Cars24 logo from this repository-relative file path as the logo source: [path]. Copy the official logo identity exactly from that file.` For reference-capable providers, also attach/share the same PNG as actual visual input during generation. Place the logo according to the layout axis and cleanest negative space; in carousels with the same theme/background family, keep logo placement and size identical across slides. The logo may overlap pattern, and may overlap hero only if readable, high-contrast, cleanly fitted, and fully uncropped. Size should match the reference creatives (roughly 8–10% canvas width for slide branding), preserve clear space, and never be cut by the artwork edge. No box/tile, no placeholder, no local overlay afterward. If QA shows any changed logo geometry, changed wordmark, missing icon, added box/tile, or crop, regenerate via a visual-input-capable workflow or ask for a supported logo upload.
+- **Layer 3 — Subject (clearly typed + context-driven)** — first state the subject TYPE explicitly: **illustration**, **real photographic image**, **abstract pattern/form**, or **infographic/icon**. Then write a clear, rich prompt for that subject as the primary style locked in 6.1. Do not mix subject types inside the same prompt. For **abstract pattern/form**, prompt a contextual abstract dot-form hero made entirely from Cars24 halftone/particle dots: one recognisable semantic silhouette is allowed (car, key, face, shield, road, etc.) when it remains metaphor-led, not literal. The hero formation should read as denser dot clusters, depth falloff, and bokeh extracted from the pattern system; lighter dots continue into the surrounding canvas. It must never become a literal illustration, real photo, icon set, UI card, dashboard, service scene, 3D platform block, or infographic process flow, and it must not default to generic mountain/terrain unless that metaphor is explicitly right for the slide. For non-abstract subjects, state the selected framing explicitly: use `contained` or `intentional editorial edge crop`; protect the face, focal interaction, action-carrying hands, and meaning-carrying product detail, while allowing only supporting forms to exit an edge. The subject must be driven by the slide's meaning — let the visual message and emotion shape it, so the hero earns its place rather than being generic. Cover who/what, action, expression/mood, framing, and palette per the style's rules (§8 illustration, §9 photography, §10 infographic). **For illustration, use the illustration reference model:** `Main_reference.png` from `1_References/3_Illustrations References/` is the mandatory style anchor, any additional illustration-folder file is a scene supplement, and any approved external/person/product image is an identity/context reference only. Merge those cues into Cars24 modern sleek flat editorial illustration in the final composite; do not request transparent/chroma-key output or let an approved photo turn the hero into photorealism, a painted-photo portrait, a SaaS dashboard scene, a 3D platform render, or an infographic flow. Apply the illustration 60/30/10 colour budget: brand blue dominant, supporting tones subordinate, orange/mint together no more than 10% and only when contextually justified. For photo heroes, specify the chosen photo layer and do not add illustrated UI overlays. For infographics, use icon/flow language and avoid human illustration unless explicitly approved.
+- **Layer 4 — Text (dynamic, follows the reference)** — how the headline and optional short support line flow, with the headline at 40–60% of canvas height. **Apply Arapey-led serif headline dominance in both themes:** Arapey Italic on the emotive word(s), Arapey Regular on structural words. **⚠️ Describe every typeface visually with its category (serif / sans-serif), never by font name alone — image models ignore font names and default to sans (see Typography System → "Rendering the typefaces in image prompts").** Write the headline as a *serif* family explicitly (e.g. "refined editorial serif, the emotive word in flowing serif italic — NOT sans-serif"), not just "Arapey". **Case:** sentence case only; never title case, camel case, or all caps. **Support-line rule:** only include a support line when Stage 1 explicitly selected `headline + short support line`; keep it short, graphic, and precise rather than explanatory prose. **Body text is never allowed on creatives.** **Colours:** dark → all text white (single-colour). Light → headline brand blue `#4736FE`, optional support line near-black `#161616` or, when it is a short punch/tagline, brand blue `#4736FE` Geist Bold. The text **layout is dynamic and follows the actual shared theme reference creative** in `2_Image References/{Dark|Light} theme/` — match its hierarchy while preserving a clean readable text area.
+- **Layer 5 — Logo** — placement per the Stage 3 decision, or none. If logo = yes, name the correct theme-matched visible logo PNG as the repo-relative source file to use and instruct faithful reproduction inside the composite. In Codex ImageGen prompts, use explicit source-language: `Use the Cars24 logo from this repository-relative file path as the logo source: [path]. Copy the official logo identity exactly from that file.` For reference-capable providers, also attach/share the same PNG as actual visual input during generation. For a carousel or batch, apply the fixed official colourway, placement, and optical size for the slide's approved theme/background family; for a standalone image, use the correct colourway and balance it in the cleanest negative space. The logo may overlap pattern, and may overlap hero only if readable, high-contrast, cleanly fitted, and fully uncropped. Size should match the reference creatives, preserve clear space, and never be cut by the artwork edge. No box/tile, no placeholder, no local overlay afterward. If QA shows any changed logo geometry, changed wordmark, missing icon, added box/tile, or crop, regenerate via a visual-input-capable workflow or ask for a supported logo upload.
 
-**6.3 — Reference picker (for the Stage 7 attach list).** Note the references this slide will need. `Main_reference.png` is always the primary **style** anchor for illustrations; add the scene-specific illustration supplement below. If the illustration depicts a named person, product, proper noun, or approved real-world object, add the approved photo/screenshot/reference as an **identity/context** reference only and state what to preserve; it never replaces `Main_reference.png` or changes the output style.
+**6.3 — Reference picker (for the Stage 7 attach list).** Select references in the canonical precedence order: visual system from `CREATIVE-DIRECTION.md`; illustration execution from `ILLUSTRATION-GENERATION-GUIDE.md`; eligibility, role, copy-from, ignore-from, and attachability from `reference-index.json` plus `reference-tags/`; brand-book asset audit from `REFERENCE-SKILL-MAP.md`; asset/layout facts from `REFERENCE-ATLAS.md`. `Main_reference.png` is always the primary **style** anchor for illustrations; add the scene-specific illustration supplement only if it does not displace the mandatory anchor. If the illustration depicts a named person, product, proper noun, or approved real-world object, add the approved photo/screenshot/reference as an **identity/context** reference only and state what to preserve; it never replaces `Main_reference.png` or changes the output style.
 
 **6.3a — Style-purity guardrail.** Before presenting prompts, add a short audit line for every slide:
 
@@ -769,6 +791,12 @@ Select first with `reference-index.json` + `reference-tags/`, then validate with
 - Infographic/icon rejects cinematic character heroes, full service scenes, and decorative illustration vignettes unless the user requested a human-led infographic.
 
 **Batch discipline.** For batch jobs, first define 3–5 approved visual territories that include both **style** and **layout** (for example: `illustration + cover-lockup: product team moment`, `abstract + headline-dominant: dot-pattern metaphor`, `infographic + stacked-left: icon flow only`) and assign every row to one territory before prompt generation. Do not create 50 independent visual interpretations from broad AI/product language, and do not let one territory collapse into the same top-left/right-hero composition for every row.
+
+**Direction anchor and revision mode.** When a user identifies an output or explicitly supplied visual as the desired direction, record it as a run-specific `direction-anchor` in the reference map and manifest. It may teach only the approved camera distance, crop, subject scale, interaction, scene depth, hierarchy, palette balance, and logo-zone relationship for that run; it never becomes canonical brand learning and `4_exports/` remains excluded from the reference library. Before a revision, declare exactly one mode:
+- **Compliance correction** — preserve the direction anchor's composition and change only the named defect (for example logo fidelity, contrast, colour balance, unwanted text, or a missing detail).
+- **Composition reset** — use only when the user explicitly requests a new concept, layout, camera, crop, scene, or visual territory.
+
+For a compliance correction, the Stage 7 handoff must state the protected visual facts and the one permitted delta. Do not solve a logo, palette, or copy defect by silently zooming out, moving the interaction, flattening the scene, or replacing the approved visual hierarchy.
 
 **Colour anchor — mandatory on every generation call.** Image models can blend colour cues across attached references, so light-periwinkle subject/layout refs can drag the brand blue toward muted navy/indigo (verified drift Δ70–147 off `#4736FE` in project 012). To lock the canvas hue:
 - **Attach the solid brand-blue swatch** `1_References/1_Brand Guidelines/02_Color-System/brand-blue-4736FE-swatch.png` as a 🎨 PALETTE reference on dark calls; attach `1_References/1_Brand Guidelines/02_Color-System/brand-blue-lavender-EBE9FF-swatch.png` on light calls. Caption dark: *"match the whole empty background canvas to this bright Cars24 brand blue; do not darken it and do not render the swatch itself."* Caption light: *"match the light background to this pale lavender tint derived from Cars24 brand blue; do not render the swatch itself."*
@@ -835,7 +863,7 @@ Once the user has approved:
    - **Codex ImageGen default:** use the built-in `image_gen` tool with the assembled prompt only when the approved reference map can be satisfied. If no logo is required and the tool cannot directly attach local reference files, include the reference-role map and the visual traits to borrow inside the prompt text. Do not run a Higgsfield cost preview or command.
    - **Logo-bearing Codex jobs:** include the exact repo-relative visible logo PNG path as the explicit source file to use, instruct the model to copy the official identity exactly, and run strict logo QA. If the result changes the logo geometry or wordmark, drops the icon, adds a box/tile, or crops the lockup, reject it and move to a visual-input-capable workflow or ask for a supported logo upload.
    - **Claude/non-Codex Higgsfield default or Codex fallback / explicit request:** run `higgsfield account status`; if it fails, stop and ask the user to run `higgsfield auth login`. Map the requested aspect ratio through the visible GPT Image 2 ratio adapter, attach all listed reference images in the priority order specified for that style, and fire the prompt to Higgsfield with `gpt_image_2` unless the user explicitly requested another supported model.
-4. **Persist provenance with the export.** Every saved version must include a `generation-manifest.md` capturing the layout plan, reference map, final prompt, provider/model path, ratio mapping, approval status, and any QA or revision notes needed for future feedback-driven repo updates.
+4. **Persist provenance with the export.** Every saved version must include a `generation-manifest.md` capturing the layout plan, reference map, final prompt, provider/model path, ratio mapping, approval status, any direction-anchor source and protected facts, revision mode, and QA or revision notes needed for future feedback-driven repo updates.
 5. Allow per-slide revision before moving on.
 
 Generate in slide order. For batch intake, queue rows and generate one approved image/slide at a time in row order; do not fire multiple generations in parallel. Revise and regenerate any slide the user flags before proceeding.
@@ -859,36 +887,37 @@ For every slide marked **logo: yes** in Stage 3:
 
 3. **Include this in the Higgsfield prompt:**
    ```
-	   Logo: Reproduce the Cars24 logo from the attached visible logo reference — rounded-square circular-arrow icon mark + "Cars24" wordmark — in the correct theme colourway. Relative logo path for traceability: [path]. Place it at [layout-derived placement based on the cleanest negative space and alignment axis], inside clean negative space, at least 16px from the edges, approximately 8–10% of canvas width. For carousels, keep this exact logo placement and size consistent across all logo-bearing slides in the same theme/background family. The logo may overlap pattern; it may overlap hero only if readable, high-contrast, cleanly fitted, and fully uncropped. No box, tile, shadow, placeholder, alternate wordmark, decorative effect, cropped/cut logo, or oversized logo. Ignore the background tile of the logo reference.
+	   Logo: Reproduce the Cars24 logo from the attached visible logo reference — rounded-square circular-arrow icon mark + "Cars24" wordmark — in the correct theme colourway. Relative logo path for traceability: [path]. Place it at [approved theme-based logo lock position], inside clean negative space, at least 16px from the edges, at the approved optical size. For a carousel or batch, lock the official colourway, placement, and optical size for every logo-bearing slide in each theme/background family; do not vary them within that family. For a standalone image, choose the appropriate colourway and use the cleanest negative space to balance that individual layout. The logo may overlap pattern; it may overlap hero only if readable, high-contrast, cleanly fitted, and fully uncropped. No box, tile, shadow, placeholder, alternate wordmark, decorative effect, cropped/cut logo, or oversized logo. Ignore the background tile of the logo reference.
    ```
 
 **Why:** The final creative should be one generated composite. The logo reference must be available to the image model during generation so logo placement, scale, and surrounding negative space are resolved as part of the composition.
 
 ---
 
-### Stage 9 — Visual QA (on demand only)
+### Stage 9 — Visual QA (on demand except direction-locked revisions)
 
-**Visual QA is not a mandatory gate.** After generation, present the outputs to the user. By default, proceed straight to export — **skip QA entirely** unless the user says an output looks wrong.
+**Visual QA is not a mandatory gate for a first generation.** After generation, present the outputs to the user. By default, proceed straight to export — **skip QA entirely** unless the user says an output looks wrong. A direction-locked compliance correction is the exception: it must pass the non-regression comparison below before export.
 
 **Run QA only when the user flags a slide as off.** When they do:
 
-1. **Load the comparison pair.** Open the flagged output next to the matching theme reference creative — the same `Dark theme/` or `Light theme/` file selected for this slide's layout in Stage 6 — and the slide's references. View them side by side (Read the image files).
-2. **Score against the Theme Fidelity Checklist** (§4 → Theme Fidelity Checklist). Walk the rows — background hue, pattern colour/glow, headline colour, body colour, layout balance, fully contained hero, aspect ratio, mood, and generated logo fidelity — plus: **copy baked in** (headline + subline rendered into the image and legible) and **look-and-feel matches the theme reference**. Apply the format-specific note for the slide's style (illustration / photo / infographic / USP).
-3. **Regenerate the flagged slide** with a corrected prompt that *names the specific deviation* (e.g. "background drifted toward navy/indigo — use a bright Cars24 Brand Blue canvas, dark theme means white text not a darkened background"; "photo is tinted lavender — keep natural grade, move the theme to the canvas only"; "headline rendered grey — must be pure white"; "illustration baked a sky — subject must be a transparent cutout"). Re-show and let the user confirm.
+1. **Load the comparison pair.** Open the flagged output next to the matching theme reference creative — the same `Dark theme/` or `Light theme/` file selected for this slide's layout in Stage 6 — and the slide's references. For a direction-locked revision, also open the approved direction-anchor. View them side by side (Read the image files).
+2. **Score against the Theme Fidelity Checklist** (§4 → Theme Fidelity Checklist). Walk the rows — background hue, pattern colour/glow, headline colour, body colour, layout balance, intentional hero framing, aspect ratio, mood, and generated logo fidelity — plus: **copy baked in** (headline + subline rendered into the image and legible) and **look-and-feel matches the theme reference**. Apply the format-specific note for the slide's style (illustration / photo / infographic / USP).
+3. **Direction-locked non-regression check.** For a compliance correction, confirm that camera distance, subject scale, focal interaction, protected details, environmental depth, hierarchy, and the theme-family logo lock remain materially consistent with the direction-anchor. The candidate fails if it fixes the named defect by weakening those approved qualities.
+4. **Regenerate the flagged slide** with a corrected prompt that names the specific deviation and, when anchored, the protected facts plus permitted delta. Re-show and let the user confirm.
 
 **Photograph parity rule:** a real-human-image slide is held to the same checklist as an illustration slide. If a photo cannot be made to read as on-theme by grade + canvas alone (e.g. the scene fights the background hue), flag it to the user rather than tinting the photo unnaturally.
 
 **Common deviations to look for when a slide is flagged:**
-- No copy baked in (bare transparent cutout handed off as final)
+- No copy baked in (bare hero or separate asset handed off as final)
 - Look-and-feel does not read as the same family as the theme reference creative
 - Background hue drifted off `#4736FE` / `#EBE9FF`
 - Dark-theme empty corners or broad background samples read as navy, indigo, black, midnight blue, or deep violet instead of bright Cars24 Brand Blue
 - Dark-theme pattern with no glow, or light-theme pattern *with* glow
 - Text colour wrong for the theme (grey instead of white; black headline on dark; etc.)
 - Pattern making the text area hard to read
-- A baked-in background inside what should be a transparent illustration/icon cutout
+- A baked-in scene panel/background inside what should be a clean hero merged into the themed composite
 - A photograph tinted purple/lavender to fake a theme match
-- Hero cropped, clipped, or bleeding off an edge instead of being fully contained
+- An accidental crop that hides a face, the key interaction, or a meaning-carrying product detail; intentional editorial edge crops are allowed only when declared in the layout plan and they strengthen the hierarchy
 - Logo missing, wrong colourway, oversized, boxed/tiled, not placed in negative space, inconsistent with reference sizing, or visibly hallucinated/typeset from memory
 
 ---
@@ -934,7 +963,7 @@ The export tree has three levels: **project folder → version folder → image 
   - provider, model, requested ratio, provider ratio, and any visible ratio mapping
   - approval state and execution date
   - export filenames
-  - QA notes, known issues, and next-step feedback hooks
+  - direction-anchor source, protected visual facts, revision mode, QA notes, known issues, and next-step feedback hooks
 - Use the same short kebab-case `{brief}` slug from the project folder so each generated file retains context outside its folder.
 - One file per slide. Slide 1 → `{brief}-image1.png`, slide 2 → `{brief}-image2.png`, etc.
 - A single (non-carousel) image is `{brief}-image1`.
@@ -1005,22 +1034,22 @@ All Cars24 illustrations follow the **modern sleek flat editorial** style establ
 
 **Colour usage ratio for illustrations:**
 - **60% Brand Blue** `#4736FE` — dominant: car interiors, large clothing shapes, environments, main scene elements
-- **30% Secondary** — Deep Navy `#2B2098` (depth, shadow, darker shapes) · Mint Green `#63FFB1` (nature, teal accents) · Off-white `#F5F5F5` (highlights, sky, light sources)
-- **10% Accents** — Orange `#EF4523` (cars and occasional clothing pops only) · warm skin tones
+- **30% Supporting tones** — Deep Navy `#2B2098` (depth, shadow, darker shapes) · Off-white `#F5F5F5` (highlights) · natural warm skin tones
+- **10% total controlled accents** — Orange `#EF4523` (cars and occasional clothing pops only) and Mint Green `#63FFB1` (deliberate product/campaign cue only). Do not use both by default.
 
 | Role | Colour | Hex | Usage |
 |---|---|---|---|
 | Primary brand (dominant) | Brand Blue | `#4736FE` | Car interiors, clothing, environment — 60% |
 | Depth / shadow / dark shapes | Deep Navy | `#2B2098` | Secondary volumes — part of 30% |
 | Hair / dark interior elements | Near-black Navy | `#0D1B3E` | Hair, deep shadows — part of 30% |
-| Nature / teal accent | Mint Green | `#63FFB1` | Trees, nature, teal accents — part of 30% |
+| Controlled product/campaign accent | Mint Green | `#63FFB1` | Optional, never a default — part of 10% total accents |
 | Highlights / sky / off-white | Off-white | `#F5F5F5` | Light sources, highlights — part of 30% |
-| Skin base | Warm Caramel | `#C68642` | Character skin — part of 10% |
-| Skin shadow | Warm Brown | `#9B6B3A` | Skin depth — part of 10% |
-| Car accent / clothing pop | Vivid Orange | `#EF4523` | Orange cars and clothing accents only — part of 10% |
+| Skin base | Warm Caramel | `#C68642` | Character skin — natural supporting tone |
+| Skin shadow | Warm Brown | `#9B6B3A` | Skin depth — natural supporting tone |
+| Car accent / clothing pop | Vivid Orange | `#EF4523` | Optional orange car/clothing accent — part of 10% total accents |
 | Dark neutral | Near-black | `#161616` | Text, outlines where needed |
 
-**Orange rule:** Orange appears on cars and as occasional clothing accents only. It is never the dominant colour or background. `Main_reference.png` contains zero orange — brand blue is the correct dominant.
+**Accent rule:** Orange appears on cars and as occasional clothing accents only. Mint appears only as a deliberate product/campaign cue. Neither is dominant, a background, a dot pattern, or a generic secondary colour; together they remain within the 10% accent allocation. `Main_reference.png` contains zero orange — brand blue is the correct dominant.
 
 **Prompt colour language (no hex codes in prompts — use colour names):**
 - Brand Blue → `electric brand blue`
@@ -1030,13 +1059,13 @@ All Cars24 illustrations follow the **modern sleek flat editorial** style establ
 - Skin → `warm caramel skin`
 - Hair → `deep navy-black`
 
-### 8.3 Subject treatment — fully contained cutout-style hero inside the composite
+### 8.3 Subject treatment — intentional editorial hero framing inside the composite
 
 **The illustration is rendered as a cutout-style hero directly into the generated composite — it is not exported as a transparent PNG and placed separately.**
 
-- The subject carries no scene of its own: no sky, no cityscape, no environment fill, no gradient box behind it. It reads as a clean-edged hero sitting on the themed brand canvas that Higgsfield generates in the **same** call.
+- The subject does not sit in a rectangular scene panel, gradient box, or separate background. It reads directly on the themed brand canvas that Higgsfield generates in the **same** call. A restrained contextual environment (for example skyline, dealership, road, or local landmark silhouette) is allowed when it adds scene depth while remaining integrated into the full canvas and subordinate to the hero and text.
 - The background, pattern, text, and required logo placement are part of the same generation (Stage 6 layers) — the illustration is one layer of the finished slide, not a standalone deliverable.
-- Keep the hero fully contained inside the canvas. No edge bleed and no crop. Keep the face, head, hands, and any key object (laptop, keys, product, car, icon) inside the safe zone with headroom and breathing room. Name the crop explicitly in the prompt (e.g. "waist-up, full head and hands in frame with headroom, fully contained inside the canvas").
+- Choose either `contained` or `intentional editorial edge crop` in the layout plan. In both modes, protect faces, the focal interaction, hands when they carry the action, and meaning-carrying product detail. A supporting car, shoulder, clothing edge, or environmental form may exit the artboard only when the crop is deliberate, stylish, and improves scale without weakening comprehension. Name the framing explicitly in the prompt and keep the text zone clear.
 
 #### Theme application (theme drives the canvas, not the illustration)
 
@@ -1052,7 +1081,6 @@ The subject's own palette stays brand-blue-dominant; the confirmed light/dark th
 
 - The illustration's own palette stays 60/30/10 brand-blue-dominant in **both** themes — do not recolour the subject to match the canvas.
 - Harmonise the subject's lighting/mood with the theme: warmer, more luminous rim light for dark · cleaner, brighter key light for light. This is a mood tune only — never bake the theme background into the subject.
-- **Tonal differentiation on dark theme (mandatory):** when an illustrated hero uses a brand-blue-dominant palette on the dark brand-blue canvas, include deliberate tonal differentiation so the subject does not merge into the background. Use lighter periwinkle or lavender fills for large clothing areas (e.g. blazer/jacket), visible white or off-white for the blouse/shirt, and bright rim lighting around the figure silhouette. In prompts, add: *"lighter periwinkle/lavender blazer, visible white blouse, bright rim highlights — tonal separation from the brand-blue canvas."*
 
 ### 8.4 Reference Images — Always Attach to Higgsfield
 
@@ -1098,7 +1126,7 @@ All files in `1_References/3_Illustrations References/`
 Use this as the **Subject block (Stage 6 Layer 3)** inside the full composite prompt — not as a standalone generation. Fill in `[SCENE]`:
 
 ```
-Modern sleek flat editorial illustration, [SCENE], South Asian characters with warm caramel skin tones, electric brand blue dominant colour palette, clean flat colour shapes with minimal shading, no photorealistic textures, deep navy-black hair, clean crisp silhouette edges, aspirational and confident mood. Render the subject as a clean-edged cutout-style hero with no scene of its own — no sky, no cityscape, no environment fill, no gradient box — fully contained inside the themed brand canvas generated in the same composite, with full head, hands, car/icons, and key objects visible. The headline, subheading, and required Cars24 logo are other layers of the same composite, not part of the subject art; the logo must be rendered from the theme-matched logo reference during generation. Style: premium modern sleek flat editorial illustration.
+Modern sleek flat editorial illustration, [SCENE], South Asian characters with warm caramel skin tones, electric brand blue dominant (60%), restrained deep navy/off-white/natural skin supporting tones (30%), and optional orange/mint contextual accents together no more than 10%. Clean flat colour shapes with minimal shading, no photorealistic textures, deep navy-black hair, clean crisp silhouette edges, aspirational and confident mood. Render the subject as a clean-edged hero directly inside the themed brand canvas generated in the same composite, never in a rectangle, scene panel, or gradient box. Framing: [contained OR intentional editorial edge crop]; keep faces, focal interaction, action-carrying hands, and meaning-carrying product detail clear, while allowing a supporting car, shoulder, or restrained contextual environment to extend to an edge only when it improves the composition and preserves the text zone. The headline, optional support line, and optional Cars24 logo are other layers of the same composite, not part of the subject art; only a selected logo is rendered from the theme-matched logo reference during generation. Style: premium modern sleek flat editorial illustration.
 ```
 
 > **Prompt hygiene rules — apply to every illustration:**
@@ -1128,12 +1156,10 @@ Modern sleek flat editorial illustration, [SCENE], South Asian characters with w
 | Non-South-Asian default skin tones | Wrong for India-primary market |
 | Stock-photo forced smiles | Feels staged — aim for genuine warm confidence |
 | Text or logos drawn inside the subject art | The headline/subheading and logo are other layers Higgsfield renders in the same composite — not part of the illustration |
-| A gradient scene behind the subject | The subject has no background of its own; the themed canvas (subtle same-hue glow) is a separate layer of the composite |
-| Subject clipped at any edge or corner | Hero must be fully contained; face, head, hands, cars, icons, and key objects stay inside the safe zone with headroom — compose smaller if it is getting sliced |
+| A gradient scene panel behind the subject | The subject does not sit in its own boxed background; any contextual depth integrates directly into the themed canvas |
+| Accidental crop that hides a face, key interaction, action-carrying hand, or meaning-carrying product detail | Protect the story; use an intentional editorial edge crop only for non-critical supporting forms where it improves scale and hierarchy |
 | A loud / high-opacity dot pattern (esp. light theme) | The pattern is restrained atmosphere behind the hero and text (light ≈20–25% opacity), never a foreground graphic that competes with the headline |
 | A light-theme headline in one uniform typeface | Both themes use Arapey-led serif headlines with italic-vs-regular emphasis to spotlight the emotive word |
-| Subline rendered tiny or illegible | The subline must be medium-sized (~30–40% of headline point size) — never "small"; a barely-readable subline breaks the composition |
-| Illustration figure merging into the dark-theme canvas | Dark-theme illustrations must include tonal differentiation: lighter periwinkle/lavender for large clothing areas, visible white highlights on shirt/blouse, bright rim lighting — the subject must read clearly against the brand-blue background |
 | Accepting a logo without reference fidelity | The generated logo must come from the correct theme-matched logo reference, match the icon + wordmark, sit in negative space, and have no box/tile |
 | Referencing retired legacy illustration files | Use only the five real files listed in the reference-selection table — old flat-vector legacy assets no longer exist; use `Main_reference.png` instead |
 
@@ -1490,6 +1516,20 @@ Available USPs:
 ## 8. Sync Metadata
 
 ```yaml
+version: 2.30
+last_updated: 2026-07-19
+changes_v2.30:
+  - Added run-specific direction anchors and compliance-correction versus composition-reset revision modes, with non-regression QA against the approved visual direction before export
+  - Replaced blanket hero full-containment with intentional editorial framing: preserve faces, key interactions, and meaning-carrying detail while allowing controlled supporting edge crops and restrained contextual depth for illustration and photography
+  - Added a theme-based logo lock for carousels and batches: official logo colourway, placement, and optical size are fixed within each approved theme/background family; standalone work balances the logo to its individual layout
+  - Rollback: restore v2.29 revision, framing, and logo-consistency wording
+changes_v2.29:
+  - Corrected the illustration delivery model: flat-editorial heroes are rendered inside one final Cars24 composite, never as transparent PNGs, chroma-key assets, or post-process layers
+  - Made Main_reference.png the non-displaceable illustration style anchor, with scene references supplementary and identity/context photos unable to override the flat-editorial system
+  - Enforced the illustration 60/30/10 palette: Cars24 Brand Blue dominant, controlled supporting tones, and orange/mint limited to 10% total contextual accents
+  - Added canonical reference precedence across Creative Direction, the illustration guide, the tag index, the Skill Map, and the Atlas, resolving stale conflicting guidance
+  - Clarified that logo use is opt-in per slide; logo fidelity rules apply only to approved logo-bearing work
+  - Rollback: restore v2.28 illustration-delivery/reference wording and remove the v2.29 palette, precedence, and optional-logo clarifications
 version: 2.8
 last_updated: 2026-06-18
 changes_v2.8:

@@ -2,6 +2,10 @@
 
 Use these recipes to select references before building a Stage 7 reference map.
 
+## Canonical reference precedence
+
+Resolve a reference decision in this order: `CREATIVE-DIRECTION.md` for the visual system; `3_Illustrations References/ILLUSTRATION-GENERATION-GUIDE.md` for illustrated-hero execution; `reference-index.json` plus this tag system for eligibility, role, and attachability; `REFERENCE-SKILL-MAP.md` for Brand-Guidelines asset audit; and `REFERENCE-ATLAS.md` for observed layout and asset facts. A lower-ranked source must never override a higher-ranked one.
+
 ## Layout plan for any image or carousel
 
 Build this plan before prompt assembly:
@@ -24,6 +28,20 @@ Carousel/batch guard:
 ```text
 Do not use the same archetype or the same top-left text / right-hero anchor on more than two consecutive slides unless the user explicitly asks for a consistent repeated system. Batch territories must include layout territory as well as style territory.
 ```
+
+## Direction-locked revision
+
+Use only when a user has approved an earlier output or explicitly supplied a visual as the desired direction for the current run.
+
+```text
+reference_role: direction-anchor
+scope: current run only
+revision_mode: compliance-correction OR composition-reset
+copy_from: camera distance, crop, subject scale, focal interaction, scene depth, hierarchy, palette balance, logo-zone relationship
+ignore_from: any unapproved logo redraw, copied text, or off-brand detail
+```
+
+For `compliance-correction`, write the protected facts and one permitted change into the Stage 7 handoff and manifest. Compare the candidate to the anchor before export; do not treat a direction-anchor as canonical reference learning and do not add `4_exports/` to the index.
 
 ## Dark theme with real photo hero
 
@@ -90,6 +108,8 @@ No hero subject. Typography and pattern carry the slide. Use a refined editorial
 
 ## Logo-bearing slide
 
+Only use this recipe when the user or approved slide plan has explicitly selected a logo. The default slide is logo-free.
+
 Query:
 
 ```text
@@ -103,7 +123,7 @@ Generation:
 ```text
 Attach/share the theme-matched visible Cars24 logo PNG as actual visual input and also describe the current logo explicitly in the prompt. The prompt must identify the current Cars24 lockup as the rounded-square icon with the circular cut-through/open-C mark plus the `Cars24` wordmark, and must explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative path in prompt text is traceability only and never enough by itself. Do not add a local logo overlay afterward.
 If the active tool cannot attach the PNG as true visual input, do not use that workflow for logo-bearing output. If the output changes, omits, boxes, all-caps, or crops the logo, reject the output and move to a visual-input-capable workflow or ask for a supported logo upload.
-Place the logo by layout axis and clean negative space. In a carousel, keep logo placement and size identical across logo-bearing slides with the same theme/background family. Logo may overlap pattern and may overlap hero only when readable, high-contrast, cleanly fitted, and uncropped.
+For a carousel or batch, establish a theme-based logo lock before generation. Within each approved theme/background family, keep the official colourway, placement, and optical size identical across every logo-bearing slide. This applies to white-on-brand, blue-on-light, white-on-dark-photo, and black-on-light/print locks. For a standalone image, use the correct colourway and place the logo to balance its individual layout. Logo may overlap pattern and may overlap hero only when readable, high-contrast, cleanly fitted, and uncropped.
 ```
 
 ## Illustration slide
@@ -119,7 +139,7 @@ illustration_style: modern flat editorial
 Prompt guard:
 
 ```text
-Copy only illustration style, palette discipline, and character treatment. Do not copy exact scene, pose, or background.
+Use Main_reference.png as the mandatory style anchor. Copy only the modern sleek flat-editorial style, 60/30/10 palette discipline, and character treatment; add a scene supplement only when useful. Do not copy an exact scene, pose, or background. Render the hero directly into the final Cars24 composite, never as transparent/chroma-key output. Declare `contained` or `intentional editorial edge crop`; protect faces, the focal interaction, action-carrying hands, and meaning-carrying product detail, while allowing a supporting car or restrained contextual environment to reach an edge only when it improves the composition and preserves text readability. Brand Blue is 60%; supporting tones are 30%; orange and mint together are optional contextual accents capped at 10%. An approved identity/context photo preserves factual cues only and never replaces the style anchor.
 ```
 
 ## Premium infographic icons

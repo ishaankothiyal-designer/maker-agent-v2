@@ -1812,8 +1812,8 @@
         "LT-6",
         "PAT-dark-wave-mid"
       ],
-      "prompt_fallback": "Match this illustration style: modern sleek flat editorial vector, clean silhouette edges, 1-2 tonal steps, brand blue #4736FE dominant (60%), warm South Asian characters with caramel skin and navy-black hair.",
-      "caption": "The attached image is a SUBJECT-STYLE reference. Match ONLY its rendering style: flat bold vector, clean silhouettes, colour saturation, and South-Asian character treatment. IGNORE its background entirely. Render the described subject as a clean cutout on transparent background.",
+      "prompt_fallback": "Match this illustration style: modern sleek flat editorial vector, clean silhouette edges, 1-2 tonal steps, Brand Blue dominant (60%), restrained supporting tones (30%), and orange/mint only as contextual accents totalling no more than 10%; warm South Asian characters with caramel skin and navy-black hair. Render the fully contained hero in the final Cars24 composite, never as transparent/chroma-key output.",
+      "caption": "The attached image is the mandatory SUBJECT-STYLE reference. Match ONLY its modern sleek flat-editorial rendering style, clean silhouettes, colour discipline, and South-Asian character treatment. IGNORE its background entirely. Render the described hero fully contained inside the final Cars24 composite, never as transparent/chroma-key output or a separate scene box. This anchor cannot be displaced by a scene or identity/context reference.",
       "source_quality": "clean",
       "schema_version": "2.0",
       "source_scope": "canonical-reference",
@@ -3722,8 +3722,8 @@
       "pairs_well_with": [
         "SWATCH-blue"
       ],
-      "prompt_fallback": "Cars24 palette: Brand Blue #4736FE dominant (60%), Mint #63FFB1 accent, deep blue #2B2098 shadow, neutrals #F5F5F5/#161616. Orange #EF4523 is a 10% accent only.",
-      "caption": "Sample the exact Cars24 palette from these swatches — electric Brand Blue #4736FE dominant, with Mint #63FFB1, deep blue #2B2098, neutrals. Do not render the swatch chart itself.",
+      "prompt_fallback": "Cars24 illustration palette: Brand Blue #4736FE dominant (60%), deep blue/off-white/natural skin supporting tones (30%), and optional Mint #63FFB1 plus Orange #EF4523 contextual accents together no more than 10%.",
+      "caption": "Sample the exact Cars24 palette from these swatches — electric Brand Blue #4736FE dominant, restrained deep-blue/off-white/natural supporting tones, and orange/mint only as controlled contextual accents totalling no more than 10%. Do not render the swatch chart itself.",
       "source_quality": "clean",
       "schema_version": "2.0",
       "source_scope": "canonical-reference",

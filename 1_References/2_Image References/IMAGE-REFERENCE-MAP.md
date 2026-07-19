@@ -8,7 +8,7 @@ description: Detailed mapping of all visual reference images. Use when composing
 > Source of truth for selecting templates, characters, and background patterns when creating posts or image briefs.
 > All files live in `1_References/2_Image References/` and `1_References/3_Illustrations References/`.
 
-> **Composition reference only.** The dark/light theme card examples in this document (Sections 1–2) show layout structures — headline position, pattern placement, safe zones, and hierarchy. They are not style targets. All generated visual content must follow the Cars24 brand book: photography style or bold flat vector illustrations with South Asian characters on transparent backgrounds. See `master-rules.md` → Visual System Boundaries.
+> **Composition reference only.** The dark/light theme card examples in this document (Sections 1–2) show layout structures — headline position, pattern placement, safe zones, and hierarchy. They are not style targets. All generated visual content must follow the Cars24 brand book: photography or modern sleek flat-editorial illustrations with South Asian characters rendered inside the final themed composite. See `master-rules.md` → Visual System Boundaries.
 >
 > **v2.0 tagging layer:** use `../reference-index.json` and `../reference-tags/` before selecting references. The map below describes what appears in each file; the tag layer decides what to copy and what to ignore.
 >
