@@ -32,13 +32,25 @@ Every brand-guideline section has a `notes.md` rewritten from the actual page im
 
 ---
 
+## Reference Precedence And Illustration Palette
+
+Use this document for the visual system; use `3_Illustrations References/ILLUSTRATION-GENERATION-GUIDE.md` for illustrated-hero execution; use `reference-index.json` and `reference-tags/` for role-based selection and attachability; use `REFERENCE-SKILL-MAP.md` for the Brand Guidelines asset audit; and use `REFERENCE-ATLAS.md` only for observed layout and asset facts. If wording conflicts, this order wins. A layout reference, scene supplement, or identity/context photo cannot override the canonical Cars24 illustration system.
+
+Illustrated heroes follow a 60/30/10 colour budget: 60% Cars24 Brand Blue `#4736FE`; 30% restrained supporting deep-blue, off-white, and natural skin tones; and at most 10% total optional orange/mint accents. Orange is limited to a contextual car or small clothing detail. Mint is limited to a deliberate product/campaign cue. Neither is a default, dominant, background, dot-pattern, or icon colour. Iconography remains under the separate brand-blue-monochrome rule.
+
+### Direction anchors for revisions
+
+When a user approves an output or supplies a visual as the desired direction for a specific run, record it as a `direction-anchor`. It is a run-specific decision tool, not a canonical brand reference: it may guide camera distance, crop, subject scale, focal interaction, scene depth, visual hierarchy, palette balance, and logo-zone relationship only for that run. Do not add `4_exports/` to the canonical reference library.
+
+Before revising from a direction-anchor, declare one mode: `compliance correction` (preserve the approved composition and alter only the named issue) or `composition reset` (only when the user asks for a new composition). A compliance correction must not silently make the scene smaller, remove approved contextual depth, move the interaction, or flatten hierarchy while fixing a logo, contrast, palette, or copy defect.
+
 ## The Three-Layer Composition System
 
 Every Cars24 creative is built from exactly three layers, composited in this order:
 
 ```
 ┌─────────────────────────────────────┐
-│  LAYER 3 — Hero image (cutout)      │  ← foreground, fully contained
+│  LAYER 3 — Hero image (cutout)      │  ← foreground, intentionally framed
 │  LAYER 2 — Dot/particle pattern     │  ← atmosphere, sits under hero
 │  LAYER 1 — Background color field   │  ← base field, single hue, subtle gradient/glow
 └─────────────────────────────────────┘
@@ -54,11 +66,11 @@ A single-hue field — **not** a flat dead fill. The reference creatives use a *
 The atmospheric dot/particle layer. Production output now uses a clean full-background pattern treatment: the pattern may flow across the full canvas, but it stays behind the text and hero, never as a foreground layer. The text area must remain clean and readable.
 
 **Layer 3 — Hero image**
-A cutout (no background) — a person, car, illustration, icon, or character — placed as the hero while staying fully contained inside the canvas. No edge bleed and no cropped heads, hands, cars, icons, or key objects.
+A person, car, illustration, icon, or character placed directly on the full-bleed canvas — never in a separate rectangular scene panel. The framing may be `contained` or an `intentional editorial edge crop`; it must be chosen in the layout plan rather than left to the generator.
 
-**Safe framing — fully contained hero, protect everything meaningful.** Everything that carries meaning — the face, head, hands, the laptop, car, icon, or product the subject is using — stays inside the safe zone (inner ~85%) and is **never clipped at any edge or corner**. The failure mode to avoid: the generator frames the subject so large or so close that it gets sliced (top of head cut, shoulder cut, hands cut, car cropped). Fix it by composing the subject smaller with deliberate headroom and breathing room. State the framing explicitly in the prompt (e.g. "waist-up, full head and hands in frame with headroom, fully contained inside the canvas").
+**Safe framing — protect the story, not a blanket box.** Faces, focal interactions, action-carrying hands, and meaning-carrying product details must remain clear and uncut. A supporting car, shoulder, clothing edge, or environmental form may intentionally exit an edge when it improves scale, confidence, or cinematic hierarchy without weakening comprehension. The failure mode is accidental clipping: a face, the exchanged keys, a hand needed to read the action, or an unreadable product. State the framing explicitly in the prompt and preserve a clean text zone.
 
-**Photo/image-led hero treatment.** Photo-led blog covers follow the same cutout discipline: the photographic subject is removed from its environment, placed directly on the Cars24 canvas, and given a crisp visible white accent outline around the full silhouette. Do not use a rectangular photo frame, embedded photo panel, or full-scene background unless the user explicitly selects `full-scene photo`. Natural lighting and real colour stay inside the cutout; the theme lives in the surrounding canvas, type, and pattern.
+**Photo/image-led hero treatment.** Photo-led blog covers follow the same direct-on-canvas discipline: the photographic subject is removed from its environment, placed directly on the Cars24 canvas, and given a crisp visible white accent outline when the full silhouette is shown. Contained and intentional editorial-edge-crop treatments are both valid; never use a rectangular photo frame or embedded photo panel. Natural lighting and real colour stay inside the subject; the theme lives in the surrounding canvas, type, and pattern.
 
 ## Style Purity — one visual system per creative
 
@@ -124,10 +136,10 @@ Example: for Gajendra Jangid, use `Main_reference.png` as the style anchor, `Fra
 **Mandatory layout plan before prompt assembly.** Every slide needs a visible layout plan before the final image prompt is written:
 
 ```
-Slide → archetype → DT/LT layout ref → vertical anchor → dominant element → text zone → hero/pattern zone → reason
+Slide → archetype → DT/LT layout ref → vertical anchor → dominant element → text zone → hero/pattern zone → framing mode (contained / intentional edge crop) → protected details → reason
 ```
 
-This is the selection mechanism, not optional rationale. If the plan repeats the same archetype or vertical anchor, the agent must say why. If there is no strong reason, revise the layout plan before prompting.
+This is the selection mechanism, not optional rationale. If the plan repeats the same archetype or vertical anchor, the agent must say why. If there is no strong reason, revise the layout plan before prompting. An intentional edge crop must name the protected face, interaction, hands, and product detail, plus the supporting form allowed to exit the frame.
 
 **Carousel and batch diversity guard.** No more than two consecutive slides may use the same archetype or the same top-left text / right-hero anchor unless the user explicitly asks for a consistent repeated system. Batch visual territories must include layout territory as well as visual style, e.g. `illustration + cover-lockup`, `photo + stacked-left`, `abstract + headline-dominant`, not only `illustration`, `photo`, or `abstract`.
 
@@ -136,7 +148,7 @@ This is the selection mechanism, not optional rationale. If the plan repeats the
 | # | Archetype | Structure | Use it for | Reference examples |
 |---|---|---|---|---|
 | 1 | **Cover / Lockup** | Big title or the "Out-of Tokens" lockup at top (or centred); hero centred-lower, or a centred logo pill. Pattern halo/wave behind. Symmetric. | Series cover, identity, opener | DT-1, DT-8, LT-1 |
-| 2 | **Headline-left + Hero-right** | Headline fills the upper-left; hero sits fully contained on the right / lower-right. | Hook, statement-with-face | DT-4, LT-2, LT-5, LT-7 |
+| 2 | **Headline-left + Hero-right** | Headline fills the upper-left; hero is deliberately framed on the right / lower-right. | Hook, statement-with-face | DT-4, LT-2, LT-5, LT-7 |
 | 3 | **Stacked-left column + Hero-right** | Vertical text column on the left — kicker/body on top, large headline anchored low (or reversed) — hero on the right. | Newsletter, value → outcome | DT-7, LT-4, LT-6 |
 | 4 | **Text-only** | No hero. Headline + body list; headline anchors TOP (list below) or BOTTOM (list above). Pattern carries the weight (bottom wave / full-bleed / corner). | List, value stack, relatable copy | DT-2, DT-5 |
 | 5 | **Headline-dominant** | Headline fills nearly the whole canvas (4–6 lines); no hero; faint corner pattern only. | Pure brand statement | DT-6 |
@@ -153,19 +165,20 @@ This is *how* the references stay balanced. Apply all of them whichever archetyp
 2. **Commit to ONE vertical anchor** per slide — headline top, bottom, centred, or full-canvas — and hang everything else off it. Elements floating at arbitrary heights is the main cause of lopsided output. Carousel variety comes from *alternating* the anchor slide-to-slide, not from randomness.
 3. **Text is left-set and left-aligned**, ragged-right — except Cover/Lockup and Event, which centre. Never justified.
 4. **Generous negative space.** Text fills roughly half its zone; the quiet area is intentional framing, not space to fill. The references breathe — keep them breathing.
-5. **Consistent outer margin (~6–8% inset)** for all text and the logo. The hero stays fully contained with the face/hands/key object inside the safe zone.
+5. **Consistent outer margin (~6–8% inset)** for all text and the logo. For a contained hero, keep the meaningful detail inside the safe zone. For an intentional edge crop, protect the face, focal interaction, action-carrying hands, and meaning-carrying product detail while allowing only supporting forms to exit the frame.
 6. **Three-tier text rhythm** when copy is rich: eyebrow/kicker (small Geist) → headline (large Arapey×Geist mix) → body or CTA (small Geist), each tier separated by clear size and space. Bold keywords inline; a hand-drawn underline/arrow may spotlight a CTA (see LT-7).
 7. **Pattern always recedes** behind both headline and hero (see Pattern Scale Rule below).
 
 ### Logo Placement And Visual-Input Rule
 
-When a generated creative includes the Cars24 logo, the same theme-matched visible logo PNG must be attached/shared as actual visual input, and the final prompt must include an explicit current-logo description. Describe the logo as the current Cars24 horizontal lockup: rounded-square icon, circular cut-through/open-`C` mark, plus the `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in the prompt is traceability only, never sufficient by itself.
+The Cars24 logo is optional per slide. Do not add it by default. When a generated creative intentionally includes the logo, the same theme-matched visible logo PNG must be attached/shared as actual visual input, and the final prompt must include an explicit current-logo description. Describe the logo as the current Cars24 horizontal lockup: rounded-square icon, circular cut-through/open-`C` mark, plus the `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in the prompt is traceability only, never sufficient by itself.
 
 Logo placement follows the layout axis and the cleanest negative-space zone:
 - Left-aligned layouts usually use a left-aligned logo, either top-left or bottom-left depending on negative space.
 - Centre/symmetric layouts use centre-aligned logo placement, either top-centre or bottom-centre depending on negative space.
 - Right-aligned layouts may use right-aligned logo placement if that is the cleanest safe zone.
-- In carousels with the same theme/background family, logo placement and size stay exactly consistent across all logo-bearing slides.
+- In a carousel or batch, establish a theme-based logo lock before generation. For every logo-bearing slide within the same approved theme/background family, use the same official colourway, placement, and optical size. The lock applies to all themes and colourways — white-on-brand, blue-on-light, white-on-dark-photo, or black-on-light/print — not only to white logos. When the theme/background family changes, declare that family's own fixed lock before generation.
+- For a standalone image, use the correct official colourway and place the logo at the cleanest negative-space zone that balances that individual layout.
 - The logo may overlap pattern. It may overlap the hero only when it remains readable, high-contrast, cleanly fitted, and fully uncropped.
 - The logo must never touch, bleed, crop, cut off, distort, sit in a box/tile, or be approximated from text.
 
@@ -199,7 +212,7 @@ Pattern boldness is directly proportional to available negative space:
 | Property | Value |
 |---|---|
 | Background | Cars24 Brand Blue `#4736FE` — full bleed dominant base; dark theme means white-on-brand-blue, so the canvas stays vivid. Use controlled same-hue vertical/ambient gradient depth, with optional restrained radial glow around the hero/pattern zone. Do not drift navy/indigo/black/midnight/dark violet/generic purple or dim AI-tech dark mode. |
-| Pattern color | White luminous dots, optional pink/teal accent |
+| Pattern color | White luminous dots; controlled same-family highlights only, never default pink/teal accents |
 | Pattern glow | Luminous, rim-lit, bokeh bloom around edges |
 | Headline font | **Arapey-led** — headline predominantly Arapey; **Arapey Italic** on the emotive word(s), Arapey Regular on structural words. A hard structural word may pair in **Geist Bold**. |
 | Headline color | White `#FFFFFF` |
@@ -508,8 +521,8 @@ Color: [White / #161616]
 - Colour-coding text in **dark** theme — dark is a single-colour (white) system; emphasis comes from typeface, weight, and size, never colour
 - Two competing emphasis words at equal prominence — one key word dominates
 - Two pattern families in one creative — one family per creative, one scale variant
-- Hero bleeding off an edge — it should be fully contained inside the canvas
-- **Hero cropped at the wrong place — head, face, or key features cut off at a corner or the top edge.** Everything that carries meaning stays inside the safe zone. A subject framed so tightly that the generator clips it is wrong — pull the subject in and give it headroom.
+- An unplanned hero edge crop. Intentional editorial crops are allowed only when declared in the layout plan and they protect the face, focal interaction, action-carrying hands, and meaning-carrying product detail.
+- **Hero cropped at the wrong place — head, face, exchanged object, or key features cut off at a corner or the top edge.** A subject framed so tightly that the generator clips the story is wrong; use a contained frame or move the crop to a non-critical supporting form.
 - Mint green as the pattern color — it is a brand accent for product/campaign contexts (badges, CTAs, stars), not the dot pattern
 
 ---

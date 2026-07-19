@@ -30,6 +30,7 @@ Use these tags when indexing or querying reference images.
 - `icon-style-anchor`
 - `usp-stamp`
 - `shape-motif`
+- `direction-anchor`
 - `rules-only`
 
 ## Attachability
@@ -137,6 +138,7 @@ Use these for production hero generation:
 - `infographic-element`
 - `abstract-form`
 - `no-hero`
+- `intentional-editorial-edge-crop`
 
 ## Icon style tags
 
@@ -190,6 +192,9 @@ Do not use marble/statue as a production hero tag. Use these only as reference w
 - `pattern-too-loud`
 - `hero-fully-contained`
 - `hero-cropped`
+- `hero-intentionally-edge-cropped`
+- `hero-story-detail-protected`
+- `direction-anchor-preserved`
 - `text-overlaps-subject`
 - `logo-zone-compromised`
 - `off-brand-color`

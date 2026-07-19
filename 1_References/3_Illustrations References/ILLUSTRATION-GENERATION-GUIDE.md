@@ -5,13 +5,11 @@
 
 ## Critical Output Rule
 
-**Every illustration must be delivered as a transparent-background PNG.**
+**Every illustration is rendered inside the final Cars24 creative as one generated composite.**
 
-- No solid colour backgrounds, no gradients, no sky fills, no cityscape backdrops — even if the reference images show them
-- The illustration subject (character, car, scene) must be cut out against full transparency
-- This allows the illustration to be superimposed onto any brand canvas without masking work
-- Format: PNG with alpha channel (RGBA), no JPEG, no flattened backgrounds
-- If the generation tool cannot output transparency natively, use solid lime green `#00FF00` as a chroma-key background
+- The final deliverable contains the themed canvas, pattern, intentionally framed illustrated hero, approved text, and optional logo together.
+- Do not request transparent PNGs, chroma-key backgrounds, separate illustration exports, or post-process compositing.
+- An illustration reference's environment is style/context only. The generated hero merges cleanly onto the Cars24 canvas and must not bring a rectangular scene panel or separate background. A restrained skyline, road, dealership, or local landmark silhouette may be integrated into the full canvas when it adds story depth while remaining subordinate to the hero and text.
 
 ---
 
@@ -79,10 +77,10 @@ Named-person example: for Gajendra Jangid, use `Main_reference.png` for style, `
 - `1_References/1_Brand Guidelines/02_Color-System/03_brand-colors-digital.png` — official hex values
 - `1_References/1_Brand Guidelines/02_Color-System/06_color-usage-ratio.png` — 60/30/10 ratio
 
-**60/30/10 usage ratio:**
-- **60% Brand Blue** `#4736FE` — car interiors, large clothing shapes, environments, dominant scene elements
-- **30% Secondary** — Deep Navy `#2B2098`, Mint Green `#63FFB1`, Off-white `#F5F5F5`
-- **10% Accents** — Orange `#EF4523` (cars and clothing accents ONLY), warm skin tones
+**60/30/10 usage ratio for illustrated heroes:**
+- **60% Brand Blue** `#4736FE` — the unmistakable dominant colour across large clothing, car, and scene-shape areas.
+- **30% supporting tones** — Deep Navy `#2B2098`, near-black navy, off-white, and natural warm skin tones provide depth, contrast, and human realism without competing with the blue field.
+- **10% total controlled accents** — Orange `#EF4523` and Mint `#63FFB1` are optional contextual details only. Do not use both by default; together they must remain within the 10% allocation.
 
 | Role | Colour | Hex |
 |---|---|---|
@@ -95,7 +93,7 @@ Named-person example: for Gajendra Jangid, use `Main_reference.png` for style, `
 | Skin shadow | Warm Brown | `#9B6B3A` |
 | Car / clothing accent | Vivid Orange | `#EF4523` |
 
-**Orange rule:** Orange is a tertiary accent. It appears on cars and occasionally as clothing highlights. It is NEVER the dominant colour or used as an environment/background tone. `Main_reference.png` has zero orange — this is intentional.
+**Accent rule:** Orange is a tertiary accent for a car or small clothing highlight; Mint is reserved for a deliberate product/campaign cue. Neither is a default, dominant colour, environment/background tone, dot pattern, or semantic colour-coding system. `Main_reference.png` has zero orange — this is intentional. Icon systems remain brand-blue monochrome under their separate, stricter rule.
 
 ---
 
@@ -127,7 +125,7 @@ All files in `1_References/3_Illustrations References/`
 ## Prompt Template
 
 ```
-Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric brand blue dominant colour palette, clean flat colour shapes with minimal shading, no photorealistic textures, deep navy-black hair, clean crisp silhouette edges, aspirational and confident mood, no text, no numbers, no labels. Isolated subject on transparent background (PNG with alpha channel) — no sky, no cityscape, no environment fill, no gradient. If transparency unavailable, use solid lime green chroma-key background for clean removal. Style: premium modern sleek flat editorial illustration.
+Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric Cars24 brand blue dominant (60%), restrained supporting deep navy/off-white/natural skin tones (30%), and no more than 10% total orange or mint contextual accents. Clean flat colour shapes with 1–2 tonal steps, no photorealistic textures, deep navy-black hair, crisp silhouette edges, aspirational and confident mood. Render the hero directly into the final Cars24 branded composite; no separate panel, scene box, transparent export, or chroma-key background. Framing: [contained OR intentional editorial edge crop]. Keep faces, the focal interaction, action-carrying hands, and meaning-carrying product detail clear; permit a supporting car, shoulder, clothing edge, or restrained contextual environment to meet an edge only when it makes the composition more stylish and preserves the text zone. Style: premium modern sleek flat editorial illustration.
 ```
 
 **[SCENE DESCRIPTION] examples:**
@@ -141,8 +139,8 @@ Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian chara
 **When the scene includes an orange car** — add: `orange car as a secondary element`
 
 **Prompt hygiene — always apply:**
-- No hex codes in prompts — use colour names only
-- Always include `no text, no numbers, no labels`
+- No hex codes in provider prompts — use colour names only
+- The wider composite prompt owns approved text and any optional logo; the illustration subject itself contains no labels or logos
 - Use `electric brand blue dominant` — do NOT write "electric blue and vivid orange colour palette"
 
 ---
@@ -154,13 +152,13 @@ Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian chara
 | Orange as dominant colour | Violates 60/30/10 — orange is 10% car/clothing accent only |
 | "Vivid orange colour palette" in prompt | Produces orange-heavy output that breaks brand |
 | Bold/chunky cartoon feel | Main_reference.png is the quality bar — modern and sleek |
-| Solid colour backgrounds | Breaks compositing onto brand canvases |
-| Gradients on backgrounds | Impossible to remove cleanly |
+| Separate/boxed scene backgrounds | The hero must merge into the single final Cars24 composite; restrained contextual depth is allowed only when integrated into the canvas |
+| Transparent or chroma-key output | Retired delivery workflow; never request it |
 | Photorealistic rendering | Wrong style register |
-| Drop shadows on characters | Edge artefacts when compositing |
+| Heavy drop shadows on characters | Breaks the clean flat editorial silhouette |
 | Western / non-South-Asian skin tones | Misrepresents India-primary market |
-| Text or logos embedded in illustration | These belong in the design layer above |
-| Environmental backgrounds (sky, cityscape) | Transparent background only |
+| Text or logos embedded in the illustration subject | These belong in the generated composite layer, only when approved |
+| Dominant or boxed environmental background | Context must remain a restrained full-canvas layer, never a competing scene panel |
 | Referencing the 75907 file | `freepik__flat-vector-editorial-illustration-fully-illustrat__75907 1 [Vectorized]-1.png` no longer exists |
 
 ---

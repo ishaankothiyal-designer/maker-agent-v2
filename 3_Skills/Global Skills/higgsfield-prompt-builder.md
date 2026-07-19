@@ -92,8 +92,8 @@ Two-zone layout:
   LEFT ZONE — text only. Flat background color, no pattern, no image.
     Headline: top-left anchor. Body: below or above headline.
   RIGHT / BOTTOM-RIGHT ZONE — subject + pattern composited here.
-    Subject is fully contained inside the canvas with full head, hands, car/icons, and key objects visible.
-Logo placement: [layout-derived placement / none]. If logo is needed, attach/share the theme-matched visible logo PNG as actual visual input and render it from that reference inside clean negative space, about 8–10% of canvas width, with no box/tile and no later local overlay. Include the relative logo path in the prompt for traceability; path text alone is not a visual reference. Choose placement from the layout axis and cleanest negative space (left layouts align left, centre layouts align centre, right layouts may align right). In carousels with the same theme/background family, keep logo placement and size identical across all logo-bearing slides. The logo may overlap pattern; it may overlap hero only when readable, high-contrast, cleanly fitted, and fully uncropped. If the active provider/tool cannot attach the logo PNG as visual input, do not generate from text-only logo prompting; stop and ask the user to share/upload the logo so it can be used as visual input, or move to a reference-capable provider/workflow.
+    Framing: [contained / intentional editorial edge crop]. Protect face, focal interaction, action-carrying hands, and meaning-carrying product detail; only supporting forms may exit an edge and the text zone stays clear.
+Logo placement: [approved theme-based logo lock / none]. If logo is needed, attach/share the theme-matched visible logo PNG as actual visual input and render it from that reference inside clean negative space, with no box/tile and no later local overlay. Include the relative logo path in the prompt for traceability; path text alone is not a visual reference. For a carousel or batch, use the fixed official colourway, placement, and optical size for the approved theme/background family. For a standalone image, use the correct colourway and balance it to the individual layout. The logo may overlap pattern; it may overlap hero only if readable, high-contrast, cleanly fitted, and fully uncropped. If the active provider/tool cannot attach the logo PNG as visual input, do not generate from text-only logo prompting; stop and ask the user to share/upload the logo so it can be used as visual input, or move to a reference-capable provider/workflow.
 Note: top-left is standard for social post templates. Use bottom-left only if top-left zone is compositionally blocked.
 ```
 
@@ -141,9 +141,15 @@ Pattern: none. Background field only behind subject.
 ### Block 3 — Typography & Copy
 
 **Step 1 — Determine this slide's text structure:**
-- Headline + subheading + body present → **Scenario 1 (full layout)**
-- Headline only, no subheading or body → **Scenario 2 (standalone)**
+- Headline only → **Scenario 1 (headline only)**
+- Headline + short support line → **Scenario 2 (headline + support line)**
 - Part of a carousel → **Creative direction decides per slide** — state which scenario applies explicitly in the prompt
+
+Rules:
+- Ask the user whether they want `headline only` or `headline + short support line`
+- Single-image default: recommend `headline only`
+- Support line is opt-in
+- Body text is never a valid creative text tier
 
 **Step 2 — Select Arapey style (Scenarios 1 and 2 only):**
 - Emotive/campaign tone → Arapey **Italic**
@@ -151,69 +157,65 @@ Pattern: none. Background field only behind subject.
 
 ---
 
-**Scenario 1 — Full layout (headline + subheading + body):**
+**Scenario 1 — Headline only:**
 
 *Dark theme:*
 ```
-Typography — dark theme (full layout):
+Typography — dark theme (headline only):
 Headline (top-left, white):
   Full Arapey [Italic / Regular] — [Italic: emotive/campaign · Regular: product/factual].
   Size: very large — 40–60% of canvas height.
 Headline text: "[EXACT HEADLINE]"
 
-Subheading (below headline, white, Geist Medium):
-  Size: medium — clear step down from headline.
-Subheading text: "[EXACT SUBHEADING]"
-
-Body copy (white, Geist Regular, small):
-  Size: small — strong size contrast against headline.
-Body text: "[EXACT BODY]"
-```
-
-*Light theme:*
-```
-Typography — light theme (full layout):
-Headline (top-left, brand blue #4736FE):
-  Full Arapey [Italic / Regular] — [Italic: emotive/campaign · Regular: product/factual].
-  Size: very large — 40–60% of canvas height.
-Headline text: "[EXACT HEADLINE]"
-
-Subheading (below headline, near-black #161616, Geist Medium):
-  Size: medium.
-Subheading text: "[EXACT SUBHEADING]"
-
-Body copy (near-black #161616, Geist Regular, small):
-  Size: small.
-Body text: "[EXACT BODY]"
-```
-
----
-
-**Scenario 2 — Standalone headline only:**
-
-*Dark theme:*
-```
-Typography — dark theme (standalone headline):
-Headline (top-left, white):
-  Mixed font pairing — Arapey Italic for emotive/key words · Geist Bold for structural words.
-  Arapey Italic: [IDENTIFY THE KEY EMOTIVE WORD(S)]
-  Geist Bold: all remaining words.
-  Size: very large — 40–60% of canvas height.
-Headline text: "[EXACT HEADLINE]"
-
-Subheading: none.
+Support line: none.
 Body copy: none.
 ```
 
 *Light theme:*
 ```
-Typography — light theme (standalone headline):
+Typography — light theme (headline only):
+Headline (top-left, brand blue #4736FE):
+  Full Arapey [Italic / Regular] — [Italic: emotive/campaign · Regular: product/factual].
+  Size: very large — 40–60% of canvas height.
+Headline text: "[EXACT HEADLINE]"
+
+Support line: none.
+Body copy: none.
+```
+
+---
+
+**Scenario 2 — Headline + short support line:**
+
+*Dark theme:*
+```
+Typography — dark theme (headline + support line):
+Headline (top-left, white):
+  Full Arapey [Italic / Regular] — [Italic: emotive/campaign · Regular: product/factual].
+  Size: very large — 40–60% of canvas height.
+Headline text: "[EXACT HEADLINE]"
+
+Support line (below headline, white, Geist Medium or Regular):
+  Size: clearly smaller than the headline.
+  Keep it short, graphic, and precise — not explanatory body copy.
+Support line text: "[EXACT SUPPORT LINE]"
+
+Body copy: none.
+```
+
+*Light theme:*
+```
+Typography — light theme (headline + support line):
 Headline (top-left, brand blue #4736FE):
   Arapey-led serif headline — refined editorial serif, emotive word in flowing serif italic vs structural words in upright serif roman. The headline is a SERIF typeface, not sans-serif.
   Size: very large — 40–60% of canvas height.
 Headline text: "[EXACT HEADLINE]"
 
-Subheading: none.
+Support line (below headline, near-black #161616 or brand blue #4736FE when it is a short punch tagline, clean modern sans-serif):
+  Size: clearly smaller than the headline.
+  Keep it short, graphic, and precise — not explanatory body copy.
+Support line text: "[EXACT SUPPORT LINE]"
+
 Body copy: none.
 ```
 
@@ -223,13 +225,13 @@ Body copy: none.
 
 **Illustration:**
 ```
-Subject: modern sleek flat editorial vector illustration.
+Subject: modern sleek flat editorial vector illustration, rendered directly inside the final Cars24 composite.
 [DESCRIBE: who, what they are doing, mood, clothing colors, environment]
 Character: South Asian [woman/man/family] — warm caramel skin tones, deep navy-black hair, expressive, not stock-photo generic.
-Palette: electric brand blue DOMINANT (~60% — interiors, large clothing shapes, environment) · deep navy + mint green secondary (~30%) · vivid orange ONLY on cars or an occasional clothing accent + warm skin (~10%). Brand blue leads; orange is never dominant or a background.
+Palette: electric brand blue DOMINANT (60% — large clothing, car, and scene-shape areas) · restrained deep navy, off-white, and natural skin supporting tones (30%) · optional orange/mint contextual accents together no more than 10%. Orange is limited to a car or small clothing detail; mint is a deliberate product/campaign cue. Neither is dominant, a background, or a dot pattern.
 Lighting/mood harmonised to the [DARK → warmer, more luminous rim light / LIGHT → cleaner, brighter key light] theme — but do NOT recolour the subject to the canvas and do NOT bake any background in.
-Rendered as a clean cutout with a visible edge definition, fully contained over the background and pattern.
-Positioned right / bottom-right. Bleeds beyond the right canvas edge.
+Rendered as a clean cutout-style hero with a visible edge definition, directly over the background and pattern; no transparent/chroma-key export or separate scene box.
+Framing: [contained / intentional editorial edge crop]. Keep face, focal interaction, action-carrying hands, and meaning-carrying product detail clear; only supporting forms may exit an edge.
 Match the rendering style, flat vector quality, and colour saturation of the attached illustration reference.
 Do NOT reproduce the exact scene from the reference.
 ```
@@ -242,7 +244,7 @@ Framing: 3/4 front angle or clean side profile. Car fills lower-centre of frame.
 Setting: [suburban residential driveway / forecourt row at low oblique angle showing depth / highway flyover at golden hour / architectural backdrop such as a tiled gateway or modern villa] — NOT a plain white studio.
 Lighting: natural daylight or golden-hour warm low-sun light. Slightly warm grade, true-to-life, not stylised. The car gleams.
 Mood: sharp, premium, desirable, confident.
-Clean photographic cutout with a visible white accent outline, composited over brand canvas. Positioned right / bottom-right, fully contained inside the canvas.
+Clean photographic cutout with a visible white accent outline, composited over brand canvas. Use contained framing or an intentional editorial edge crop while protecting the product read and text zone.
 Do NOT reproduce the exact car or scene from the reference.
 No text, no logos, no watermarks.
 ```
@@ -256,7 +258,7 @@ People: ordinary, relatable South Asians — not models. Agent guides; customer 
 Lighting: natural outdoor daylight or bright showroom interior. Clean, true colour. Royal-blue uniform pops against neutral surroundings.
 Grade: true-to-life, slightly warm. Service feels transparent and hands-on (open bonnets, tablets, paperwork).
 Mood: warm, professional, approachable. "We've got you covered."
-Clean photographic cutout with a visible white accent outline, composited over brand canvas. Positioned right / bottom-right, fully contained inside the canvas.
+Clean photographic cutout with a visible white accent outline, composited over brand canvas. Use contained framing or an intentional editorial edge crop while protecting face, interaction, and text zone.
 No text, no logos.
 ```
 
@@ -267,7 +269,7 @@ Framing: intimate, editorial. PREFER interior/cabin POV — looking out windows,
 Lighting: warm, golden, backlit. Sun flare through glass. Warm alive skin tones. Grade is warm and lifestyle-editorial, never clinical.
 Mood: joyful, free, warm, human. A specific moment of connection — not generic stock.
 No Cars24 agent present. No overt brand markings.
-Clean photographic cutout with a visible white accent outline, composited over brand canvas. Positioned right / bottom-right, fully contained inside the canvas.
+Clean photographic cutout with a visible white accent outline, composited over brand canvas. Use contained framing or an intentional editorial edge crop while protecting face, interaction, and text zone.
 No text, no logos.
 ```
 
@@ -342,7 +344,7 @@ Match icon proportions and visual weight from the attached Cars24 icon system ov
 
 ### Block 5 — Reference Instruction
 
-Caption each attached reference **by its position** using `1_References/reference-index.json` first, then the role templates from the *Multi-Reference Protocol* below. Attach in the fixed order (SUBJECT-STYLE / PHOTO-STYLE → LAYOUT → PATTERN-TEXTURE, with logo/palette add-ons only when the cap allows) and write only the captions for refs you actually attached.
+Caption each attached reference **by its position** using `1_References/reference-index.json` first, then the role templates from the *Multi-Reference Protocol* below. Resolve the visual system from `CREATIVE-DIRECTION.md`, illustration execution from `ILLUSTRATION-GENERATION-GUIDE.md`, eligibility from the tag index, brand-book assets from the Skill Map, and observed asset facts from the Atlas. Attach in the fixed order (SUBJECT-STYLE / PHOTO-STYLE → LAYOUT → PATTERN-TEXTURE, with logo/palette add-ons only when the cap allows) and write only the captions for refs you actually attached.
 
 Before showing the assembled prompt, present a reference map with:
 - File
@@ -369,7 +371,7 @@ Final output: single flat composited image. Print-ready. No watermarks, borders,
 Example (illustration slide, 3 refs):
 ```
 Reference images attached — use each ONLY for its stated role:
-SUBJECT-STYLE — Image 1: match ONLY its flat bold vector style, colour saturation, and South-Asian character treatment. IGNORE its car-interior background. Render the Block 4 subject as a clean cutout on transparent background. Do NOT copy its pose.
+SUBJECT-STYLE — Image 1: match ONLY its modern sleek flat-editorial style, colour discipline, and South-Asian character treatment. IGNORE its car-interior background. Render the Block 4 subject directly in the final Cars24 composite, with no transparent/chroma-key output or separate scene box. Use the declared framing mode and protect the story details. Do NOT copy its pose.
 LAYOUT — Image 2: copy ONLY its zone split, headline position/size, body placement, logo placement, subject scale, and negative-space balance. This reference contains a marble/statue placeholder: do NOT copy marble material, statue identity, sculpture texture, its words, or its pattern. For photo output, replace the placeholder with a real Cars24-style photographic subject.
 PATTERN-TEXTURE — Image 3: match ONLY its white-dot density, rim glow, and bottom-edge falloff at mid scale. Ignore any colour cast.
 Across ALL references, do NOT reproduce visible text, logos, or (except the LAYOUT ref) backgrounds.
@@ -393,7 +395,7 @@ Attaching several image references only helps if the model knows **what each one
 1. **Cap = 3 references per call.** More than three degrades fidelity.
 2. **Fixed attach order** so positions are predictable:
    `--image` 1 = SUBJECT-STYLE (if any) → 2 = LAYOUT → 3 = PATTERN-TEXTURE (if any).
-3. **Illustration slides:** the SUBJECT-STYLE slot is **`Main_reference.png` (mandatory anchor)**; add a scene supplement only if it fits within the cap (anchor still counts as the one subject ref — don't exceed 3 total).
+3. **Illustration slides:** the SUBJECT-STYLE slot is **`Main_reference.png` (mandatory anchor)**; add a scene or identity/context supplement only if it fits within the cap and never at the cost of the anchor. Render the hero directly into the final composite, never as transparent/chroma-key output. Apply the 60/30/10 illustration budget: Brand Blue 60%, supporting tones 30%, optional orange/mint contextual accents no more than 10% total.
 4. **Caption every attached ref by its position** in the prompt (Block 5), using the templates below. Only write captions for refs you actually attach.
 5. Prefer the **clean** pattern PNGs in `Generated Patterns/` over crops (crops carry colour cast). Source files + fingerprints: `1_References/REFERENCE-ATLAS.md`.
 6. **v2.0 tag check:** before attaching, check `1_References/reference-index.json`. Do not attach anything marked `rules-only`, `do-not-attach`, `unsafe-to-attach`, or `diagram-contamination`.
@@ -401,7 +403,7 @@ Attaching several image references only helps if the model knows **what each one
 
 ### Paste-ready captions (Block 5)
 ```
-SUBJECT-STYLE — Image [N]: match ONLY its rendering style (flat bold vector line quality, colour saturation, South-Asian character treatment). IGNORE its background and scene. Render the subject described above as a clean cutout on a transparent background. Do NOT copy its pose or scene.
+SUBJECT-STYLE — Image [N]: match ONLY its modern sleek flat-editorial rendering style, colour discipline, and South-Asian character treatment. IGNORE its background and scene. Render the subject directly in the final Cars24 composite, not as transparent/chroma-key output and not in a separate scene box. Use the declared framing mode and protect the story details. Do NOT copy its pose or scene.
 ```
 ```
 LAYOUT — Image [N]: copy ONLY its composition (text-zone vs subject-zone split, headline position and dominant size, body placement, logo placement, premium finish). Do NOT copy its subject, its words, or its pattern.
@@ -533,7 +535,7 @@ Two-zone layout:
   LEFT ZONE — text only. Flat brand blue. No pattern intrusion.
     Headline top-left. Body below.
   RIGHT / BOTTOM-RIGHT ZONE — subject + pattern composited.
-    Subject fully contained inside the canvas.
+    Framing: [contained / intentional editorial edge crop]; protect the focal story details and keep the text zone clear.
 Logo zone: reserve top-left, 260px wide, clear space maintained; final logo is overlaid from the original PNG.
 
 Background: Cars24 brand-blue single-hue field, full bleed, with only faint same-hue glow. Keep the dominant field vivid electric brand blue; do not drift to navy, indigo, dark violet, or a heavily darkened gradient. No multi-colour gradient.
@@ -550,19 +552,19 @@ Headline (top-left, white):
   Arapey Regular: "Sell your car in" and the full stop.
   Size: very large, ~50% of canvas height.
 Headline text: "Sell your car in 30 minutes."
-Body copy (white, Geist Regular, small):
-Body text: "Inspection. Offer. Payment. Done at your doorstep."
+Support line (white, Geist Regular, short):
+Support line text: "Inspection. Offer. Payment. Done at your doorstep."
 
 Subject: bold flat editorial vector illustration.
 Confident South Asian woman, yellow jacket, standing beside an open-door orange car, arm resting on the roof, relaxed smile, sunglasses.
 Warm skin tones, expressive, not stock-photo.
 Brand blue car interior, orange car body.
-Clean cutout, transparent background, composited over background and pattern.
-Positioned right side, fully contained inside the canvas with full head, hands, car, and key objects visible.
+Clean cutout-style hero, rendered directly over the themed background and pattern in the final composite; no transparent/chroma-key export or post-process compositing.
+Positioned right side with [contained / intentional editorial edge crop] framing; keep face, focal interaction, action-carrying hands, and meaning-carrying product detail clear.
 Match the flat vector quality and colour saturation of the attached illustration reference. Do NOT reproduce the scene from the reference.
 
 Reference images attached — use each ONLY for its stated role:
-SUBJECT-STYLE — Image 1: match ONLY the flat bold vector style, colour saturation, and South-Asian character treatment. IGNORE its background. Render the Block 4 woman-and-car as a clean cutout on transparent background. Do NOT copy its pose.
+SUBJECT-STYLE — Image 1: match ONLY the modern sleek flat-editorial style, colour discipline, and South-Asian character treatment. IGNORE its background. Render the Block 4 woman-and-car directly in the final Cars24 composite using the declared framing mode. Do NOT copy its pose.
 LAYOUT — Image 2: copy ONLY its zone split, headline position/size, body placement, and logo placement. Do NOT copy its statue subject, its words, or its pattern.
 PATTERN-TEXTURE — Image 3: match ONLY its white-dot density, rim glow, and bottom-edge falloff at mid scale. Ignore any colour cast.
 Across ALL references, do NOT reproduce visible text, logos, or (except the LAYOUT ref) backgrounds.
@@ -602,8 +604,8 @@ Headline (top-left, white):
   Geist Bold: all other words.
   Size: very large, ~55% canvas height.
 Headline text: "Delivered to your doorstep."
-Body copy (white, Geist Regular, small):
-Body text: "Inspection at home. Best price guaranteed. Transfer handled end to end."
+Support line (white, Geist Regular, short):
+Support line text: "Inspection at home. Best price guaranteed. Transfer handled end to end."
 
 Subject: none. Pattern and typography carry this slide.
 
@@ -632,10 +634,10 @@ Before generating each slide, confirm:
 - [ ] Theme consistent with other slides in the set
 - [ ] Background flat color stated
 - [ ] Pattern: family chosen · scale set · or explicitly "none"
-- [ ] Scenario identified: full layout (Scenario 1) · standalone headline (Scenario 2) · carousel per-slide decision made
+- [ ] Scenario identified: headline only (Scenario 1) · headline + short support line (Scenario 2) · carousel per-slide decision made
 - [ ] Arapey style chosen: Italic (emotive/campaign) or Regular (product/factual)
 - [ ] Actual headline copy inserted — emotive word(s) identified if Scenario 2 mixed pairing
-- [ ] Actual body copy inserted — or "none"
+- [ ] Actual support line inserted — or "none"
 - [ ] Subject type decided: illustration · photo · none
 - [ ] Subject described specifically (not generically)
 - [ ] Composition reference selected
@@ -651,6 +653,6 @@ Generation is not done until each slide passes the theme-fidelity gate. **Do not
 
 For every generated slide:
 1. Open the output next to the **same theme reference creative** used to select its layout (the `Dark theme/` or `Light theme/` file from Reference Image Selection above).
-2. Score it against the **Theme Fidelity Checklist** in `master-rules.md` §4 — background hue, pattern colour/glow, headline colour, body colour, clean readable text area, fully contained hero, aspect ratio, mood, and generated logo fidelity if logo=yes. Apply the format note (illustration / photo / infographic / USP).
+2. Score it against the **Theme Fidelity Checklist** in `master-rules.md` §4 — background hue, pattern colour/glow, headline colour, body colour, clean readable text area, intentional hero framing, aspect ratio, mood, and generated logo fidelity if logo=yes. Apply the format note (illustration / photo / infographic / USP). For a direction-locked compliance correction, compare it to the approved anchor before export and reject visual regression outside the named fix.
 3. If any row fails → regenerate with a corrected prompt naming the exact deviation (see master-rules Stage 9 antipatterns), then re-check. The same checklist binds photos and illustrations equally — never tint a photo to fake a match.
 4. Report a one-line verdict per slide (e.g. `Slide 2 ✓ matched LT-1`) before export.

@@ -46,6 +46,7 @@ The exported file is the source of truth for final Maker runs.
 - The manifest and the exported image files together are the canonical run record.
 - Chat previews should display those exact saved files with absolute Markdown image paths whenever the file exists. The preview and the export must be the same bitmap.
 - Export means copy, rename, or explicitly requested resize of the same generated bitmap. Export must never mean "run the prompt again."
+- Export is immediate after a successful generation, not a deferred follow-up step. If a Codex `image_gen` bitmap is locally accessible, copy or rename that same file into `4_exports/` and write the manifest in the same pass.
 - Do not crop by default. Cropping is a separate post-production choice and requires an explicit user request.
 - If a Codex `image_gen` result is visible but no exact local/exportable bitmap can be verified, stop and ask before any regeneration, provider switch, or fallback.
 
