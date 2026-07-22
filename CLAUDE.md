@@ -32,7 +32,7 @@ Never edit the generated files directly (the Claude/Codex `maker-skill.md`, `mak
 
 ## Project version
 
-The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.30`.
+The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`. Current baseline: `v2.31`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
@@ -100,17 +100,17 @@ Every file saved to `4_exports/` must follow this structure. No exceptions.
 ```
 4_exports/{serial}_{brief}_{DD-Mon}/
   v1/
-    {brief}-image1.[ext]
-    {brief}-image2.[ext]
+    {item-brief}-v1-image1.[ext]
+    {item-brief}-v1-image2.[ext]
   v2/
-    {brief}-image1.[ext]
+    {item-brief}-v2-image1.[ext]
 ```
 
 - `{serial}` — zero-padded counter, increments per new brief: `001`, `002`, `003`
 - `{brief}` — kebab-case slug of the content brief, max 30 chars: `summer-launch-post`, `ai-agent-carousel`
 - `{DD-Mon}` — date of the run: `31-May`, `01-Jun`
 - `vN/` — one version folder per generation run (`v1`, `v2`, …). If the user changes any field parameter (theme, size, style, slide count, copy) and regenerates, keep the same project folder and add the next version folder (`v4/`).
-- `{brief}-imageN` — one file per slide inside the version folder (`summer-launch-post-image1`, `summer-launch-post-image2`, …), using the same short kebab-case brief slug so exported files keep context. A single image is `{brief}-image1`.
+- `{item-brief}-vN-imageN` — one file per slide inside the version folder. For batches, use the row's kebab-case blog-title slug as `{item-brief}`; otherwise use the short project brief slug. `vN` must match the enclosing version folder. A single image is `{item-brief}-vN-image1`.
 - New brief or new topic → new numbered project folder.
 
 **Example:**

@@ -80,7 +80,7 @@ Every generated output should live under the required three-level structure:
 ```text
 4_exports/{serial}_{brief}_{DD-Mon}/
   v1/
-    {brief}-image1.[ext]
+    {item-brief}-v1-image1.[ext]
 ```
 
 ## Batch template

@@ -79,8 +79,8 @@ Named-person example: for Gajendra Jangid, use `Main_reference.png` for style, `
 
 **60/30/10 usage ratio for illustrated heroes:**
 - **60% Brand Blue** `#4736FE` — the unmistakable dominant colour across large clothing, car, and scene-shape areas.
-- **30% supporting tones** — Deep Navy `#2B2098`, near-black navy, off-white, and natural warm skin tones provide depth, contrast, and human realism without competing with the blue field.
-- **10% total controlled accents** — Orange `#EF4523` and Mint `#63FFB1` are optional contextual details only. Do not use both by default; together they must remain within the 10% allocation.
+- **30% supporting tones** — Deep Navy `#2B2098`, near-black/Neutral 950, off-white/Neutral 100, and natural warm skin tones provide depth, contrast, and human realism without competing with the blue field.
+- **10% total controlled accents** — Orange `#EF4523` and Mint `#63FFB1` are optional contextual details used to make the illustration feel more alive. Mint can signal freshness, product energy, EV/charging, cashback, completion, or campaign cues. Orange can appear on cars, clothing accents, or small emphasis details. Do not use both by default; together they must remain within the 10% allocation.
 
 | Role | Colour | Hex |
 |---|---|---|
@@ -93,7 +93,7 @@ Named-person example: for Gajendra Jangid, use `Main_reference.png` for style, `
 | Skin shadow | Warm Brown | `#9B6B3A` |
 | Car / clothing accent | Vivid Orange | `#EF4523` |
 
-**Accent rule:** Orange is a tertiary accent for a car or small clothing highlight; Mint is reserved for a deliberate product/campaign cue. Neither is a default, dominant colour, environment/background tone, dot pattern, or semantic colour-coding system. `Main_reference.png` has zero orange — this is intentional. Icon systems remain brand-blue monochrome under their separate, stricter rule.
+**Accent rule:** Use approved brand accents to enrich illustration context, not to recolour the brand system. Orange may appear on cars, clothing accents, or small emphasis details. Mint may appear as a fresh/product/energy cue, including EV charging, cashback, completion, or a campaign signal. Neither is a default, dominant colour, environment/background tone, dot pattern, logo colourway, or semantic colour-coding system. Brand Blue remains the correct dominant. Icon systems remain brand-blue monochrome under their separate, stricter rule.
 
 ---
 
@@ -125,7 +125,7 @@ All files in `1_References/3_Illustrations References/`
 ## Prompt Template
 
 ```
-Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric Cars24 brand blue dominant (60%), restrained supporting deep navy/off-white/natural skin tones (30%), and no more than 10% total orange or mint contextual accents. Clean flat colour shapes with 1–2 tonal steps, no photorealistic textures, deep navy-black hair, crisp silhouette edges, aspirational and confident mood. Render the hero directly into the final Cars24 branded composite; no separate panel, scene box, transparent export, or chroma-key background. Framing: [contained OR intentional editorial edge crop]. Keep faces, the focal interaction, action-carrying hands, and meaning-carrying product detail clear; permit a supporting car, shoulder, clothing edge, or restrained contextual environment to meet an edge only when it makes the composition more stylish and preserves the text zone. Style: premium modern sleek flat editorial illustration.
+Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian characters with warm caramel skin tones, electric Cars24 brand blue dominant (60%), intentional supporting deep navy/off-white/near-black/natural skin tones (30%), and no more than 10% total fresh mint green and/or vivid orange contextual accents. Use the approved brand palette to add life and specificity without making the image orange- or mint-dominant. Clean flat colour shapes with 1–2 tonal steps, no photorealistic textures, deep navy-black hair, crisp silhouette edges, aspirational and confident mood. Render the hero directly into the final Cars24 branded composite; no separate panel, scene box, transparent export, or chroma-key background. Framing: [contained OR intentional editorial edge crop]. Keep faces, the focal interaction, action-carrying hands, and meaning-carrying product detail clear; permit a supporting car, shoulder, lower body, car body, clothing edge, or restrained contextual environment to continue behind a selected logo overlay when it makes the composition more stylish and preserves logo readability. Do not cut, fade, or truncate the bottom of the hero merely to reserve logo space. Style: premium modern sleek flat editorial illustration.
 ```
 
 **[SCENE DESCRIPTION] examples:**
@@ -136,12 +136,13 @@ Modern sleek flat editorial illustration, [SCENE DESCRIPTION], South Asian chara
 - `South Asian family loading luggage into a car, warm celebratory scene`
 - `South Asian man receiving car keys, excited and confident`
 
-**When the scene includes an orange car** — add: `orange car as a secondary element`
+**When the scene benefits from brand accents** — add a precise contextual cue, such as `fresh mint charging cue as a small accent`, `fresh mint cashback cue as a small accent`, `vivid orange car as a secondary element`, or `vivid orange clothing detail as a small accent`.
 
 **Prompt hygiene — always apply:**
 - No hex codes in provider prompts — use colour names only
 - The wider composite prompt owns approved text and any optional logo; the illustration subject itself contains no labels or logos
 - Use `electric brand blue dominant` — do NOT write "electric blue and vivid orange colour palette"
+- If the selected logo overlaps the hero zone, describe it as the highest overlay layer and preserve natural hero continuity behind it instead of cropping the illustration away.
 
 ---
 

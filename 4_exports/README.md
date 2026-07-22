@@ -10,11 +10,11 @@ Every new exported creative must use three levels:
 4_exports/{serial}_{brief}_{DD-Mon}/
   v1/
     generation-manifest.md
-    {brief}-image1.[ext]
-    {brief}-image2.[ext]
+    {item-brief}-v1-image1.[ext]
+    {item-brief}-v1-image2.[ext]
   v2/
     generation-manifest.md
-    {brief}-image1.[ext]
+    {item-brief}-v2-image1.[ext]
 ```
 
 - `{serial}` is a zero-padded counter. Before creating a new project folder, scan existing numbered folders and choose the next unused serial after the highest existing serial.
@@ -22,7 +22,7 @@ Every new exported creative must use three levels:
 - `{DD-Mon}` is the run date, for example `18-Jun`.
 - `vN/` is one version folder per generation run.
 - `generation-manifest.md` is mandatory in every version folder.
-- Image filenames include the same short brief slug: `{brief}-imageN.[ext]`.
+- Image filenames include an identifying item brief plus the generation version: `{item-brief}-vN-imageN.[ext]`. For batches, `{item-brief}` is the kebab-case blog-title slug; for a non-batch creative it is the short project brief slug.
 
 ## Generation Manifest
 
