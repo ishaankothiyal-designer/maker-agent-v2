@@ -24,7 +24,7 @@ Claude users may also use `/sync-skills` via `.claude/commands/sync-skills.md`.
 
 The project version is the `version` value in `3_Skills/Global Skills/master-rules.md` `sync-metadata`.
 `AGENTS.md` does not maintain an independent version number; it must always mirror the current `master-rules.md` version ledger.
-Current mapped version: `v2.30` from `3_Skills/Global Skills/master-rules.md`.
+Current mapped version: `v2.31` from `3_Skills/Global Skills/master-rules.md`.
 
 When the user asks to update the version, use `master-rules.md` as the single version ledger. Summarize what changed since the previous version, which skills/references/agents are impacted, how the changes help Maker Agent users, and rollback considerations.
 
@@ -99,17 +99,17 @@ Never dump files flat into `4_exports/`. Three levels: project folder → versio
 ```
 4_exports/{serial}_{brief}_{DD-Mon}/
   v1/
-    {brief}-image1.[ext]
-    {brief}-image2.[ext]
+    {item-brief}-v1-image1.[ext]
+    {item-brief}-v1-image2.[ext]
   v2/
-    {brief}-image1.[ext]
+    {item-brief}-v2-image1.[ext]
 ```
 
 - `{serial}` — zero-padded counter, increments per new brief: `001`, `002`, `003`
 - `{brief}` — kebab-case slug of the content brief, max 30 chars
 - `{DD-Mon}` — date of the run, e.g. `31-May`
 - `vN/` — one version folder per generation run
-- `{brief}-imageN` — one file per slide inside the version folder, using the same short kebab-case brief slug so exported files keep context
+- `{item-brief}-vN-imageN` — one file per slide inside the version folder; use the batch row's kebab-case blog-title slug for `{item-brief}`, or the short project brief slug for non-batch work. `vN` must match the enclosing version folder.
 
 Before saving any file, check the existing numbered folders in `4_exports/` to determine the next serial number.
 
@@ -180,4 +180,4 @@ Use:
 - Light background → generation context `Logo - Blue-on-white.png`
 - High-contrast / print → generation context `Logo - Black.png`
 
-Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. For a carousel or batch, establish a theme-based logo lock before generation: within each approved theme/background family, the official colourway, placement, and optical size are fixed across every logo-bearing slide. This applies to white-on-brand, blue-on-light, white-on-dark-photo, and black-on-light/print locks. For a standalone image, use the correct colourway and place the logo to balance that individual layout. Logo-bearing generation must use the correct theme-matched visible logo PNG as actual visual input and must also include an explicit prompt block describing the current Cars24 lockup: rounded-square icon, circular cut-through/open-C mark, and `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in prompt text is traceability only, never enough by itself. The logo may overlap pattern and may overlap hero only if readable, high-contrast, cleanly fitted, and uncropped. If the active tool cannot attach the logo PNG as true visual input, do not use it for logo-bearing output. If the output changes the logo geometry, drops the icon, alters the wordmark, drifts to all caps, adds a box/tile, or crops the lockup, fail logo QA and regenerate through a visual-input-capable workflow or ask for a supported logo upload. Do not silently overlay the logo afterward.
+Logo sizing should match the reference creatives, fit inside negative space, preserve clear space, and align to the layout axis. For a carousel, establish a theme-based logo lock before generation: within each approved theme/background family, the official colourway, placement, and optical size are fixed across every logo-bearing slide. For a batch, establish one batch-wide placement-and-size lock: every logo-bearing output uses the exact same placement zone and optical size across all themes/backgrounds, while the official colourway changes only as required by each output background. For a standalone image, use the correct colourway and place the logo to balance that individual layout. Logo-bearing generation must use the correct theme-matched visible logo PNG as actual visual input and must also include an explicit prompt block describing the current Cars24 lockup: rounded-square icon, circular cut-through/open-C mark, and `Cars24` wordmark. Explicitly reject the old boxed `CARS24` logo, all-caps lockups, plaques, badges, redraws, and tile hallucinations. A repo-relative logo path in prompt text is traceability only, never enough by itself. The logo may overlap pattern and may overlap hero only if readable, high-contrast, cleanly fitted, and uncropped. If the active tool cannot attach the logo PNG as true visual input, do not use it for logo-bearing output. If the output changes the logo geometry, drops the icon, alters the wordmark, drifts to all caps, adds a box/tile, or crops the lockup, fail logo QA and regenerate through a visual-input-capable workflow or ask for a supported logo upload. Do not silently overlay the logo afterward.
